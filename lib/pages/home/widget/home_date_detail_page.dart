@@ -34,7 +34,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   WanNianLiModel? wanNianLiModel;
 
   Set<DateTime> _dates = Set<DateTime>();
-  DateModel? _dateModel;
+  //DateModel? _dateModel;
 
   final DateTime dateNow = DateTime.now();
   int? _year = DateTime.now().year;
@@ -69,7 +69,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
         });
       })
       ..addOnCalendarSelectListener((dateModel) {
-        _dateModel = dateModel;
+        //_dateModel = dateModel;
         _getPerpetual(
             DateUtil.formatDate(dateModel!.getDateTime(), format: 'yyyy-MM-dd'));
         setState(() {});

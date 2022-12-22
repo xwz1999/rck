@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -11,7 +13,6 @@ import 'package:recook/pages/live/live_stream/pick_view/goods_window_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/hot_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
@@ -48,7 +49,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         elevation: 0,
         backgroundColor: Colors.white,
         leading: RecookBackButton.text(),
@@ -70,7 +71,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
               child: CustomImageButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  CRoute.push(context, PickSearchGoodsPage());
+                  Get.to(()=> PickSearchGoodsPage());
                 },
                 child: Container(
                   alignment: Alignment.center,

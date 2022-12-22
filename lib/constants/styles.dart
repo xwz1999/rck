@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppColor {
   static const Color themeColor = Color.fromARGB(255, 206, 38, 40);
@@ -57,14 +58,20 @@ class AppThemes {
     // 使用 bottomSheet 时， 修改背景色为透明时使用
     canvasColor: Colors.transparent,
     appBarTheme: AppBarTheme(
-        brightness: Brightness.light,
+        //brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         iconTheme: IconThemeData(color: Colors.grey[400]),
         color: AppColor.appBarGrey,
-        textTheme: TextTheme(
-            headline6: TextStyle(
-                color: Colors.grey[900],
-                fontSize: 17,
-                fontWeight: FontWeight.w500))),
+        toolbarTextStyle:  TextStyle(
+            color: Colors.grey[900],
+            fontSize: 17,
+            fontWeight: FontWeight.w500)
+        // textTheme: TextTheme(
+        //     headline6: TextStyle(
+        //         color: Colors.grey[900],
+        //         fontSize: 17,
+        //         fontWeight: FontWeight.w500))
+  ),
     scaffoldBackgroundColor: Colors.white,
   );
 
@@ -77,11 +84,17 @@ class AppThemes {
     appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(color: Colors.white),
         color: AppColor.themeColor,
-        textTheme: TextTheme(
-            headline6: TextStyle(
-                color: Colors.white,
-                fontSize: 17,
-                fontWeight: FontWeight.w500))),
+        toolbarTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 17,
+            fontWeight: FontWeight.w500),
+        // textTheme: TextTheme(
+        //     headline6: TextStyle(
+        //         color: Colors.white,
+        //         fontSize: 17,
+        //         fontWeight: FontWeight.w500)
+        // )
+    ),
     iconTheme: IconThemeData(color: AppColor.themeColor),
 //    textTheme: TextTheme(title: TextStyle(color: Colors.black)),
     scaffoldBackgroundColor: Colors.white,

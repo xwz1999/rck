@@ -15,6 +15,7 @@ import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/input_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class InvoiceAddPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class InvoiceAddPage extends StatefulWidget {
 class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
   int _type = 0;
   TextEditingController? _titleController;
-  TextEditingController? _TFNController;
+  TextEditingController? _tfnController;
 
   late OrderListPresenterImpl _presenter;
 
@@ -35,14 +36,14 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
   void initState() {
     super.initState();
     _titleController = TextEditingController();
-    _TFNController = TextEditingController();
+    _tfnController = TextEditingController();
     _presenter = OrderListPresenterImpl();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _TFNController!.dispose();
+    _tfnController!.dispose();
     _titleController!.dispose();
   }
 
@@ -125,7 +126,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                     ? null
                     : Border.all(
                         color: unselectedColor,
-                        width: ScreenAdapterUtils.setSp(0.5)),
+                        width: 1.w),
                 fontSize: 13 * 2.sp,
                 backgroundColor: personal ? selectedColor : null,
                 color: personal ? Colors.white : unselectedColor,
@@ -148,7 +149,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                     ? null
                     : Border.all(
                         color: unselectedColor,
-                        width: ScreenAdapterUtils.setSp(0.5)),
+                        width: 1.w),
                 fontSize: 13 * 2.sp,
                 backgroundColor: !personal ? selectedColor : null,
                 color: !personal ? Colors.white : unselectedColor,
@@ -200,7 +201,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                 Expanded(
                   child: InputView(
                     padding: EdgeInsets.zero,
-                    controller: _TFNController,
+                    controller: _tfnController,
                     textStyle: AppTextStyle.generate(
                       15 * 2.sp,
                     ),
@@ -218,15 +219,16 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
   }
 
   _saveInvoice() async {
-    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
+    ReToast.loading(text: '');
     HttpResultModel result = await _presenter.addInvoice(
         UserManager.instance!.user.info!.id,
         _type,
         _titleController!.text,
-        _TFNController!.text);
+        _tfnController!.text);
 
     if (!result.result) {
-      GSDialog.of(globalContext).showError(globalContext!, result.msg);
+      ReToast.err(text:  result.msg);
+
       return;
     }
     Toast.showInfo("添加成功");

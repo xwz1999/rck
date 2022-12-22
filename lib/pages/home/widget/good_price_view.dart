@@ -150,16 +150,16 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         price, commission, originPrice, coupon, saleNum);
   }
 
-  _getDoubleText(double number) {
-    if ((number - number.toInt()) > 0) {
-      return number.toString();
-    } else {
-      return number.toInt().toString();
-    }
-  }
+  // _getDoubleText(double number) {
+  //   if ((number - number.toInt()) > 0) {
+  //     return number.toString();
+  //   } else {
+  //     return number.toInt().toString();
+  //   }
+  // }
 
   _promotionPrice(price, commission, originPrice, coupon, saleNum,
-      {isTwoPrice = false}) {
+      ) {
     return Container(
       padding: EdgeInsets.only(top: 8.rw, left: 12.rw),
       color: Colors.transparent,

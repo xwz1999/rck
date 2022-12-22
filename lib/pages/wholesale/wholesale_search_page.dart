@@ -8,7 +8,6 @@ import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
@@ -66,11 +65,11 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
   int _filterIndex = 0;
 
   GSRefreshController _refreshController = GSRefreshController();
-  GoodsHotSellListModel? _listModel;
+  //GoodsHotSellListModel? _listModel;
   late GifController _gifController;
   int _page = 0;
 
-  int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
+  //int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
   String _jdTypeText = '全部';
   bool isNodata = false;
   ScrollController _scrollController = ScrollController();
@@ -96,7 +95,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
       }
     });
     if (widget.jdType == 1) {
-      _jDType = 1;
+     // _jDType = 1;
       _sortType = SortType.priceAsc;
       _barBool = [false, false];
     }
@@ -479,11 +478,11 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
           setState(() {
             _jdTypeText = value;
             if (value == '全部') {
-              _jDType = 1;
+              //_jDType = 1;
             } else if (value == '京东自营') {
-              _jDType = 2;
+              //_jDType = 2;
             } else if (value == '京东POP') {
-              _jDType = 3;
+             // _jDType = 3;
             }
             print(value);
             setState(() {});
@@ -694,7 +693,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
 
   _recommendWidget() {
     List<Widget> keyWordList = [];
-    int leg = 0;
+    //int leg = 0;
     if (_recommendWords.length > 0) {
       for (int i=0;i<_recommendWords.length;i++) {
         keyWordList.add(Padding(

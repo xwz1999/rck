@@ -87,9 +87,9 @@ class DateUtilss {
 
     var globalOffset = renderObject.localToGlobal(Offset.zero);
 
-    if (globalOffset == null) {
-      return null;
-    }
+    // if (globalOffset == null) {
+    //   return null;
+    // }
 
     var bounds = renderObject.paintBounds;
     bounds = bounds.translate(globalOffset.dx, globalOffset.dy);

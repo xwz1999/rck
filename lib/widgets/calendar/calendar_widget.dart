@@ -1,14 +1,10 @@
-import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_calendar/constants/constants.dart';
 import 'package:flutter_custom_calendar/controller.dart';
 import 'package:flutter_custom_calendar/widget/calendar_view.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/widgets/calendar/perpetual_calendar_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'calendar_weekbar_widget.dart';
@@ -22,7 +18,7 @@ class CalendarWidget extends StatefulWidget {
 
 class _CalendarWidgetState extends State<CalendarWidget> {
   late CalendarController _calendarController;
-  PerpetualCalendarModel? _perpetualCalendarModel;
+  //PerpetualCalendarModel? _perpetualCalendarModel;
   Set<DateTime> _dates = Set<DateTime>();
 
   final DateTime dateNow = DateTime.now();
@@ -205,15 +201,15 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   _getPerpetual(String time) async {
-    String url =
-        "http://v.juhe.cn/laohuangli/d?date=$time&key=edfd263c72451fd0b50c348259445879";
-    Response? res = await HttpManager.netFetchNormal(url, null, null, null);
-    Map map = json.decode(res.toString());
-    _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map as Map<String, dynamic>);
-
-    setState(() {
-          
-        });
+    // String url =
+    //     "http://v.juhe.cn/laohuangli/d?date=$time&key=edfd263c72451fd0b50c348259445879";
+    // Response? res = await HttpManager.netFetchNormal(url, null, null, null);
+    // Map map = json.decode(res.toString());
+    // _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map as Map<String, dynamic>);
+    //
+    // setState(() {
+    //
+    //     });
     //_homeWeatherModel = HomeWeatherModel.fromJson(map);
   }
 }

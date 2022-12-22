@@ -14,6 +14,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InviteSearchPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
   TextEditingController? _textEditController;
   FocusNode _contentFocusNode = FocusNode();
   String _searchText = "";
-  bool _displayList = true;
+  //bool _displayList = true;
   List<String>? _searchHistory = [];
   bool _startSearch = false;
   @override
@@ -206,7 +207,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
 
   @override
   failure(String? msg) {
-    GSDialog.of(context).showError(globalContext!, msg);
+    ReToast.err(text: msg);
   }
 
   @override
@@ -290,17 +291,32 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
                     ),
                     Spacer(),
                     (_searchHistory != null && _searchHistory!.length > 0)
-                        ? FlatButton(
-                            onPressed: () {
-                              _searchHistory = [];
-                              saveSearchListToSharedPreferences(_searchHistory!);
-                              setState(() {});
-                            },
-                            child: Text(
-                              "清除",
-                              style: TextStyle(
-                                  color: Color(0xff666666), fontSize: 12),
-                            ))
+                        ?
+                    // FlatButton(
+                    //         onPressed: () {
+                    //           _searchHistory = [];
+                    //           saveSearchListToSharedPreferences(_searchHistory!);
+                    //           setState(() {});
+                    //         },
+                    //         child: Text(
+                    //           "清除",
+                    //           style: TextStyle(
+                    //               color: Color(0xff666666), fontSize: 12),
+                    //         ))
+                    TextButton(
+                      onPressed: () {
+                        _searchHistory = [];
+                        saveSearchListToSharedPreferences(_searchHistory!);
+                        setState(() {});
+                      },
+                      child:Text(
+                        '清除',
+                        style: TextStyle(
+                          fontSize: 16 * 2.sp,
+                          color: Color(0xff666666)
+                        ),
+                      ),
+                    )
                         : Container(),
                   ],
                 )),

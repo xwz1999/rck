@@ -42,7 +42,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
   UserBenefitMonthTeamModel? _monthModel;
   String _formatType = 'MM-dd'; //时间选择器按钮样式
   List<UserIncomeDay>? _userIncomeDaylist; //到账收益团队列表
-  Timer? _timer;
+  //Timer? _timer;
 
   bool _sortGroup = false;
   bool _sortOrder = false;
@@ -320,26 +320,26 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                                 .userIncome!
                                 .sublist(1, _monthModel!.userIncome!.length);
                             userIncome.sort((a, b) =>
-                                b.order_count!.compareTo(a.order_count!));
+                                b.orderCount!.compareTo(a.orderCount!));
                             _monthModel!.userIncome!.replaceRange(
                                 1, _monthModel!.userIncome!.length, userIncome);
                           } else if (widget.receivedType == '已到账' &&
                               widget.teamType != 1) {
                             _monthModel!.userIncome!.sort((a, b) =>
-                                b.order_count!.compareTo(a.order_count!));
+                                b.orderCount!.compareTo(a.orderCount!));
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType == 1) {
                             //第一个本人默认不变 对后续的进行排序
                             List<UserIncomeDay> userIncome = _userIncomeDaylist!
                                 .sublist(1, _userIncomeDaylist!.length);
                             userIncome.sort((a, b) =>
-                                b.order_count!.compareTo(a.order_count!));
+                                b.orderCount!.compareTo(a.orderCount!));
                             _userIncomeDaylist!.replaceRange(
                                 1, _userIncomeDaylist!.length, userIncome);
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType != 1) {
                             _userIncomeDaylist!.sort((a, b) =>
-                                b.order_count!.compareTo(a.order_count!));
+                                b.orderCount!.compareTo(a.orderCount!));
                           }
                         });
                       },
@@ -431,7 +431,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                             count: e.count ?? '' as int?,
                             roleLevel: e.roleLevel ?? '' as int?,
                             amount: e.amount ?? '' as num?,
-                            order_count: e.order_count ?? '' as int?);
+                            orderCount: e.orderCount ?? '' as int?);
                       })
                       .toList()
                       .sepWidget(
@@ -454,7 +454,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                             count: e.count ?? '' as int?,
                             roleLevel: e.roleLevel ?? '' as int?,
                             amount: e.amount ?? '' as num?,
-                            order_count: e.order_count ?? '' as int?);
+                            orderCount: e.orderCount ?? '' as int?);
                       })
                       .toList()
                       .sepWidget(
@@ -634,7 +634,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                   _subsidy = _monthModel!.ratio.toString(); //比例
                   _salesVolume =
                       _monthModel!.salesVolume!.toStringAsFixed(2); //销售额
-                  _count = _monthModel!.order_count.toString(); //订单数
+                  _count = _monthModel!.orderCount.toString(); //订单数
                   _amount = _monthModel!.amount!.toStringAsFixed(2); //补贴
                   _isOver = true;
                 } else if (widget.receivedType == '未到账') {
@@ -646,20 +646,20 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                     _subsidy = _dayModel!.team!.ratio.toString();
                     _salesVolume =
                         _dayModel!.team!.salesVolume!.toStringAsFixed(2);
-                    _count = _dayModel!.team!.order_count.toString();
+                    _count = _dayModel!.team!.orderCount.toString();
                     _amount = _dayModel!.team!.amount!.toStringAsFixed(2); //补贴
                   } else if (widget.teamType == 2) {
                     _subsidy = _dayModel!.recommend!.ratio.toString();
                     _salesVolume =
                         _dayModel!.recommend!.salesVolume!.toStringAsFixed(2);
-                    _count = _dayModel!.recommend!.order_count.toString();
+                    _count = _dayModel!.recommend!.orderCount.toString();
                     _amount =
                         _dayModel!.recommend!.amount!.toStringAsFixed(2); //补贴
                   } else if (widget.teamType == 3) {
                     _subsidy = _dayModel!.reward!.ratio.toString();
                     _salesVolume =
                         _dayModel!.reward!.salesVolume!.toStringAsFixed(2);
-                    _count = _dayModel!.reward!.order_count.toString();
+                    _count = _dayModel!.reward!.orderCount.toString();
                     _amount = _dayModel!.reward!.amount!.toStringAsFixed(2); //补贴
                   }
                   _isOver = true;

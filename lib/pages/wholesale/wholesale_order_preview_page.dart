@@ -12,6 +12,7 @@ import 'package:recook/models/address_list_model.dart';
 import 'package:recook/models/order_prepay_model.dart';
 import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
 import 'package:recook/pages/user/order/order_detail_page.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
@@ -48,10 +49,10 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
   TextEditingController? _editController;
   FocusNode _focusNode = FocusNode();
 
-  String? _selectedStoreName;
+  //String? _selectedStoreName;
   int totalNum = 0;
 
-  bool _accept = false;
+  //bool _accept = false;
   String _buyerMessage = '';
 
 
@@ -296,16 +297,16 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
               width: rSize(80),
               child: Text(
                 title,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+                style: AppTextStyle.generate(27.sp,
                     fontWeight: FontWeight.w400),
               )),
           Expanded(
             child: InputView(
               showClear: false,
               padding: EdgeInsets.zero,
-              textStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+              textStyle: AppTextStyle.generate(27.sp,
                   color: Colors.grey[600], fontWeight: FontWeight.w300),
-              hintStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+              hintStyle: AppTextStyle.generate(27.sp,
                   color: Colors.grey[600], fontWeight: FontWeight.w300),
               controller: _editController,
               focusNode: _focusNode,
@@ -358,9 +359,10 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
       {titleColor,
       subTitleColor,
       rightTitleColor,
-      Function(bool)? switchChange,
-      bool switchValue = false,
-      bool switchEnable = false}) {
+      // Function(bool)? switchChange,
+      // bool switchValue = false,
+      // bool switchEnable = false
+      }) {
     return Container(
       margin: EdgeInsets.only(top: 10),
       // height: 55,
@@ -578,7 +580,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
         //
         // Get.to(()=>WholesaleCustomerPage(model: model,));
         if (UserManager.instance!.user.info!.id == 0) {
-          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Get.offAll(() => LoginPage());
           Toast.showError('请先登录...');
           return;
         }

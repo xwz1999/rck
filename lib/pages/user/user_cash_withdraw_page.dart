@@ -229,7 +229,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
   }
 
    _amountWidget() {
-    double? amount = widget.arguments!['amount'];
+    //double? amount = widget.arguments!['amount'];
     Container con = Container(
       padding: EdgeInsets.symmetric(horizontal: 17),
       width: MediaQuery.of(context).size.width,
@@ -378,25 +378,25 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     );
   }
 
-  _getTax(String text) {
-    if (text.isEmpty) {
-      return '';
-    } else {
-      double price = double.parse(text);
-      double tax = price / (1.13) * 0.13 * 1.12;
-      return tax.toStringAsFixed(2);
-    }
-  }
-
-  _getReal(String before, String tax) {
-    if (before.isEmpty || tax.isEmpty) {
-      return '';
-    } else {
-      double b = double.parse(before);
-      double t = double.parse(tax);
-      return (b - t).toStringAsFixed(2);
-    }
-  }
+  // _getTax(String text) {
+  //   if (text.isEmpty) {
+  //     return '';
+  //   } else {
+  //     double price = double.parse(text);
+  //     double tax = price / (1.13) * 0.13 * 1.12;
+  //     return tax.toStringAsFixed(2);
+  //   }
+  // }
+  //
+  // _getReal(String before, String tax) {
+  //   if (before.isEmpty || tax.isEmpty) {
+  //     return '';
+  //   } else {
+  //     double b = double.parse(before);
+  //     double t = double.parse(tax);
+  //     return (b - t).toStringAsFixed(2);
+  //   }
+  // }
 
   _buttonWidget(String title, {isSelect = false, Function? click}) {
     return CustomImageButton(

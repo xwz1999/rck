@@ -88,17 +88,17 @@ static Future<CompanyInfoModel?> getCompanyInfo() async {
   }
 
 
-  static Future<bool> applyWithdrawal(num? amount,num tax, {String? logistics_name,String? waybill_code}  ) async {
+  static Future<bool> applyWithdrawal(num? amount,num tax, {String? logisticsName,String? waybillCode}  ) async {
     Map<String, dynamic> params = {
       "amount": amount,
       'tax':tax,
     };
-    if (logistics_name != null) {
-      params.putIfAbsent("logistics_name", () => logistics_name);
+    if (logisticsName != null) {
+      params.putIfAbsent("logistics_name", () => logisticsName);
 
     }
-    if (waybill_code != null) {
-      params.putIfAbsent("waybill_code", () => waybill_code);
+    if (waybillCode != null) {
+      params.putIfAbsent("waybill_code", () => waybillCode);
 
     }
 

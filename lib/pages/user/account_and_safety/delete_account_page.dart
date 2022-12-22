@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/account_and_safety/delete_account_validation_page.dart';
@@ -30,7 +31,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
             color: AppColor.blackColor,
           ),
         ),
-        themeData: AppBarTheme(brightness: Brightness.light),
+        themeData: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light,),
         leading: _backButton(context),
       ),
       bottomNavigationBar: Container(
@@ -42,69 +43,35 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
           child: Row(
             children: [
               Expanded(
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(rSize(4)),
-                  ),
-                  padding: EdgeInsets.zero,
-                  color: Color(0xFFF0F0F0),
+                child:
+                TextButton(
                   onPressed: () {
                     Get.to(() => DeleteAcountValidationPage());
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (context) => NormalTextDialog(
-                    //     title: '注销提示',
-                    //     content: '确定注销账户？',
-                    //     items: ['取消'],
-                    //     type: NormalTextDialogType.delete,
-                    //     listener: (index) {
-                    //       switch (index) {
-                    //         case 0:
-                    //           Navigator.pop(context);
-                    //           break;
-                    //       }
-                    //     },
-                    //     deleteItem: '确定',
-                    //     deleteListener: () {
-                    //       //TODO 注销账号
-                    //       HttpManager.post(UserApi.deleteAccount, {
-                    //         "user_id": UserManager.instance.user.info.id,
-                    //       }).then((value) {
-                    //         if (value.data['code'] == "SUCCESS") {
-                    //           UserManager.logout();
-                    //         } else {
-                    //           showToast('注销失败${value.data['msg']}');
-                    //           Navigator.pop(context);
-                    //         }
-                    //       });
-                    //     },
-                    //   ),
-                    // );
                   },
-                  textColor: Color(0xFF666666),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: rSize(12),
+                  child:Text(
+                    '确认注销',
+                    style: TextStyle(
+                      fontSize: 16 * 2.sp,
+                      color: Color(0xFF666666),
                     ),
-                    child: Text('确认注销'),
                   ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Color(0xFFF0F0F0)),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(rSize(4)),
+                      )) ),
                 ),
+
               ),
               SizedBox(width: rSize(16)),
               Expanded(
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(rSize(4)),
-                  ),
-                  padding: EdgeInsets.zero,
-                  color: Color(0xFFDB2D2D),
+                child:
+                TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: rSize(12),
-                    ),
-                    child: Text('不注销了'),
-                  ),
+                  child: Text('不注销了',style: TextStyle(color: Colors.white),),
+                  style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),
+                      backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(rSize(4)),
+                      )) ),
                 ),
               ),
             ],

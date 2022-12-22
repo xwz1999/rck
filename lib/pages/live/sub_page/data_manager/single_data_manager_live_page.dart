@@ -4,7 +4,6 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/live_data_detail_model.dart';
-import 'package:recook/widgets/custom_painters/pie_progress_painter.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class SingleDataManagerPage extends StatefulWidget {
@@ -148,128 +147,128 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
     );
   }
 
-  _buildAudienceSource() {
-    return AspectRatio(
-      aspectRatio: 345 / 197,
-      child: Container(
-        padding: EdgeInsets.all(rSize(10)),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(rSize(10)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '观众来源',
-              style: TextStyle(
-                color: Color(0xFF333333),
-                fontWeight: FontWeight.bold,
-                fontSize: rSP(14),
-              ),
-            ),
-            Divider(
-              height: rSize(21),
-              color: Color(0XFFEEEEEE),
-              thickness: rSize(1),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: CustomPaint(
-                      painter: PieProgressPainter(values: [
-                        PieDataStructure(
-                          color: Color(0xFFF33963),
-                          value: 0.8,
-                        ),
-                        PieDataStructure(
-                          color: Color(0xFFFD9530),
-                          value: 0.1,
-                        ),
-                        PieDataStructure(
-                          color: Color(0xFFFBD941),
-                          value: 0.05,
-                        ),
-                        PieDataStructure(
-                          color: Color(0xFFB6C0CC),
-                          value: 0.05,
-                        ),
-                      ]),
-                    ),
-                  ),
-                  SizedBox(width: rSize(20)),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildAudienceTile(
-                          color: Color(0xFFF33963),
-                          value: 0.8,
-                          title: '关注',
-                        ),
-                        _buildAudienceTile(
-                          color: Color(0xFFFD9530),
-                          value: 0.1,
-                          title: '直播推荐',
-                        ),
-                        _buildAudienceTile(
-                          color: Color(0xFFFBD941),
-                          value: 0.05,
-                          title: '分享',
-                        ),
-                        _buildAudienceTile(
-                          color: Color(0xFFB6C0CC),
-                          value: 0.05,
-                          title: '其他',
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // _buildAudienceSource() {
+  //   return AspectRatio(
+  //     aspectRatio: 345 / 197,
+  //     child: Container(
+  //       padding: EdgeInsets.all(rSize(10)),
+  //       decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.circular(rSize(10)),
+  //       ),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             '观众来源',
+  //             style: TextStyle(
+  //               color: Color(0xFF333333),
+  //               fontWeight: FontWeight.bold,
+  //               fontSize: rSP(14),
+  //             ),
+  //           ),
+  //           Divider(
+  //             height: rSize(21),
+  //             color: Color(0XFFEEEEEE),
+  //             thickness: rSize(1),
+  //           ),
+  //           Expanded(
+  //             child: Row(
+  //               children: [
+  //                 AspectRatio(
+  //                   aspectRatio: 1,
+  //                   child: CustomPaint(
+  //                     painter: PieProgressPainter(values: [
+  //                       PieDataStructure(
+  //                         color: Color(0xFFF33963),
+  //                         value: 0.8,
+  //                       ),
+  //                       PieDataStructure(
+  //                         color: Color(0xFFFD9530),
+  //                         value: 0.1,
+  //                       ),
+  //                       PieDataStructure(
+  //                         color: Color(0xFFFBD941),
+  //                         value: 0.05,
+  //                       ),
+  //                       PieDataStructure(
+  //                         color: Color(0xFFB6C0CC),
+  //                         value: 0.05,
+  //                       ),
+  //                     ]),
+  //                   ),
+  //                 ),
+  //                 SizedBox(width: rSize(20)),
+  //                 Expanded(
+  //                   child: Column(
+  //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                     children: [
+  //                       _buildAudienceTile(
+  //                         color: Color(0xFFF33963),
+  //                         value: 0.8,
+  //                         title: '关注',
+  //                       ),
+  //                       _buildAudienceTile(
+  //                         color: Color(0xFFFD9530),
+  //                         value: 0.1,
+  //                         title: '直播推荐',
+  //                       ),
+  //                       _buildAudienceTile(
+  //                         color: Color(0xFFFBD941),
+  //                         value: 0.05,
+  //                         title: '分享',
+  //                       ),
+  //                       _buildAudienceTile(
+  //                         color: Color(0xFFB6C0CC),
+  //                         value: 0.05,
+  //                         title: '其他',
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  _buildAudienceTile({
-    required Color color,
-    required double value,
-    required String title,
-  }) {
-    return Row(
-      children: [
-        Container(
-          height: rSize(6),
-          width: rSize(6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(rSize(3)),
-            color: color,
-          ),
-        ),
-        SizedBox(width: rSize(8)),
-        Expanded(
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Color(0xFF333333).withOpacity(0.7),
-              fontSize: rSP(14),
-            ),
-          ),
-        ),
-        Text(
-          '${(value * 100.0).toStringAsFixed(1)}%',
-          style: TextStyle(
-            color: Color(0xFF333333),
-            fontSize: rSP(14),
-          ),
-        ),
-        SizedBox(width: rSize(6)),
-      ],
-    );
-  }
+  // _buildAudienceTile({
+  //   required Color color,
+  //   required double value,
+  //   required String title,
+  // }) {
+  //   return Row(
+  //     children: [
+  //       Container(
+  //         height: rSize(6),
+  //         width: rSize(6),
+  //         decoration: BoxDecoration(
+  //           borderRadius: BorderRadius.circular(rSize(3)),
+  //           color: color,
+  //         ),
+  //       ),
+  //       SizedBox(width: rSize(8)),
+  //       Expanded(
+  //         child: Text(
+  //           title,
+  //           style: TextStyle(
+  //             color: Color(0xFF333333).withOpacity(0.7),
+  //             fontSize: rSP(14),
+  //           ),
+  //         ),
+  //       ),
+  //       Text(
+  //         '${(value * 100.0).toStringAsFixed(1)}%',
+  //         style: TextStyle(
+  //           color: Color(0xFF333333),
+  //           fontSize: rSP(14),
+  //         ),
+  //       ),
+  //       SizedBox(width: rSize(6)),
+  //     ],
+  //   );
+  // }
 }

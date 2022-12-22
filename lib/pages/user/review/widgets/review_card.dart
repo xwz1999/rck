@@ -6,7 +6,6 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/user/review/add_review_page.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/pages/user/review/review_detail_page.dart';
-import 'package:recook/utils/custom_route.dart';
 
 class  ReviewCard extends StatelessWidget {
   final OrderReviewListModel model;
@@ -132,15 +131,19 @@ class  ReviewCard extends StatelessWidget {
                 GestureDetector(
                   onTap: (){
                     if (reviewStatusAdd) {
-                      CRoute.push(
-                        context,
-                        AddReviewPage(
-                          goodsDetailId: model.myOrderGoodsDea!.goodsDetailId,
-                          model: model,
-                        ),
-                      ).then((value) {
-                        onBack();
-                      });
+                      // CRoute.push(
+                      //   context,
+                      //   AddReviewPage(
+                      //     goodsDetailId: model.myOrderGoodsDea!.goodsDetailId,
+                      //     model: model,
+                      //   ),
+                      // ).then((value) {
+                      //   onBack();
+                      // });
+                      Get.to(()=> AddReviewPage(
+                        goodsDetailId: model.myOrderGoodsDea!.goodsDetailId,
+                        model: model,
+                      ),)?.then((value) =>  onBack());
                     } else {
                       Get.to(ReviewDetailPage(reviewModel: model));
                     }

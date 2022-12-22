@@ -165,23 +165,23 @@ class BrandDetailListItem extends StatelessWidget {
     );
   }
 
-  _soldOutWidget(){
-    return Container(
-      padding: EdgeInsets.all(20),
-      color: Colors.black.withOpacity(0.2).withAlpha(110),
-      child: Image.asset("assets/goods_sold_out.png", width: 82, height: 82,),
-    );
-  }
-  _tagsWidget(){
-    List<Widget> list = <Widget>[];
-    if (goods!.tags!=null && goods!.tags!.length>0) {
-      for (dynamic tag in goods!.tags!) {
-        list.add(
-          ItemTagWidget.getWidgetWithTag(tag, color: goods!.inventory! <= 0? colorGrey: AppColor.themeColor)
-        );
-      }
-    }
-    
-    return list;
-  }
+  // _soldOutWidget(){
+  //   return Container(
+  //     padding: EdgeInsets.all(20),
+  //     color: Colors.black.withOpacity(0.2).withAlpha(110),
+  //     child: Image.asset("assets/goods_sold_out.png", width: 82, height: 82,),
+  //   );
+  // }
+  // _tagsWidget(){
+  //   List<Widget> list = <Widget>[];
+  //   if (goods!.tags!=null && goods!.tags!.length>0) {
+  //     for (dynamic tag in goods!.tags!) {
+  //       list.add(
+  //         ItemTagWidget.getWidgetWithTag(tag, color: goods!.inventory! <= 0? colorGrey: AppColor.themeColor)
+  //       );
+  //     }
+  //   }
+  //
+  //   return list;
+  // }
 }

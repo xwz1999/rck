@@ -9,7 +9,6 @@ import 'package:recook/pages/user/banlance/withdraw_history_page.dart';
 import 'package:recook/pages/user/banlance/withdraw_page.dart';
 import 'package:recook/widgets/image_scaffold.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/refresh_widget.dart';
 
 import '../user_cash_withdraw_page.dart';
 
@@ -24,8 +23,8 @@ class UserBalancePage extends StatefulWidget {
 }
 
 class _UserBalancePageState extends State<UserBalancePage> {
-  GSRefreshController _refreshController =
-  GSRefreshController(initialRefresh: true);
+  // GSRefreshController _refreshController =
+  // GSRefreshController(initialRefresh: true);
 
 
 

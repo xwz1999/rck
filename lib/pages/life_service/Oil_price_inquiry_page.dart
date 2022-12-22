@@ -1,9 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/list_pick_body.dart';
@@ -294,34 +291,34 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
   }
 
 
-  _getIcon(String name) {
-    switch (name) {
-      case '白羊':
-        return Assets.life.imgBaiyang.path;
-      case '金牛':
-        return Assets.life.imgJinniu.path;
-      case '双子':
-        return Assets.life.imgShuangzi.path;
-      case '巨蟹':
-        return Assets.life.imgJuxie.path;
-      case '狮子':
-        return Assets.life.imgShizi.path;
-      case '处女':
-        return Assets.life.imgChunv.path;
-      case '天秤':
-        return Assets.life.imgTiancheng.path;
-      case '天蝎':
-        return Assets.life.imgTianxie.path;
-      case '射手':
-        return Assets.life.imgSheshou.path;
-      case '摩羯':
-        return Assets.life.imgMoxie.path;
-      case '水平':
-        return Assets.life.imgShuiping.path;
-      case '双鱼':
-        return Assets.life.imgShuangyu.path;
-    }
-  }
+  // _getIcon(String name) {
+  //   switch (name) {
+  //     case '白羊':
+  //       return Assets.life.imgBaiyang.path;
+  //     case '金牛':
+  //       return Assets.life.imgJinniu.path;
+  //     case '双子':
+  //       return Assets.life.imgShuangzi.path;
+  //     case '巨蟹':
+  //       return Assets.life.imgJuxie.path;
+  //     case '狮子':
+  //       return Assets.life.imgShizi.path;
+  //     case '处女':
+  //       return Assets.life.imgChunv.path;
+  //     case '天秤':
+  //       return Assets.life.imgTiancheng.path;
+  //     case '天蝎':
+  //       return Assets.life.imgTianxie.path;
+  //     case '射手':
+  //       return Assets.life.imgSheshou.path;
+  //     case '摩羯':
+  //       return Assets.life.imgMoxie.path;
+  //     case '水平':
+  //       return Assets.life.imgShuiping.path;
+  //     case '双鱼':
+  //       return Assets.life.imgShuangyu.path;
+  //   }
+  // }
   Future<bool?> show(BuildContext context, Widget widget) async {
     return await showDialog(
       context: context,
@@ -330,66 +327,66 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
     );
   }
 
-  _dialog(
-      String text1,
-      String text2,
-      String text3,
-      ) {
-    return Center(
-      child: Container(
-        width: 327.rw,
-        height: 490.rw,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.rw),
-          color: Colors.white,
-        ),
-        margin: EdgeInsets.symmetric(horizontal: rSize(36)),
-        child: Material(
-          color: Colors.transparent,
-          child: ListView(
-            children: [
-              Row(
-                children: [
-                  24.wb,
-                  Text(text1,
-                      style: TextStyle(
-                        color: Color(0xFFDB2D2D),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.rsp,
-                      )),
-                  Spacer(),
-                  IconButton(
-                      icon: Icon(
-                        Icons.cancel,
-                        color: Colors.black38,
-                        size: 20 * 2.sp,
-                      ),
-                      onPressed: () {
-                        Get.back();
-                      })
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.rw),
-                child: Text(text2,
-                    style: TextStyle(
-                      color: Color(0xFF999999),
-                      fontSize: 12.rsp,
-                    )),
-              ),
-              20.hb,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.rw),
-                child: Text(text3,
-                    style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: 14.rsp,
-                    )),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // _dialog(
+  //     String text1,
+  //     String text2,
+  //     String text3,
+  //     ) {
+  //   return Center(
+  //     child: Container(
+  //       width: 327.rw,
+  //       height: 490.rw,
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(4.rw),
+  //         color: Colors.white,
+  //       ),
+  //       margin: EdgeInsets.symmetric(horizontal: rSize(36)),
+  //       child: Material(
+  //         color: Colors.transparent,
+  //         child: ListView(
+  //           children: [
+  //             Row(
+  //               children: [
+  //                 24.wb,
+  //                 Text(text1,
+  //                     style: TextStyle(
+  //                       color: Color(0xFFDB2D2D),
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 18.rsp,
+  //                     )),
+  //                 Spacer(),
+  //                 IconButton(
+  //                     icon: Icon(
+  //                       Icons.cancel,
+  //                       color: Colors.black38,
+  //                       size: 20 * 2.sp,
+  //                     ),
+  //                     onPressed: () {
+  //                       Get.back();
+  //                     })
+  //               ],
+  //             ),
+  //             Padding(
+  //               padding: EdgeInsets.symmetric(horizontal: 12.rw),
+  //               child: Text(text2,
+  //                   style: TextStyle(
+  //                     color: Color(0xFF999999),
+  //                     fontSize: 12.rsp,
+  //                   )),
+  //             ),
+  //             20.hb,
+  //             Padding(
+  //               padding: EdgeInsets.symmetric(horizontal: 12.rw),
+  //               child: Text(text3,
+  //                   style: TextStyle(
+  //                     color: Color(0xFF333333),
+  //                     fontSize: 14.rsp,
+  //                   )),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

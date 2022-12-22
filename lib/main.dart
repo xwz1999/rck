@@ -61,7 +61,7 @@ void main() async {
           user: User.empty(),
           themeData: AppThemes.themeDataMain,
           userBrief: UserBrief.empty(),
-          openinstall: Openinstall.empty()));
+          openinstall: OpenInstall.empty()));
 
   // const bool inProduction = const bool.fromEnvironment("dart.vm.product");
 

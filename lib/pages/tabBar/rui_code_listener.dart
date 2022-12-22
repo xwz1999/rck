@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -10,7 +11,6 @@ import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/home_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/widgets/toast.dart';
 
@@ -188,14 +188,20 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                       elevation: 0,
                       shape: StadiumBorder(),
                       onPressed: () {
-                        CRoute.pushReplace(
-                            context,
-                            CommodityDetailPage(
-                              arguments: CommodityDetailPage.setArguments(
-                                widget.model!.data!.id,
-                                invite: widget.invite,
-                              ),
-                            ));
+                        Get.off(()=> CommodityDetailPage(
+                          arguments: CommodityDetailPage.setArguments(
+                            widget.model!.data!.id,
+                            invite: widget.invite,
+                          ),
+                        ));
+                        // CRoute.pushReplace(
+                        //     context,
+                        //     CommodityDetailPage(
+                        //       arguments: CommodityDetailPage.setArguments(
+                        //         widget.model!.data!.id,
+                        //         invite: widget.invite,
+                        //       ),
+                        //     ));
                       },
                       height: rSize(36),
                       minWidth: rSize(235),

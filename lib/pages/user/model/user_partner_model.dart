@@ -10,7 +10,7 @@ class UserPartnerModel {
   int? count;
   int? roleLevel;
   num? amount;
-  int? order_count;
+  int? orderCount;
 
   UserRoleLevel get roleLevelEnum => UserLevelTool.roleLevelEnum(roleLevel);
 
@@ -29,10 +29,10 @@ class UserPartnerModel {
   }
 
   String get orderValue {
-    if (order_count == -1)
+    if (orderCount == -1)
       return '—';
     else
-      return (order_count ?? 0.0).toStringAsFixed(2);
+      return (orderCount ?? 0.0).toStringAsFixed(2);
   }
 
   UserPartnerModel({
@@ -45,7 +45,7 @@ class UserPartnerModel {
     required this.count,
     required this.roleLevel,
     required this.amount,
-    required this.order_count,
+    required this.orderCount,
   });
 
   UserPartnerModel.fromJson(Map<String, dynamic> json) {
@@ -58,7 +58,7 @@ class UserPartnerModel {
     count = json['count'];
     roleLevel = json['roleLevel'];
     amount = json['amount'];
-    order_count = json['order_count'];
+    orderCount = json['order_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,7 +72,7 @@ class UserPartnerModel {
     data['count'] = this.count;
     data['roleLevel'] = this.roleLevel;
     data['amount'] = this.amount;
-    data['order_count'] = this.order_count;
+    data['order_count'] = this.orderCount;
     return data;
   }
 }

@@ -95,7 +95,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
             Container(
               height: 34,
               alignment: Alignment.center,
-              color: AppThemes.themeDataGrey.appBarTheme.color,
+              color: AppThemes.themeDataGrey.appBarTheme.backgroundColor,
               width: MediaQuery.of(context).size.width,
               child: TabBar(
                   onTap: (index) {
@@ -215,7 +215,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
       child: Container(
         alignment: Alignment.center,
         // color: Colors.white,
-        color: AppThemes.themeDataGrey.appBarTheme.color,
+        color: AppThemes.themeDataGrey.appBarTheme.backgroundColor,
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

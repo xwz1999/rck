@@ -1,8 +1,4 @@
-
-
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -20,27 +16,21 @@ import 'package:recook/pages/home/classify/goods_service_guarantee.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/model/address_model.dart';
 import 'package:recook/pages/home/widget/goods_image_page_view.dart';
-import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
-import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
 import 'package:recook/pages/wholesale/wholesale_good_price_view.dart';
 import 'package:recook/pages/wholesale/wholesale_goods_param_page.dart';
 import 'package:recook/pages/wholesale/wholesale_order_preview_page.dart';
 import 'package:recook/pages/wholesale/wholesale_selected_list.dart';
 import 'package:recook/pages/wholesale/wholesale_sku_choose_page.dart';
-import 'package:recook/utils/file_utils.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
-import 'package:recook/widgets/bottom_sheet/address_selector.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/empty_view.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
 import 'package:velocity_x/velocity_x.dart';
-
 import 'func/wholesale_func.dart';
 import 'models/goods_dto.dart';
 import 'models/wholesale_detail_model.dart';
@@ -89,14 +79,14 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
   List<SelectedItemModel>? _itemModels;
   StateSetter? _stateSetter;
   BuildContext? _context;
-  ShoppingCartModelImpl? _shoppingCartModelImpl;
+  //ShoppingCartModelImpl? _shoppingCartModelImpl;
   GoodsDetailImagesModel? _model;
 
-  ProvinceCityModel? _overseaCityModel;
+  // ProvinceCityModel? _overseaCityModel;
 
   ProvinceCityModel? _cityModel;
 
-  Address _address = Address.empty();
+  // Address _address = Address.empty();
   Address _cityAddress = Address.empty();
   List<AddressDefaultModel>? _addressList = [];
   AddressDefaultModel? _addressModel;
@@ -173,7 +163,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
       _model = model;
       setState(() {});
     });
-    _shoppingCartModelImpl = ShoppingCartModelImpl();
+    //_shoppingCartModelImpl = ShoppingCartModelImpl();
     widget.openSkuChoosePage!.addListener(() {
 
       print(widget.openSkuChoosePage!.value);
@@ -460,7 +450,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
             deleteListener: () async{
 
               Alert.dismiss(context);
-              bool isOpened = await openAppSettings();
+              await openAppSettings();
             },
             type: NormalTextDialogType.delete,
           ),
@@ -548,7 +538,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
           child: GestureDetector(
             onTap: () async {
               if (UserManager.instance!.user.info!.id == 0) {
-                AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                Get.offAll(() => LoginPage());
                 Toast.showError('请先登录...');
                 return;
               }
@@ -740,7 +730,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
       onTap: () async {
 
         if (UserManager.instance!.user.info!.id == 0) {
-          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Get.offAll(() => LoginPage());
           Toast.showError('请先登录...');
           return;
         }
@@ -1052,96 +1042,96 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
   //   );
   // }
 
-  _buildOverseaTax() {
-    return Row(
-      children: [
-        Text(
-          '进口税',
-          style: TextStyle(
-            color: Color(0xFFA4A4A4),
-            fontSize: rSP(13),
-          ),
-        ),
-        rWBox(7),
-        widget.goodsDetail!.isFerme == 1
-            ? Container(
-                alignment: Alignment.center,
-                height: rSize(14),
-                width: rSize(32),
-                decoration: BoxDecoration(
-                  color: Color(0xFFFFE5ED),
-                  borderRadius: BorderRadius.circular(rSize(7)),
-                ),
-                child: Text(
-                  '包税',
-                  style: TextStyle(
-                    color: Color(0xFFCC1B4F),
-                    fontSize: rSP(10),
-                  ),
-                ),
-              )
-            : SizedBox(),
-        widget.goodsDetail!.isFerme == 1 ? rWBox(10) : SizedBox(),
-        widget.goodsDetail!.isFerme == 1
-            ? Text(
-                '预计¥${widget.goodsDetail!.price!.min!.ferme!.toStringAsFixed(2)}由瑞库客承担',
-                style: TextStyle(
-                  fontSize: rSP(13),
-                  color: Color(0xFF535353),
-                ),
-              )
-            : SizedBox(),
-      ],
-    );
-  }
+  // _buildOverseaTax() {
+  //   return Row(
+  //     children: [
+  //       Text(
+  //         '进口税',
+  //         style: TextStyle(
+  //           color: Color(0xFFA4A4A4),
+  //           fontSize: rSP(13),
+  //         ),
+  //       ),
+  //       rWBox(7),
+  //       widget.goodsDetail!.isFerme == 1
+  //           ? Container(
+  //               alignment: Alignment.center,
+  //               height: rSize(14),
+  //               width: rSize(32),
+  //               decoration: BoxDecoration(
+  //                 color: Color(0xFFFFE5ED),
+  //                 borderRadius: BorderRadius.circular(rSize(7)),
+  //               ),
+  //               child: Text(
+  //                 '包税',
+  //                 style: TextStyle(
+  //                   color: Color(0xFFCC1B4F),
+  //                   fontSize: rSP(10),
+  //                 ),
+  //               ),
+  //             )
+  //           : SizedBox(),
+  //       widget.goodsDetail!.isFerme == 1 ? rWBox(10) : SizedBox(),
+  //       widget.goodsDetail!.isFerme == 1
+  //           ? Text(
+  //               '预计¥${widget.goodsDetail!.price!.min!.ferme!.toStringAsFixed(2)}由瑞库客承担',
+  //               style: TextStyle(
+  //                 fontSize: rSP(13),
+  //                 color: Color(0xFF535353),
+  //               ),
+  //             )
+  //           : SizedBox(),
+  //     ],
+  //   );
+  // }
 
-  Future<bool> _getAddress() async {
-    FileOperationResult result =
-        await FileUtils.readJSON(AppPaths.path_province_city_json);
-    if (result.success &&
-        result.data != null &&
-        result.data.toString().length > 0) {
-      _overseaCityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
-      return true;
-    }
-    ResultData res = await AddressModelImpl().fetchWholeProvince();
-    if (!res.result) {
-      Toast.showError(res.msg);
-      return false;
-    }
-    _overseaCityModel = ProvinceCityModel.fromJson(res.data);
-    FileUtils.writeJSON(
-        AppPaths.path_province_city_json, json.encode(res.data));
-    return true;
-  }
+  // Future<bool> _getAddress() async {
+  //   FileOperationResult result =
+  //       await FileUtils.readJSON(AppPaths.path_province_city_json);
+  //   if (result.success &&
+  //       result.data != null &&
+  //       result.data.toString().length > 0) {
+  //     _overseaCityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
+  //     return true;
+  //   }
+  //   ResultData res = await AddressModelImpl().fetchWholeProvince();
+  //   if (!res.result) {
+  //     Toast.showError(res.msg);
+  //     return false;
+  //   }
+  //   _overseaCityModel = ProvinceCityModel.fromJson(res.data);
+  //   FileUtils.writeJSON(
+  //       AppPaths.path_province_city_json, json.encode(res.data));
+  //   return true;
+  // }
 
-  Future<bool> _getCityAddress() async {
-    FileOperationResult result =
-        await FileUtils.readJSON(AppPaths.path_province_city_json);
-    if (result.success &&
-        result.data != null &&
-        result.data != [] &&
-        result.data.toString().length > 0) {
-
-      _cityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
-      return true;
-    }
-    ResultData res = await AddressModelImpl().fetchWholeProvince();
-    if (!res.result) {
-      Toast.showError(res.msg);
-      return false;
-    }
-    _cityModel = ProvinceCityModel.fromJson(res.data);
-    FileUtils.writeJSON(
-        AppPaths.path_province_city_json, json.encode(res.data));
-    return true;
-  }
+  // Future<bool> _getCityAddress() async {
+  //   FileOperationResult result =
+  //       await FileUtils.readJSON(AppPaths.path_province_city_json);
+  //   if (result.success &&
+  //       result.data != null &&
+  //       result.data != [] &&
+  //       result.data.toString().length > 0) {
+  //
+  //     _cityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
+  //     return true;
+  //   }
+  //   ResultData res = await AddressModelImpl().fetchWholeProvince();
+  //   if (!res.result) {
+  //     Toast.showError(res.msg);
+  //     return false;
+  //   }
+  //   _cityModel = ProvinceCityModel.fromJson(res.data);
+  //   FileUtils.writeJSON(
+  //       AppPaths.path_province_city_json, json.encode(res.data));
+  //   return true;
+  // }
 
   Future<List<AddressDefaultModel>?> _getDefaultAddress() async {
     ResultData res = await HttpManager.post(UserApi.address_list, {
       "userId": UserManager.instance!.user.info!.id,
     });
-    if (res != null) {
+
       if (res.data != null) {
         print(res.data);
         if (res.data["data"] != null) {
@@ -1153,252 +1143,251 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
           return null;
       } else
         return null;
-    } else
-      return null;
+
   }
 
-  _selectAddress(BuildContext context) {
-    AddressSelectorHelper.show(
-      context,
-      model: _overseaCityModel,
-      city: _address.city,
-      province: _address.province,
-      district: _address.district,
-      callback: (
-        String? province,
-        String? city,
-        String? district,
-      ) {
-        _address.city = city;
-        _address.province = province;
-        _address.district = district;
-        setState(() {});
-      },
-    );
-  }
+  // _selectAddress(BuildContext context) {
+  //   AddressSelectorHelper.show(
+  //     context,
+  //     model: _overseaCityModel,
+  //     city: _address.city,
+  //     province: _address.province,
+  //     district: _address.district,
+  //     callback: (
+  //       String? province,
+  //       String? city,
+  //       String? district,
+  //     ) {
+  //       _address.city = city;
+  //       _address.province = province;
+  //       _address.district = district;
+  //       setState(() {});
+  //     },
+  //   );
+  // }
 
 
-  _buildOverseaCityPicker() {
-    return GestureDetector(
-      onTap: () async {
-        if (_overseaCityModel == null) {
-          final cancel = ReToast.loading();
-          bool result = await _getAddress();
-          cancel();
-          if (result) {
-            _selectAddress(context);
-          }
-        }
-        _selectAddress(context);
-      },
-      child: Container(
-        color: Colors.transparent,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  '送至',
-                  style: TextStyle(
-                    color: Color(0xFFA4A4A4),
-                    fontSize: rSP(13),
-                  ),
-                ),
-                Container(
-                  width: 20,
-                ),
-                ..._overseaCityModel == null
-                    ? [
-                        Text(
-                          '请选择',
-                          style: TextStyle(
-                            color: Color(0xFFCC1B4F),
-                            fontSize: rSP(13),
-                          ),
-                        ),
-                        Text(
-                          '收货地址',
-                          style: TextStyle(
-                            color: Color(0xFF525252),
-                            fontSize: rSP(13),
-                          ),
-                        ),
-                      ]
-                    : [
-                        Text(
-                          '${_address.province}-${_address.city}-${_address.district}',
-                          style: TextStyle(
-                            color: Color(0xFF525252),
-                            fontSize: rSP(13),
-                          ),
-                        ),
-                      ],
-                Spacer(),
-                Icon(
-                  AppIcons.icon_next,
-                  color: Color(0xFF333333),
-                  size: 13 * 2.sp,
-                ),
-              ],
-            ),
-            rHBox(14),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                rWBox(41),
-                Column(
-                  children: [
-                    Image.asset(
-                      R.ASSETS_STATIC_OVERSEA_ZHENG_PNG,
-                      height: rSize(26),
-                      width: rSize(26),
-                    ),
-                    rHBox(5),
-                    Text(
-                      '正品保障',
-                      style: TextStyle(
-                        color: Color(0xFFCCCCCC),
-                        fontSize: rSP(12),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      '- - - - - -',
-                      style: TextStyle(
-                        color: Color(0xFFCCCCCC),
-                        fontSize: rSP(15),
-                        height: 1,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                ),
-                Column(
-                  children: [
-                    Builder(
-                      builder: (context) {
-                        String text = '';
-                        String text2 = '';
-                        switch (widget.goodsDetail!.storehouse) {
-                          case 0:
-                            text = '';
-                            break;
-                          case 1:
-                            text = R.ASSETS_STATIC_OVERSEA_BOX_PNG;
-                            text2 = R.ASSETS_STATIC_OVERSEA_BOX_ON_PNG;
-                            break;
-                          case 2:
-                            text = R.ASSETS_STATIC_OVERSEA_FLIGHT_PNG;
-                            text2 = R.ASSETS_STATIC_OVERSEA_FLIGHT_ON_PNG;
-                            break;
-                          case 3:
-                            text = R.ASSETS_STATIC_OVERSEA_BOX_G_PNG;
-                            text2 = R.ASSETS_STATIC_OVERSEA_BOX_G_ON_PNG;
-                            break;
-                          default:
-                            break;
-                        }
-                        return Image.asset(
-                          _address.city == '' ? text : text2,
-                          height: rSize(26),
-                          width: rSize(26),
-                        );
-                      },
-                    ),
-                    rHBox(5),
-                    Builder(
-                      builder: (context) {
-                        String text = '';
-                        switch (widget.goodsDetail!.storehouse) {
-                          case 0:
-                            text = '';
-                            break;
-                          case 1:
-                            text = '国内仓';
-                            break;
-                          case 2:
-                            text = '海外直邮';
-                            break;
-                          case 3:
-                            text = '保税仓';
-                            break;
-                          default:
-                            break;
-                        }
-                        return Text(
-                          text,
-                          style: TextStyle(
-                            color: Color(0xFFCCCCCC),
-                            fontSize: rSP(12),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      '- - - - - -',
-                      style: TextStyle(
-                        color: Color(0xFFCCCCCC),
-                        fontSize: rSP(15),
-                        height: 1,
-                      ),
-                      maxLines: 1,
-                    ),
-                  ),
-                ),
-                Column(
-                  children: [
-                    Image.asset(
-                      _address.city == ''
-                          ? R.ASSETS_STATIC_OVERSEA_LOCATION_PNG
-                          : R.ASSETS_STATIC_OVERSEA_LOCATION_ON_PNG,
-                      height: rSize(26),
-                      width: rSize(26),
-                    ),
-                    rHBox(5),
-                    Text(
-                      _address.city!,
-                      style: TextStyle(
-                        color: Color(0xFFCCCCCC),
-                        fontSize: rSP(12),
-                      ),
-                    ),
-                  ],
-                ),
-                rWBox(27),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  _img(imageUrl) {
-    double cir = rSize(8);
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(cir), topRight: Radius.circular(cir)),
-      child: AspectRatio(
-        aspectRatio: 2.5,
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
-          child: CustomCacheImage(
-            fit: BoxFit.cover,
-            imageUrl: Api.getResizeImgUrl(
-                imageUrl, DeviceInfo.screenWidth!.toInt() * 2),
-          ),
-        ),
-      ),
-    );
-  }
+  // _buildOverseaCityPicker() {
+  //   return GestureDetector(
+  //     onTap: () async {
+  //       if (_overseaCityModel == null) {
+  //         final cancel = ReToast.loading();
+  //         bool result = await _getAddress();
+  //         cancel();
+  //         if (result) {
+  //           _selectAddress(context);
+  //         }
+  //       }
+  //       _selectAddress(context);
+  //     },
+  //     child: Container(
+  //       color: Colors.transparent,
+  //       child: Column(
+  //         children: [
+  //           Row(
+  //             children: [
+  //               Text(
+  //                 '送至',
+  //                 style: TextStyle(
+  //                   color: Color(0xFFA4A4A4),
+  //                   fontSize: rSP(13),
+  //                 ),
+  //               ),
+  //               Container(
+  //                 width: 20,
+  //               ),
+  //               ..._overseaCityModel == null
+  //                   ? [
+  //                       Text(
+  //                         '请选择',
+  //                         style: TextStyle(
+  //                           color: Color(0xFFCC1B4F),
+  //                           fontSize: rSP(13),
+  //                         ),
+  //                       ),
+  //                       Text(
+  //                         '收货地址',
+  //                         style: TextStyle(
+  //                           color: Color(0xFF525252),
+  //                           fontSize: rSP(13),
+  //                         ),
+  //                       ),
+  //                     ]
+  //                   : [
+  //                       Text(
+  //                         '${_address.province}-${_address.city}-${_address.district}',
+  //                         style: TextStyle(
+  //                           color: Color(0xFF525252),
+  //                           fontSize: rSP(13),
+  //                         ),
+  //                       ),
+  //                     ],
+  //               Spacer(),
+  //               Icon(
+  //                 AppIcons.icon_next,
+  //                 color: Color(0xFF333333),
+  //                 size: 13 * 2.sp,
+  //               ),
+  //             ],
+  //           ),
+  //           rHBox(14),
+  //           Row(
+  //             crossAxisAlignment: CrossAxisAlignment.end,
+  //             children: [
+  //               rWBox(41),
+  //               Column(
+  //                 children: [
+  //                   Image.asset(
+  //                     R.ASSETS_STATIC_OVERSEA_ZHENG_PNG,
+  //                     height: rSize(26),
+  //                     width: rSize(26),
+  //                   ),
+  //                   rHBox(5),
+  //                   Text(
+  //                     '正品保障',
+  //                     style: TextStyle(
+  //                       color: Color(0xFFCCCCCC),
+  //                       fontSize: rSP(12),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //               Expanded(
+  //                 child: Center(
+  //                   child: Text(
+  //                     '- - - - - -',
+  //                     style: TextStyle(
+  //                       color: Color(0xFFCCCCCC),
+  //                       fontSize: rSP(15),
+  //                       height: 1,
+  //                     ),
+  //                     maxLines: 1,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Column(
+  //                 children: [
+  //                   Builder(
+  //                     builder: (context) {
+  //                       String text = '';
+  //                       String text2 = '';
+  //                       switch (widget.goodsDetail!.storehouse) {
+  //                         case 0:
+  //                           text = '';
+  //                           break;
+  //                         case 1:
+  //                           text = R.ASSETS_STATIC_OVERSEA_BOX_PNG;
+  //                           text2 = R.ASSETS_STATIC_OVERSEA_BOX_ON_PNG;
+  //                           break;
+  //                         case 2:
+  //                           text = R.ASSETS_STATIC_OVERSEA_FLIGHT_PNG;
+  //                           text2 = R.ASSETS_STATIC_OVERSEA_FLIGHT_ON_PNG;
+  //                           break;
+  //                         case 3:
+  //                           text = R.ASSETS_STATIC_OVERSEA_BOX_G_PNG;
+  //                           text2 = R.ASSETS_STATIC_OVERSEA_BOX_G_ON_PNG;
+  //                           break;
+  //                         default:
+  //                           break;
+  //                       }
+  //                       return Image.asset(
+  //                         _address.city == '' ? text : text2,
+  //                         height: rSize(26),
+  //                         width: rSize(26),
+  //                       );
+  //                     },
+  //                   ),
+  //                   rHBox(5),
+  //                   Builder(
+  //                     builder: (context) {
+  //                       String text = '';
+  //                       switch (widget.goodsDetail!.storehouse) {
+  //                         case 0:
+  //                           text = '';
+  //                           break;
+  //                         case 1:
+  //                           text = '国内仓';
+  //                           break;
+  //                         case 2:
+  //                           text = '海外直邮';
+  //                           break;
+  //                         case 3:
+  //                           text = '保税仓';
+  //                           break;
+  //                         default:
+  //                           break;
+  //                       }
+  //                       return Text(
+  //                         text,
+  //                         style: TextStyle(
+  //                           color: Color(0xFFCCCCCC),
+  //                           fontSize: rSP(12),
+  //                         ),
+  //                       );
+  //                     },
+  //                   ),
+  //                 ],
+  //               ),
+  //               Expanded(
+  //                 child: Center(
+  //                   child: Text(
+  //                     '- - - - - -',
+  //                     style: TextStyle(
+  //                       color: Color(0xFFCCCCCC),
+  //                       fontSize: rSP(15),
+  //                       height: 1,
+  //                     ),
+  //                     maxLines: 1,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Column(
+  //                 children: [
+  //                   Image.asset(
+  //                     _address.city == ''
+  //                         ? R.ASSETS_STATIC_OVERSEA_LOCATION_PNG
+  //                         : R.ASSETS_STATIC_OVERSEA_LOCATION_ON_PNG,
+  //                     height: rSize(26),
+  //                     width: rSize(26),
+  //                   ),
+  //                   rHBox(5),
+  //                   Text(
+  //                     _address.city!,
+  //                     style: TextStyle(
+  //                       color: Color(0xFFCCCCCC),
+  //                       fontSize: rSP(12),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //               rWBox(27),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  //
+  // _img(imageUrl) {
+  //   double cir = rSize(8);
+  //   return ClipRRect(
+  //     borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(cir), topRight: Radius.circular(cir)),
+  //     child: AspectRatio(
+  //       aspectRatio: 2.5,
+  //       child: ClipRRect(
+  //         borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
+  //         child: CustomCacheImage(
+  //           fit: BoxFit.cover,
+  //           imageUrl: Api.getResizeImgUrl(
+  //               imageUrl, DeviceInfo.screenWidth!.toInt() * 2),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
 
 
@@ -1413,7 +1402,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
             listener:  (WholesaleSkuChooseModel skuModel) async {
 
               if (UserManager.instance!.user.info!.id == 0) {
-                AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                Get.offAll(() => LoginPage());
                 Toast.showError('请先登录...');
                 return;
               }

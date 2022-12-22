@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -10,22 +9,16 @@ import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/models/shopping_cart_list_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
-import 'package:recook/pages/home/items/item_brand_like_grid.dart';
 import 'package:recook/pages/shopping_cart/item/item_shopping_cart.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_contact.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_presenter_impl.dart';
 import 'package:recook/utils/mvp.dart';
-
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
-
 import 'package:recook/widgets/toast.dart';
-import 'package:waterfall_flow/waterfall_flow.dart';
-
-import 'function/shopping_cart_fuc.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   final bool needSafeArea;
@@ -47,13 +40,13 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   bool _checkAll = false;
   List<ShoppingCartGoodsModel> _selectedGoods = [];
   GoodsSimpleListModel? goodsSimpleListModel;
-  List<GoodsSimple>? _likeGoodsList = [];
+  //List<GoodsSimple>? _likeGoodsList = [];
   late StateSetter _bottomStateSetter;
   int _totalNum = 0;
   bool? _manageStatus;
   late bool _editting;
   BuildContext? _context;
-  bool _onLoad = true;
+  // bool _onLoad = true;
 
   // @override
   // bool get wantKeepAlive {
@@ -75,13 +68,13 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
 
     UserManager.instance!.refreshShoppingCart.addListener(_refreshShoppingCart);
     Future.delayed(Duration.zero, () async {
-      int? userid;
+      //int? userid;
       if (UserManager.instance!.user.info!.id == null) {
-        userid = 0;
+        //userid = 0;
       } else {
-        userid = UserManager.instance!.user.info!.id;
+        //userid = UserManager.instance!.user.info!.id;
       }
-      _likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
+      //_likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
       // if (goodsSimpleListModel != null) {
       //   _likeGoodsList = goodsSimpleListModel.data;
       // }
@@ -115,7 +108,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
       appBar: AppBar(
         leading: null,
         backgroundColor: Colors.white,
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         titleSpacing: 0,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -362,92 +355,92 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     );
   }
 
-  _buildLikeTitle() {
-    return Container(
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 22.rw,
-            height: 2.rw,
-            decoration: BoxDecoration(color: Color(0xFFC92219)),
-          ),
-          Container(
-            width: 6.rw,
-            height: 6.rw,
-            decoration: BoxDecoration(
-                color: Color(0xFFC92219),
-                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
-          ),
-          20.wb,
-          Text(
-            '您可能还喜欢',
-            style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rsp),
-          ),
-          20.wb,
-          Container(
-            width: 6.rw,
-            height: 6.rw,
-            decoration: BoxDecoration(
-                color: Color(0xFFC92219),
-                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
-          ),
-          Container(
-            width: 22.rw,
-            height: 2.rw,
-            decoration: BoxDecoration(color: Color(0xFFC92219)),
-          ),
-        ],
-      ),
-    );
-  }
+  // _buildLikeTitle() {
+  //   return Container(
+  //     width: double.infinity,
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Container(
+  //           width: 22.rw,
+  //           height: 2.rw,
+  //           decoration: BoxDecoration(color: Color(0xFFC92219)),
+  //         ),
+  //         Container(
+  //           width: 6.rw,
+  //           height: 6.rw,
+  //           decoration: BoxDecoration(
+  //               color: Color(0xFFC92219),
+  //               borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+  //         ),
+  //         20.wb,
+  //         Text(
+  //           '您可能还喜欢',
+  //           style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rsp),
+  //         ),
+  //         20.wb,
+  //         Container(
+  //           width: 6.rw,
+  //           height: 6.rw,
+  //           decoration: BoxDecoration(
+  //               color: Color(0xFFC92219),
+  //               borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+  //         ),
+  //         Container(
+  //           width: 22.rw,
+  //           height: 2.rw,
+  //           decoration: BoxDecoration(color: Color(0xFFC92219)),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _buildLikeWidget() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.rw),
-      //height: _likeGoodsList?.length * 381.rw / 2,
-      width: double.infinity,
-      child: Column(
-        children: [
-          35.hb,
-          _buildLikeTitle(),
-          50.hb,
-          WaterfallFlow.builder(
-              primary: false,
-              shrinkWrap: true,
-              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: _likeGoodsList!.length,
-              gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              itemBuilder: (context, index) {
-                GoodsSimple goods = _likeGoodsList![index];
-
-                return MaterialButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                          arguments:
-                              CommodityDetailPage.setArguments(goods.id as int?));
-                    },
-                    child: BrandLikeGridItem(goods: goods));
-              }),
-          40.hb,
-          // Container(
-          //   alignment: Alignment.center,
-          //   child: Text(
-          //     '已经到底啦~',
-          //     style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
-          //   ),
-          // ),
-        ],
-      ),
-    );
-  }
+  // _buildLikeWidget() {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 10.rw),
+  //     //height: _likeGoodsList?.length * 381.rw / 2,
+  //     width: double.infinity,
+  //     child: Column(
+  //       children: [
+  //         35.hb,
+  //         _buildLikeTitle(),
+  //         50.hb,
+  //         WaterfallFlow.builder(
+  //             primary: false,
+  //             shrinkWrap: true,
+  //             padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
+  //             physics: NeverScrollableScrollPhysics(),
+  //             itemCount: _likeGoodsList!.length,
+  //             gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+  //               crossAxisCount: 2,
+  //               crossAxisSpacing: 10,
+  //               mainAxisSpacing: 10,
+  //             ),
+  //             itemBuilder: (context, index) {
+  //               GoodsSimple goods = _likeGoodsList![index];
+  //
+  //               return MaterialButton(
+  //                   padding: EdgeInsets.zero,
+  //                   onPressed: () {
+  //                     AppRouter.push(context, RouteName.COMMODITY_PAGE,
+  //                         arguments:
+  //                             CommodityDetailPage.setArguments(goods.id as int?));
+  //                   },
+  //                   child: BrandLikeGridItem(goods: goods));
+  //             }),
+  //         40.hb,
+  //         // Container(
+  //         //   alignment: Alignment.center,
+  //         //   child: Text(
+  //         //     '已经到底啦~',
+  //         //     style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
+  //         //   ),
+  //         // ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _buildList(BuildContext context) {
     return GestureDetector(
@@ -470,13 +463,13 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           FocusManager.instance.primaryFocus!.unfocus();
           _presenter!.getShoppingCartList(UserManager.instance!.user.info!.id);
 
-            int? userid;
+            //int? userid;
             if (UserManager.instance!.user.info!.id == null) {
-              userid = 0;
+              //userid = 0;
             } else {
-              userid = UserManager.instance!.user.info!.id;
+              //userid = UserManager.instance!.user.info!.id;
             }
-            _likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
+            //_likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
             // if (goodsSimpleListModel != null) {
             //   _likeGoodsList = goodsSimpleListModel.data;
             // }

@@ -1,6 +1,7 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -14,6 +15,7 @@ import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
@@ -660,7 +662,7 @@ class GoodsItemWidget extends StatelessWidget {
               GestureDetector(
                       onTap: () {
                         if (UserManager.instance!.user.info!.id == 0) {
-                          AppRouter.pushAndRemoveUntil(buildCtx!, RouteName.LOGIN);
+                          Get.offAll(() => LoginPage());
                           Toast.showError('请先登录...');
                           return;
                         }

@@ -169,7 +169,7 @@ class WholesaleFunc {
     return model;
   }
 
-  static Future<dynamic> UpdateShopCar(List<GoodsDTO> list) async {
+  static Future<dynamic> updateShopCar(List<GoodsDTO> list) async {
     final cancel = ReToast.loading();
     ResultData result =
         await HttpManager.post(APIV2.wholesaleAPI.updateShopCar, {
@@ -270,7 +270,7 @@ class WholesaleFunc {
 
   ///获取批发活动商品列表
   static Future<List<WholesaleGood>> getGoodsList(
-      int page, SortType type,{String? keyword,int? activity_id, int? categoryID}) async {
+      int page, SortType type,{String? keyword,int? activityId, int? categoryID}) async {
     String url = '';
     switch (type) {
       case SortType.comprehensive:
@@ -291,8 +291,8 @@ class WholesaleFunc {
       'page': page,
     };
 
-    if (activity_id!=null) {
-      params.putIfAbsent("activity_id", () => activity_id);
+    if (activityId!=null) {
+      params.putIfAbsent("activity_id", () => activityId);
     }
 
 

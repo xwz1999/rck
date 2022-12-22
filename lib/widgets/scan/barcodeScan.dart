@@ -38,7 +38,7 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
   final player = AudioPlayer();
   final picker = ImagePicker();
   ScanController controller = ScanController();
-  String _platformVersion = 'Unknown';
+  //String _platformVersion = 'Unknown';
 
   bool _openLight = false;
 
@@ -57,17 +57,17 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
       platformVersion = 'Failed to get platform version.';
     }
     if (!mounted) return;
-
     setState(() {
-      _platformVersion = platformVersion;
+      //_platformVersion = platformVersion;
     });
+    print(platformVersion);
   }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
     num width = MediaQuery.of(context).size.width;
     num height = MediaQuery.of(context).size.height;
-    Color lineColor = Color(0xffe53636).withAlpha(200);
+    //Color lineColor = Color(0xffe53636).withAlpha(200);
     return new Scaffold(
       body: Stack(
         alignment: Alignment.center,
@@ -137,7 +137,7 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
 
                         if (Platform.isIOS) {
                           var image =
-                              await picker.getImage(source: ImageSource.gallery);
+                              await picker.pickImage(source: ImageSource.gallery);
                           if (image == null) {
                             controller.toggleTorchMode();
                             return;
@@ -196,7 +196,7 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
                                   return;
                                 } else {
                                   var image =
-                                  await picker.getImage(source: ImageSource.gallery);
+                                  await picker.pickImage(source: ImageSource.gallery);
                                   if (image == null) {
                                     controller.toggleTorchMode();
                                     return;
@@ -229,7 +229,7 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
 
 
                           var image =
-                              await picker.getImage(source: ImageSource.gallery);
+                              await picker.pickImage(source: ImageSource.gallery);
                           if (image == null) {
                             controller.toggleTorchMode();
                             return;
@@ -321,10 +321,10 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
     // }
     ScanResultModel scanResultModel =
         ScanResultModel.fromMap(resultData.data['data']);
-    if (scanResultModel == null) {
-      pushToFailPage(code, model.msg, image);
-      return;
-    }
+    // if (scanResultModel == null) {
+    //   pushToFailPage(code, model.msg, image);
+    //   return;
+    // }
     Get.off(
       () => QRScarerResultPage(
         model: scanResultModel,

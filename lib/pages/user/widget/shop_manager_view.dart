@@ -101,7 +101,7 @@ class ShopManagerView extends StatelessWidget {
               //   path: R.ASSETS_SHOP_MY_AWARD_WEBP,
               //   show: showBottom,
               // ),
-            ]..removeWhere((element) => element == null),
+            ],
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
           ),

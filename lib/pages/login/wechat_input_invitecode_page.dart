@@ -1,11 +1,15 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
@@ -120,9 +124,9 @@ class _WeChatInputInviteCodePageState
     );
   }
 
-  _verifyLoginEnable() {
-    return _inviteCodeController!.text.length == 6;
-  }
+  // _verifyLoginEnable() {
+  //   return _inviteCodeController!.text.length == 6;
+  // }
 
   _inviteInputWidget() {
     String? bindString = getStore().state.openinstall!.code;
@@ -173,7 +177,7 @@ class _WeChatInputInviteCodePageState
         radius: BorderRadius.all(Radius.circular(3)),
         backgroundColor: Theme.of(context).primaryColor,
         onTap: () {
-          GSDialog.of(context).showLoadingDialog(context, "正在登录...");
+          ReToast.loading(text: '正在登录...');
           _weChatRegister(context);
         },
       ),
@@ -195,11 +199,11 @@ class _WeChatInputInviteCodePageState
     UserDao.weChatInvitation(
         widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], bindData,
         success: (data, code, msg) {
-      GSDialog.of(context).dismiss(context);
-      AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
+      BotToast.closeAllLoading();
+      Get.offAll(() => TabBarWidget());
       UserManager.updateUser(data!, getStore());
     }, failure: (code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       Toast.showError(msg);
     });
   }

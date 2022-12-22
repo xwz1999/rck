@@ -68,8 +68,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildContext(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       resizeToAvoidBottomInset: false,

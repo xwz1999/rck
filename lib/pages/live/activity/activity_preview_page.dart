@@ -1,6 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -15,7 +16,6 @@ import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/network_file_video.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
 import 'package:recook/pages/user/user_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_like_button.dart';
 
@@ -187,11 +187,14 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                             ExtendedWidgetSpan(
                               child: InkWell(
                                 onTap: () {
-                                  CRoute.push(
-                                      context,
-                                      TopicPage(
-                                          topicId: widget.model.topicId,
-                                          initAttention: false));
+                                  // CRoute.push(
+                                  //     context,
+                                  //     TopicPage(
+                                  //         topicId: widget.model.topicId,
+                                  //         initAttention: false));
+                                  Get.to(()=>TopicPage(
+                                      topicId: widget.model.topicId,
+                                      initAttention: false));
                                 },
                                 child: TextUtil.isEmpty(widget.model.topicName)
                                     ? SizedBox()
@@ -241,7 +244,8 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                             );
                           else {
                             showToast('未登陆，请先登陆');
-                            CRoute.push(context, UserPage());
+                            //CRoute.push(context, UserPage());
+                            Get.to(()=> UserPage());
                           }
                         },
                         child: Image.asset(
@@ -265,7 +269,8 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                             );
                           else {
                             showToast('未登陆，请先登陆');
-                            CRoute.push(context, UserPage());
+                            //CRoute.push(context, UserPage());
+                            Get.to(()=> UserPage());
                           }
                         },
                       ),

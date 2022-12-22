@@ -1,6 +1,8 @@
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/order_detail_model.dart';
@@ -8,6 +10,7 @@ import 'package:recook/models/order_list_model.dart';
 import 'package:recook/models/order_prepay_model.dart';
 import 'package:recook/pages/aftersale/choose_after_sale_type_page.dart';
 import 'package:recook/pages/home/classify/order_prepay_page.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/mvp/order_list_contact.dart';
 import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
 import 'package:recook/pages/user/order/order_detail_state.dart';
@@ -16,6 +19,7 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_floating_action_button_location.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 
@@ -65,7 +69,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         //
         // Get.to(()=>WholesaleCustomerPage(model: model,));
         if (UserManager.instance!.user.info!.id == 0) {
-          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Get.offAll(() => LoginPage());
           Toast.showError('请先登录...');
           return;
         }
@@ -290,7 +294,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
                 listener: (int index) {
                   Alert.dismiss(globalContext!);
                   if (index == 0) return;
-                  GSDialog.of(context).showLoadingDialog(globalContext!, "");
+                  ReToast.loading(text: '');
                   _presenter.cancelOrder(
                       UserManager.instance!.user.info!.id, orderDetail!.id);
                 },
@@ -327,15 +331,15 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   _deliverItems() {
     List<Widget> items = [];
-    bool canRefund = false, canReturn = false, canViewLogistics = false;
+    // bool canRefund = false, canReturn = false, canViewLogistics = false;
 
     for (Brands brand in orderDetail!.brands!) {
       for (Goods goods in brand.goods!) {
         if (goods.assType != 0) continue;
         if (goods.expressStatus == 0) {
-          canRefund = true;
+          //canRefund = true;
         } else if (goods.expressStatus == 1) {
-          canReturn = true;
+         // canReturn = true;
         }
       }
     }
@@ -463,7 +467,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
           items: ["确认"],
           listener: (index) {
             Alert.dismiss(context);
-            GSDialog.of(globalContext).showLoadingDialog(context, "");
+            ReToast.loading(text: '');
             _presenter.applyRefund(
                 UserManager.instance!.user.info!.id, [goods.goodsDetailId]);
           },
@@ -507,7 +511,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               Alert.dismiss(context);
             } else {
               Alert.dismiss(context);
-              GSDialog.of(globalContext).showLoadingDialog(context, "");
+              ReToast.loading(text: '');
               _presenter.confirmReceipt(
                   UserManager.instance!.user.info!.id, orderDetail!.id);
             }
@@ -515,37 +519,37 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         ));
   }
 
-  _refundGoods() {
-    List<Goods> goodsList = [];
-    orderDetail!.brands!.forEach((brands) {
-      brands.goods!.forEach((goods) {
-        goods.selected = false;
-        if (goods.expressStatus == 0 && goods.assType == 0) {
-          goodsList.add(goods);
-        }
-      });
-    });
-    return goodsList;
-  }
+  // _refundGoods() {
+  //   List<Goods> goodsList = [];
+  //   orderDetail!.brands!.forEach((brands) {
+  //     brands.goods!.forEach((goods) {
+  //       goods.selected = false;
+  //       if (goods.expressStatus == 0 && goods.assType == 0) {
+  //         goodsList.add(goods);
+  //       }
+  //     });
+  //   });
+  //   return goodsList;
+  // }
 
-  _returnGoods() {
-    List<Goods> goodsList = [];
-    orderDetail!.brands!.forEach((brands) {
-      brands.goods!.forEach((goods) {
-        goods.selected = false;
-        if (goods.expressStatus == 1 &&
-            goods.assType == 0 &&
-            goods.isClosed != 1) {
-          goodsList.add(goods);
-        }
-      });
-    });
-    return goodsList;
-  }
+  // _returnGoods() {
+  //   List<Goods> goodsList = [];
+  //   orderDetail!.brands!.forEach((brands) {
+  //     brands.goods!.forEach((goods) {
+  //       goods.selected = false;
+  //       if (goods.expressStatus == 1 &&
+  //           goods.assType == 0 &&
+  //           goods.isClosed != 1) {
+  //         goodsList.add(goods);
+  //       }
+  //     });
+  //   });
+  //   return goodsList;
+  // }
 
   @override
   cancelOrderSuccess(OrderModel? order) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     Toast.showInfo("已取消订单");
     Future.delayed(Duration(milliseconds: 300), () {
       Navigator.pop(globalContext!, 2);
@@ -554,7 +558,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   @override
   failure(String? msg) {
-    GSDialog.of(globalContext).showError(globalContext!, msg);
+    ReToast.err(text: msg);
   }
 
   @override
@@ -567,7 +571,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   @override
   refundSuccess(msg) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     Toast.showInfo(msg);
     _presenter.getOrderDetail(
         UserManager.instance!.user.info!.id, orderDetail!.id);
@@ -581,7 +585,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   @override
   applyInvoiceSuccess() {
-    GSDialog.of(globalContext).showSuccess(globalContext!, "申请成功");
+    ReToast.success(text:'申请成功' );
     _presenter.getOrderDetail(
         UserManager.instance!.user.info!.id, orderDetail!.id);
   }
@@ -593,11 +597,8 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   @override
   confirmReceiptSuccess(model) {
-    GSDialog.of(context).dismiss(globalContext!);
-    GSDialog.of(globalContext).showSuccess(globalContext!, "确认成功").then((value) {
-      // UserLevelTool.showUpgradeWidget(UserRoleUpgradeModel(data:UpgradeModel(upGrade: 1, roleLevel: 400, userLevel: 30)), globalContext, getStore());
-      // UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
-    });
+    BotToast.closeAllLoading();
+    ReToast.success(text:'确认成功' );
     _presenter.getOrderDetail(
         UserManager.instance!.user.info!.id, orderDetail!.id);
   }

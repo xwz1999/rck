@@ -17,7 +17,7 @@ class UserPartnerCard extends StatelessWidget {
   final int? count;
   final int? roleLevel;
   final num? amount;
-  final int? order_count;
+  final int? orderCount;
 
   //final UserIncome model;
   const UserPartnerCard({
@@ -31,7 +31,7 @@ class UserPartnerCard extends StatelessWidget {
     this.count,
     this.roleLevel,
     this.amount,
-    this.order_count,
+    this.orderCount,
   }) : super(key: key);
   UserRoleLevel get roleLevelEnum => UserLevelTool.roleLevelEnum(roleLevel);
 
@@ -86,10 +86,10 @@ class UserPartnerCard extends StatelessWidget {
   }
 
   String get orderValue {
-    if (order_count == -1)
+    if (orderCount == -1)
       return '—';
     else
-      return (order_count ?? 0).toString();
+      return (orderCount ?? 0).toString();
   }
 
   @override

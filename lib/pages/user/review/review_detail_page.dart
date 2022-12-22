@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
@@ -37,7 +38,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: AppBar(
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: RecookBackButton(),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -12,13 +13,13 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/media_model.dart';
 import 'package:recook/models/order_detail_model.dart';
-import 'package:recook/pages/user/model/return_reason_model.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
@@ -42,7 +43,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
   //TODO 可能需要不止一个TextField，此页面只有单个TextEditingController
   TextEditingController? _ruiCoinController;
   List<MediaModel> _imageFiles = [];
-  ReasonModel? _selectReasonModel;
+  //ReasonModel? _selectReasonModel;
 
   @override
   void initState() {
@@ -322,17 +323,17 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
       return;
     }
     try {
-      num rui = num.parse(_ruiCoinController!.text);
+      //num rui = num.parse(_ruiCoinController!.text);
     } catch (e) {
       showError("请输入正确的需要返还的瑞币");
       return;
     }
-    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
+    ReToast.loading(text: '');
     await _uploadImages();
     String images = "";
     for (MediaModel media in _imageFiles) {
       if (TextUtils.isEmpty(media.result!.url)) {
-        GSDialog.of(globalContext).dismiss(globalContext!);
+        BotToast.closeAllLoading();
         showError("第${_imageFiles.indexOf(media) + 1}图片${media.result!.msg}");
         return;
       }
@@ -352,14 +353,14 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
     //   "reasonId": _selectReasonModel.id,
     //   "reasonImg": images,
     // });
-    GSDialog.of(globalContext).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     if (!resultData.result) {
-      GSDialog.of(globalContext).showError(globalContext!, resultData.msg);
+      ReToast.err(text:  resultData.msg);
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      GSDialog.of(globalContext).showError(globalContext!, model.msg);
+      ReToast.err(text:  model.msg);
       return;
     }
     Toast.showInfo("申请退货成功，请等待商家审核...");
@@ -413,9 +414,9 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
 
-            if (entitys == null) {
-              return;
-            }
+            // if (entitys == null) {
+            //   return;
+            // }
 
             for (var element in entitys) {
               File? file = await element!.file;

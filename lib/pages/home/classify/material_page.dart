@@ -28,6 +28,7 @@ import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pic_swiper.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class MaterialPage extends StatefulWidget {
@@ -142,7 +143,7 @@ class _MaterialPageState extends State<MaterialPage>
           }, (success) {
             BotToast.closeAllLoading();
             success
-                ? GSDialog.of(context).showSuccess(context, "保存完成!")
+                ? ReToast.success(text:"保存完成!" )
                 : Alert.show(
               context,
               NormalContentDialog(
@@ -156,7 +157,7 @@ class _MaterialPageState extends State<MaterialPage>
                 deleteListener: () async{
 
                   Alert.dismiss(context);
-                  bool isOpened = await openAppSettings();
+                  await openAppSettings();
                 },
                 type: NormalTextDialogType.delete,
               ),
@@ -248,7 +249,7 @@ class _MaterialPageState extends State<MaterialPage>
             deleteItem: "确认",
             deleteListener: () async {
               Alert.dismiss(context);
-              bool isOpened = await openAppSettings();
+              await openAppSettings();
             },
             type: NormalTextDialogType.delete,
           ),
@@ -279,7 +280,7 @@ class _MaterialPageState extends State<MaterialPage>
   //           ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
   //             DPrint.printf("保存好了---$index");
   //           }, (success) {
-  //             GSDialog.of(context).dismiss(context);
+  //             BotToast.closeAllLoading();
   //             success
   //                 ? GSDialog.of(context).showSuccess(context, "保存完成")
   //                 : GSDialog.of(context).showError(context, "保存失败");

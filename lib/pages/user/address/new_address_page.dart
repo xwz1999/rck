@@ -9,7 +9,9 @@
 
 import 'dart:convert';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -23,6 +25,7 @@ import 'package:recook/widgets/bottom_sheet/address_selector.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/edit_tile.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class NewAddressPage extends StatefulWidget {
@@ -167,9 +170,9 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
     return GestureDetector(
       onTap: () {
         if (_addressModel == null) {
-          GSDialog.of(context).showLoadingDialog(context, "");
+          ReToast.loading(text: '');
           _getAddress().then((success) {
-            GSDialog.of(context).dismiss(context);
+            BotToast.closeAllLoading();
             if (success) {
               _selectAddress(context);
             }
@@ -342,7 +345,8 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
       Toast.showError(model.msg);
       return;
     }
-    Navigator.maybePop<dynamic>(context, _address);
+    //Navigator.maybePop<dynamic>(context, _address);
+    Get.back(result: _address);
   }
 
   Future<bool> _getAddress() async {

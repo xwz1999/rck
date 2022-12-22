@@ -1,19 +1,14 @@
-/*
- * ====================================================
- * package   : base
- * author    : Created by nansi.
- * time      : 2019/5/5  3:46 PM 
- * remark    : 
- * ====================================================
- */
+
 
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/redux/recook_state.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:redux/redux.dart';
 
 abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
@@ -55,7 +50,7 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
   }
 
   Color? getCurrentThemeColor() {
-    return getStore().state.themeData!.appBarTheme.color;
+    return getStore().state.themeData!.appBarTheme.backgroundColor;
   }
 
   Color? getCurrentAppItemColor() {
@@ -148,22 +143,24 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
     return Navigator.pop(globalContext!, result);
   }
 
-  Future<Null> showError(String error,
+  Future<Function> showError(String error,
       {Duration duration = const Duration(milliseconds: 1000)}) async {
-    return GSDialog.of(globalContext)
-        .showError(globalContext!, error, duration: duration);
+    return ReToast.err(text: error);
+    // return GSDialog.of(globalContext)
+    //     .showError(globalContext!, error, duration: duration);
   }
 
-  Future<Null> showSuccess(String success) async {
-    return GSDialog.of(globalContext).showSuccess(globalContext!, success);
+  Future<Function> showSuccess(String success) async {
+    return ReToast.success(text: success);
   }
 
   showLoading(String loading) {
-    GSDialog.of(globalContext).showLoadingDialog(globalContext!, loading);
+    ReToast.loading(text: loading);
+   // GSDialog.of(globalContext).showLoadingDialog(globalContext!, loading);
   }
 
   dismissLoading() {
-    GSDialog.of(globalContext).dismiss(globalContext!);
+    BotToast.closeAllLoading();
   }
 
   @override

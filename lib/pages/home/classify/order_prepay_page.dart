@@ -1,5 +1,6 @@
 
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,7 +72,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   bool _isPifa = false;
 
   /// 用于辅助判断 app 从后台进入前台时，是否需要向后台验证订单状态
-  bool _clickPay = false;
+ // bool _clickPay = false;
   BottomKeyBoardController _bottomKeyBoardController =
       BottomKeyBoardController();
 //  @override
@@ -154,7 +155,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     if (state == AppLifecycleState.resumed && !_lifecycleLock) {
       DPrint.printf("app 进入前台了");
       _verifyPayStatus() ;
-      _clickPay = false;
+      //_clickPay = false;
     }
   }
 
@@ -372,7 +373,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       return;
     }
 
-    _clickPay = true;
+    //_clickPay = true;
     switch (_defaultPayIndex) {
       case 0:
         // _recookPay();
@@ -390,49 +391,51 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     }
   }
 
-  _zeroPay() async {
-    HttpResultModel<BaseModel?> resultModel = await _presenter
-        .createZeroPayOrder(UserManager.instance!.user.info!.id, _model!.data!.id);
-    if (!resultModel.result) {
-      showError(resultModel.msg??'');
-      return;
-    }
-    _updateUserBrief();
-    showSuccess("订单支付成功").then((value) {
-      AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
-          arguments: OrderCenterPage.setArguments(2));
-    });
-  }
+  // _zeroPay() async {
+  //   HttpResultModel<BaseModel?> resultModel = await _presenter
+  //       .createZeroPayOrder(UserManager.instance!.user.info!.id, _model!.data!.id);
+  //   if (!resultModel.result) {
+  //     showError(resultModel.msg??'');
+  //     return;
+  //   }
+  //   _updateUserBrief();
+  //   showSuccess("订单支付成功").then((value) {
+  //     AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
+  //         arguments: OrderCenterPage.setArguments(2));
+  //   });
+  // }
 
   _aliPay(BuildContext context) async {
     HttpResultModel<AlipayOrderModel?> resultModel = await _presenter
         .createAliPayOrder(UserManager.instance!.user.info!.id, _model!.data!.id);
     dismissLoading();
     if (!resultModel.result) {
-      GSDialog.of(context).showError(context, resultModel.msg);
+      //GSDialog.of(context).showError(context, resultModel.msg);
+      ReToast.err(text: resultModel.msg);
       return;
     }
     AliPayUtils.callAliPay(resultModel.data!.data!.orderString);
   }
 
-  _aliPayLifang(BuildContext context) async {
-    HttpResultModel<AlipayOrderModel?> resultModel =
-        await _presenter.createAliPayOrderLifang(
-            UserManager.instance!.user.info!.id, _model!.data!.id);
-    dismissLoading();
-    if (!resultModel.result) {
-      GSDialog.of(context).showError(context, resultModel.msg);
-      return;
-    }
-    AliPayUtils.callAliPay(resultModel.data!.data!.orderString);
-  }
+  // _aliPayLifang(BuildContext context) async {
+  //   HttpResultModel<AlipayOrderModel?> resultModel =
+  //       await _presenter.createAliPayOrderLifang(
+  //           UserManager.instance!.user.info!.id, _model!.data!.id);
+  //   dismissLoading();
+  //   if (!resultModel.result) {
+  //     GSDialog.of(context).showError(context, resultModel.msg);
+  //     return;
+  //   }
+  //   AliPayUtils.callAliPay(resultModel.data!.data!.orderString);
+  // }
 
   _weChatPay(BuildContext context) async {
     HttpResultModel<PayInfoModel?> resultModel = await _presenter
         .createWeChatOrder(UserManager.instance!.user.info!.id, _model!.data!.id);
-    GSDialog.of(context).dismiss(context);
+    BotToast.closeAllLoading();
     if (!resultModel.result) {
-      GSDialog.of(context).showError(context, resultModel.msg);
+      ReToast.err(text: resultModel.msg);
+
       return;
     }
     PayInfoModel wxPayModel = resultModel.data!;
@@ -447,49 +450,49 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         listener: (WXPayResult result) {});
   }
 
-  _weChatPayLifang(BuildContext context) async {
-    HttpResultModel<PayInfoModel?> resultModel =
-        await _presenter.createWeChatOrderLifang(
-            UserManager.instance!.user.info!.id, _model!.data!.id);
-    GSDialog.of(context).dismiss(context);
-    if (!resultModel.result) {
-      GSDialog.of(context).showError(context, resultModel.msg);
-      return;
-    }
-    PayInfoModel wxPayModel = resultModel.data!;
-    WeChatUtils.pay(
-        appId: wxPayModel.payInfo!.appid,
-        partnerId: wxPayModel.payInfo!.partnerid,
-        prepayId: wxPayModel.payInfo!.prepayid,
-        packageValue: wxPayModel.payInfo!.package,
-        nonceStr: wxPayModel.payInfo!.noncestr,
-        timeStamp: int.parse(wxPayModel.payInfo!.timestamp!),
-        sign: wxPayModel.payInfo!.sign,
-        listener: (WXPayResult result) {});
-    // String msg = await PassagerFunc.airOrderPayLifang(
-    //     _payNeedModel.lfOrderId,
-    //     _payNeedModel.seatCode,
-    //     _payNeedModel.passagers,
-    //     _payNeedModel.itemId,
-    //     _payNeedModel.contactName,
-    //     _payNeedModel.contactTel,
-    //     _payNeedModel.date,
-    //     _payNeedModel.from,
-    //     _payNeedModel.to,
-    //     _payNeedModel.companyCode,
-    //     _payNeedModel.flightNo);
-    // if (msg == 'ok') {
-    //   ReToast.success(text: '购票成功');
-    //   Navigator.pop(context);
-    //   Navigator.pop(context);
-    //   Navigator.pop(context);
-    // } else {
-    //   ReToast.success(text: '购票失败');
-    //   Navigator.pop(context);
-    //   Navigator.pop(context);
-    //   Navigator.pop(context);
-    // }
-  }
+  // _weChatPayLifang(BuildContext context) async {
+  //   HttpResultModel<PayInfoModel?> resultModel =
+  //       await _presenter.createWeChatOrderLifang(
+  //           UserManager.instance!.user.info!.id, _model!.data!.id);
+  //   BotToast.closeAllLoading();
+  //   if (!resultModel.result) {
+  //     GSDialog.of(context).showError(context, resultModel.msg);
+  //     return;
+  //   }
+  //   PayInfoModel wxPayModel = resultModel.data!;
+  //   WeChatUtils.pay(
+  //       appId: wxPayModel.payInfo!.appid,
+  //       partnerId: wxPayModel.payInfo!.partnerid,
+  //       prepayId: wxPayModel.payInfo!.prepayid,
+  //       packageValue: wxPayModel.payInfo!.package,
+  //       nonceStr: wxPayModel.payInfo!.noncestr,
+  //       timeStamp: int.parse(wxPayModel.payInfo!.timestamp!),
+  //       sign: wxPayModel.payInfo!.sign,
+  //       listener: (WXPayResult result) {});
+  //   // String msg = await PassagerFunc.airOrderPayLifang(
+  //   //     _payNeedModel.lfOrderId,
+  //   //     _payNeedModel.seatCode,
+  //   //     _payNeedModel.passagers,
+  //   //     _payNeedModel.itemId,
+  //   //     _payNeedModel.contactName,
+  //   //     _payNeedModel.contactTel,
+  //   //     _payNeedModel.date,
+  //   //     _payNeedModel.from,
+  //   //     _payNeedModel.to,
+  //   //     _payNeedModel.companyCode,
+  //   //     _payNeedModel.flightNo);
+  //   // if (msg == 'ok') {
+  //   //   ReToast.success(text: '购票成功');
+  //   //   Navigator.pop(context);
+  //   //   Navigator.pop(context);
+  //   //   Navigator.pop(context);
+  //   // } else {
+  //   //   ReToast.success(text: '购票失败');
+  //   //   Navigator.pop(context);
+  //   //   Navigator.pop(context);
+  //   //   Navigator.pop(context);
+  //   // }
+  // }
 
   _unionPay(BuildContext context) async {
     ResultData resultData =
@@ -507,21 +510,21 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     }
   }
 
-  _unionPayLifang(BuildContext context) async {
-    ResultData resultData = await HttpManager.post(
-        "/v2/app/liFang_ticketing/order_pay/pay/unionpay_order", {
-      "orderId": _model!.data!.id,
-      "userId": UserManager.instance!.user.info!.id,
-    });
-    dismissLoading();
-    if (!TextUtil.isEmpty(resultData.data['data']['tn'] ?? null)) {
-      // FlutterUnionPay.pay(
-      //   tn: resultData?.data['data']['tn'],
-      //   mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
-      //   scheme: "RecookUnionPay",
-      // );
-    }
-  }
+  // _unionPayLifang(BuildContext context) async {
+  //   ResultData resultData = await HttpManager.post(
+  //       "/v2/app/liFang_ticketing/order_pay/pay/unionpay_order", {
+  //     "orderId": _model!.data!.id,
+  //     "userId": UserManager.instance!.user.info!.id,
+  //   });
+  //   dismissLoading();
+  //   if (!TextUtil.isEmpty(resultData.data['data']['tn'] ?? null)) {
+  //     // FlutterUnionPay.pay(
+  //     //   tn: resultData?.data['data']['tn'],
+  //     //   mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
+  //     //   scheme: "RecookUnionPay",
+  //     // );
+  //   }
+  // }
 
   // 密码支付
   _submitPassword() {
@@ -604,35 +607,35 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     });
   }
 
-  _recookPay(password) async {
-    showLoading("");
-    HttpResultModel<BaseModel?> resultModel =
-        await _presenter.createRecookPayOrder(
-            UserManager.instance!.user.info!.id, _model!.data!.id, password);
-    dismissLoading();
-    if (!resultModel.result) {
-      _bottomKeyBoardController.clearPassWord();
-      showError(resultModel.msg??'', duration: Duration(milliseconds: 2000));
-      return;
-    }
-    UserManager.instance!.refreshShoppingCart.value = true;
-    Navigator.pop(context);
-    _updateUserBrief();
-    showSuccess("订单支付成功").then((value) {
-      if(_isPifa){
-        Get.off(()=>WholesaleOrderHomePage(initialIndex: 2,));
-        //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
-      }else{
-        if(_goToOrder!)
-        AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
-            arguments: OrderCenterPage.setArguments(2));
-        else{
-          Navigator.pop(context);
-        }
-      }
-
-    });
-  }
+  // _recookPay(password) async {
+  //   showLoading("");
+  //   HttpResultModel<BaseModel?> resultModel =
+  //       await _presenter.createRecookPayOrder(
+  //           UserManager.instance!.user.info!.id, _model!.data!.id, password);
+  //   dismissLoading();
+  //   if (!resultModel.result) {
+  //     _bottomKeyBoardController.clearPassWord();
+  //     showError(resultModel.msg??'', duration: Duration(milliseconds: 2000));
+  //     return;
+  //   }
+  //   UserManager.instance!.refreshShoppingCart.value = true;
+  //   Navigator.pop(context);
+  //   _updateUserBrief();
+  //   showSuccess("订单支付成功").then((value) {
+  //     if(_isPifa){
+  //       Get.off(()=>WholesaleOrderHomePage(initialIndex: 2,));
+  //       //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
+  //     }else{
+  //       if(_goToOrder!)
+  //       AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
+  //           arguments: OrderCenterPage.setArguments(2));
+  //       else{
+  //         Navigator.pop(context);
+  //       }
+  //     }
+  //
+  //   });
+  // }
 
   _recookPayDeposit(password) async {
     showLoading("");
@@ -668,20 +671,18 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
 
   _verifyPayStatus() async {
-    GSDialog.of(_scaffoldKey.currentContext)
-        .showLoadingDialog(_scaffoldKey.currentContext!, "正在验证订单...");
+    final cancel =  ReToast.loading(text: "正在验证订单...");
+
 
     await Future.delayed(Duration(seconds: 1));
 
     HttpResultModel<PayResult?> resultModel =
         await _presenter.verifyOrderPayStatus(_model!.data!.id);
 
-    GSDialog.of(_scaffoldKey.currentContext)
-        .dismiss(_scaffoldKey.currentContext!);
+    cancel();
 
     if (!resultModel.result) {
-      GSDialog.of(_scaffoldKey.currentContext)
-          .showError(_scaffoldKey.currentContext!, resultModel.msg);
+      ReToast.err(text: resultModel.msg);
       return;
     }
 

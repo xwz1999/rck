@@ -28,6 +28,7 @@ import 'package:recook/pages/home/items/item_user_comment.dart';
 import 'package:recook/pages/home/model/address_model.dart';
 import 'package:recook/pages/home/widget/good_price_view.dart';
 import 'package:recook/pages/home/widget/goods_image_page_view.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
 import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
@@ -37,16 +38,13 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/bottom_sheet/address_selector.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/empty_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/selected_list.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
-import 'commodity_detail_page.dart';
 import 'evaluation_list_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
@@ -169,6 +167,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         return;
       }
       _model = model;
+      if(mounted)
       setState(() {});
     });
     _shoppingCartModelImpl = ShoppingCartModelImpl();
@@ -218,6 +217,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(Assets.totop.path,width: 30.rw,height: 30.rw,color: Colors.white,),
+            Column(
+              children: [
+
+              ],
+            )
           ],
         ),
       ),
@@ -498,7 +502,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   deleteItem: "确认",
                   deleteListener: () async {
                     Alert.dismiss(context);
-                    bool isOpened = await openAppSettings();
+                    await openAppSettings();
                   },
                   type: NormalTextDialogType.delete,
                 ),
@@ -628,7 +632,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             onTap: () async {
               if (UserManager.instance!.user.info!.id == 0) {
                 UserManager.instance!.goodsId = widget.goodsDetail!.data!.id!;
-                AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                Get.offAll(() => LoginPage());
                 Toast.showError('请先登录...');
                 return;
               }
@@ -794,7 +798,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       onTap: () async {
         if (UserManager.instance!.user.info!.id == 0) {
           UserManager.instance!.goodsId = widget.goodsDetail!.data!.id!;
-          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Get.offAll(() => LoginPage());
           Toast.showError('请先登录...');
           return;
         }
@@ -1203,33 +1207,33 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         AppPaths.path_province_city_json, json.encode(res.data));
     return true;
   }
-
-  Future<bool> _getCityAddress() async {
-    FileOperationResult result =
-        await FileUtils.readJSON(AppPaths.path_province_city_json);
-    if (result.success &&
-        result.data != null &&
-        result.data != [] &&
-        result.data.toString().length > 0) {
-      _cityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
-      return true;
-    }
-    ResultData res = await AddressModelImpl().fetchWholeProvince();
-    if (!res.result) {
-      Toast.showError(res.msg);
-      return false;
-    }
-    _cityModel = ProvinceCityModel.fromJson(res.data);
-    FileUtils.writeJSON(
-        AppPaths.path_province_city_json, json.encode(res.data));
-    return true;
-  }
+  //
+  // Future<bool> _getCityAddress() async {
+  //   FileOperationResult result =
+  //       await FileUtils.readJSON(AppPaths.path_province_city_json);
+  //   if (result.success &&
+  //       result.data != null &&
+  //       result.data != [] &&
+  //       result.data.toString().length > 0) {
+  //     _cityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
+  //     return true;
+  //   }
+  //   ResultData res = await AddressModelImpl().fetchWholeProvince();
+  //   if (!res.result) {
+  //     Toast.showError(res.msg);
+  //     return false;
+  //   }
+  //   _cityModel = ProvinceCityModel.fromJson(res.data);
+  //   FileUtils.writeJSON(
+  //       AppPaths.path_province_city_json, json.encode(res.data));
+  //   return true;
+  // }
 
   Future<List<AddressDefaultModel>?> _getDefaultAddress() async {
     ResultData res = await HttpManager.post(UserApi.address_list, {
       "userId": UserManager.instance!.user.info!.id,
     });
-    if (res != null) {
+
       if (res.data != null) {
         print(res.data);
         if (res.data["data"] != null) {
@@ -1241,8 +1245,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           return null;
       } else
         return null;
-    } else
-      return null;
+
   }
 
   _selectAddress(BuildContext context) {
@@ -1467,82 +1470,82 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     );
   }
 
-  List _coupons() {
-    List<Widget> coupons = [
-      Text(
-        "领券",
-        style: AppTextStyle.generate(13 * 2.sp,
-            color: Color(0xff828282), fontWeight: FontWeight.w300),
-      ),
-      Container(
-        width: 20,
-      ),
-    ];
-
-    if (widget.goodsDetail!.data!.coupons!.length == 0 ||
-        (widget.goodsDetail!.data!.secKill != null
-            ? widget.goodsDetail!.data!.secKill!.secKill == 1
-            : false)) {
-      //秒杀中的商品都没有优惠券
-      coupons.add(
-        Text(
-          "暂无优惠劵",
-          maxLines: 1,
-          style: AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
-          // style: AppTextStyle.generate(
-          //   11*2.sp,
-          //   color: Colors.grey[700],
-          // ),
-        ),
-      );
-      return coupons;
-    }
-
-    for (int i = 0; i < widget.goodsDetail!.data!.coupons!.length; i++) {
-      if (i > 2) break;
-      Coupons coupon = widget.goodsDetail!.data!.coupons![i];
-
-      coupons.add(Container(
-        height: 26,
-        margin: EdgeInsets.only(right: 10),
-        padding: EdgeInsets.symmetric(vertical: 1.5 * 2.w),
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Positioned(
-              left: 0,
-              top: 0,
-              right: 0,
-              bottom: 0,
-              child: Image.asset(
-                'assets/goods_page_coupon.png',
-                fit: BoxFit.fill,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 6),
-              child: Text(
-                coupon.name!,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.generate(12 * 2.sp, color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ));
-    }
-
-    coupons.addAll([
-      Expanded(child: Container()),
-      Icon(
-        AppIcons.icon_next,
-        color: Color(0xFF333333),
-        size: 13 * 2.sp,
-      )
-    ]);
-    return coupons;
-  }
+  // List _coupons() {
+  //   List<Widget> coupons = [
+  //     Text(
+  //       "领券",
+  //       style: AppTextStyle.generate(13 * 2.sp,
+  //           color: Color(0xff828282), fontWeight: FontWeight.w300),
+  //     ),
+  //     Container(
+  //       width: 20,
+  //     ),
+  //   ];
+  //
+  //   if (widget.goodsDetail!.data!.coupons!.length == 0 ||
+  //       (widget.goodsDetail!.data!.secKill != null
+  //           ? widget.goodsDetail!.data!.secKill!.secKill == 1
+  //           : false)) {
+  //     //秒杀中的商品都没有优惠券
+  //     coupons.add(
+  //       Text(
+  //         "暂无优惠劵",
+  //         maxLines: 1,
+  //         style: AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
+  //         // style: AppTextStyle.generate(
+  //         //   11*2.sp,
+  //         //   color: Colors.grey[700],
+  //         // ),
+  //       ),
+  //     );
+  //     return coupons;
+  //   }
+  //
+  //   for (int i = 0; i < widget.goodsDetail!.data!.coupons!.length; i++) {
+  //     if (i > 2) break;
+  //     Coupons coupon = widget.goodsDetail!.data!.coupons![i];
+  //
+  //     coupons.add(Container(
+  //       height: 26,
+  //       margin: EdgeInsets.only(right: 10),
+  //       padding: EdgeInsets.symmetric(vertical: 1.5 * 2.w),
+  //       child: Stack(
+  //         alignment: Alignment.center,
+  //         children: <Widget>[
+  //           Positioned(
+  //             left: 0,
+  //             top: 0,
+  //             right: 0,
+  //             bottom: 0,
+  //             child: Image.asset(
+  //               'assets/goods_page_coupon.png',
+  //               fit: BoxFit.fill,
+  //             ),
+  //           ),
+  //           Container(
+  //             margin: EdgeInsets.symmetric(horizontal: 6),
+  //             child: Text(
+  //               coupon.name!,
+  //               maxLines: 1,
+  //               overflow: TextOverflow.ellipsis,
+  //               style: AppTextStyle.generate(12 * 2.sp, color: Colors.white),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ));
+  //   }
+  //
+  //   coupons.addAll([
+  //     Expanded(child: Container()),
+  //     Icon(
+  //       AppIcons.icon_next,
+  //       color: Color(0xFF333333),
+  //       size: 13 * 2.sp,
+  //     )
+  //   ]);
+  //   return coupons;
+  // }
 
   _userEvaluation() {
     return Column(
@@ -1609,125 +1612,125 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
 
   //大家都在买 推荐商品
-  _recommendsWidget() {
-    return Container(
-      height: 200.rw,
-      // padding: EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            height: 50,
-            child: Text('为你推荐',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16 * 2.sp)),
-            alignment: Alignment.centerLeft,
-          ),
-          Expanded(
-            child: ListView.builder(
-              physics: AlwaysScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.goodsDetail!.data!.recommends == null
-                  ? 0
-                  : widget.goodsDetail!.data!.recommends!.length,
-              itemBuilder: (_, index) {
-                Recommends recommends =
-                    widget.goodsDetail!.data!.recommends![index];
-                return GestureDetector(
-                  onTap: () {
-                    AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                        arguments: CommodityDetailPage.setArguments(
-                            recommends.goodsId));
-                  },
-                  child: _recommendsItemWidget(recommends),
-                );
-              },
-            ),
-          ),
-          Container(
-            height: 13,
-            color: AppColor.frenchColor,
-          ),
-        ],
-      ),
-    );
-  }
+  // _recommendsWidget() {
+  //   return Container(
+  //     height: 200.rw,
+  //     // padding: EdgeInsets.only(left: 10, right: 10),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       children: <Widget>[
+  //         Container(
+  //           padding: EdgeInsets.only(left: 10),
+  //           height: 50,
+  //           child: Text('为你推荐',
+  //               style: TextStyle(
+  //                   color: Colors.black,
+  //                   fontWeight: FontWeight.w500,
+  //                   fontSize: 16 * 2.sp)),
+  //           alignment: Alignment.centerLeft,
+  //         ),
+  //         Expanded(
+  //           child: ListView.builder(
+  //             physics: AlwaysScrollableScrollPhysics(),
+  //             scrollDirection: Axis.horizontal,
+  //             itemCount: widget.goodsDetail!.data!.recommends == null
+  //                 ? 0
+  //                 : widget.goodsDetail!.data!.recommends!.length,
+  //             itemBuilder: (_, index) {
+  //               Recommends recommends =
+  //                   widget.goodsDetail!.data!.recommends![index];
+  //               return GestureDetector(
+  //                 onTap: () {
+  //                   AppRouter.push(context, RouteName.COMMODITY_PAGE,
+  //                       arguments: CommodityDetailPage.setArguments(
+  //                           recommends.goodsId));
+  //                 },
+  //                 child: _recommendsItemWidget(recommends),
+  //               );
+  //             },
+  //           ),
+  //         ),
+  //         Container(
+  //           height: 13,
+  //           color: AppColor.frenchColor,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _recommendsItemWidget(Recommends recommends) {
-    return Container(
-      margin: EdgeInsets.only(left: 10, bottom: 10.rw),
-      width: 80.rw,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: 80.rw,
-            height: 80.rw,
-            child: _img(recommends.mainPhotoUrl),
-          ),
-          Container(
-            height: 3,
-          ),
-          Expanded(
-              child: Container(
-            alignment: Alignment.topLeft,
-            child: Text(
-              recommends.goodsName!,
-              maxLines: 2,
-              style: TextStyle(color: Color(0xff828282), fontSize: 10.rsp),
-            ),
-          )),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 16,
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '￥',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12 * 2.sp),
-                    ),
-                  ),
-                  Text(
-                    '${recommends.price}',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12 * 2.sp),
-                  ),
-                ],
-              )),
-        ],
-      ),
-    );
-  }
+  // _recommendsItemWidget(Recommends recommends) {
+  //   return Container(
+  //     margin: EdgeInsets.only(left: 10, bottom: 10.rw),
+  //     width: 80.rw,
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Container(
+  //           width: 80.rw,
+  //           height: 80.rw,
+  //           child: _img(recommends.mainPhotoUrl),
+  //         ),
+  //         Container(
+  //           height: 3,
+  //         ),
+  //         Expanded(
+  //             child: Container(
+  //           alignment: Alignment.topLeft,
+  //           child: Text(
+  //             recommends.goodsName!,
+  //             maxLines: 2,
+  //             style: TextStyle(color: Color(0xff828282), fontSize: 10.rsp),
+  //           ),
+  //         )),
+  //         Container(
+  //             alignment: Alignment.centerLeft,
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: <Widget>[
+  //                 Container(
+  //                   height: 16,
+  //                   alignment: Alignment.bottomLeft,
+  //                   child: Text(
+  //                     '￥',
+  //                     style: TextStyle(
+  //                         color: Colors.black,
+  //                         fontWeight: FontWeight.w500,
+  //                         fontSize: 12 * 2.sp),
+  //                   ),
+  //                 ),
+  //                 Text(
+  //                   '${recommends.price}',
+  //                   style: TextStyle(
+  //                       color: Colors.black,
+  //                       fontWeight: FontWeight.w500,
+  //                       fontSize: 12 * 2.sp),
+  //                 ),
+  //               ],
+  //             )),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _img(imageUrl) {
-    double cir = rSize(8);
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(cir), topRight: Radius.circular(cir)),
-      child: AspectRatio(
-        aspectRatio: 2.5,
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
-          child: CustomCacheImage(
-            fit: BoxFit.cover,
-            imageUrl: Api.getResizeImgUrl(
-                imageUrl, DeviceInfo.screenWidth!.toInt() * 2),
-          ),
-        ),
-      ),
-    );
-  }
+  // _img(imageUrl) {
+  //   double cir = rSize(8);
+  //   return ClipRRect(
+  //     borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(cir), topRight: Radius.circular(cir)),
+  //     child: AspectRatio(
+  //       aspectRatio: 2.5,
+  //       child: ClipRRect(
+  //         borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
+  //         child: CustomCacheImage(
+  //           fit: BoxFit.cover,
+  //           imageUrl: Api.getResizeImgUrl(
+  //               imageUrl, DeviceInfo.screenWidth!.toInt() * 2),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _storeName() {
     DPrint.printf(Api.getImgUrl(widget.goodsDetail!.data!.brand!.logoUrl));
@@ -1793,7 +1796,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             listener: (SkuChooseModel skuModel) async {
               if (UserManager.instance!.user.info!.id == 0) {
                 UserManager.instance!.goodsId = widget.goodsDetail!.data!.id!;
-                AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                Get.offAll(() => LoginPage());
                 Toast.showError('请先登录...');
                 return;
               }
@@ -1903,7 +1906,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 );
                 return;
               } else {
-                GoodsDetailModel? detailModel = widget.goodsDetail;
+                //GoodsDetailModel? detailModel = widget.goodsDetail;
                 // 现在未到开枪时间也能开抢
                 // if (detailModel.data.promotion!=null && detailModel.data.promotion.id > 0) {
                 //   if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(detailModel) == PromotionStatus.ready){
@@ -2048,12 +2051,12 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   _selectedSkuDes() {
     StringBuffer stringBuffer = StringBuffer("已选:");
-    bool hasSelected = false;
+    //bool hasSelected = false;
 
     DPrint.printf(_itemModels!.length);
     _itemModels!.forEach((SelectedListItemModel model) {
       if (model.selectedIndex != null) {
-        hasSelected = true;
+        //hasSelected = true;
         stringBuffer.write(" ");
         stringBuffer.write("\“${model.items[model.selectedIndex!].itemTitle}\”");
         if (guige == '请选择规格') {

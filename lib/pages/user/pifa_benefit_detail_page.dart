@@ -1,10 +1,8 @@
-
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
-import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/pifa_benefit_page.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -53,7 +51,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
 
   ///累计收益
   ///
-  UserAccumulateModel _model = UserAccumulateModel.zero();
+  // UserAccumulateModel _model = UserAccumulateModel.zero();
   DateTime _date = DateTime.now();
   String formatType = 'yyyy-MM'; //时间选择器按钮样式
 

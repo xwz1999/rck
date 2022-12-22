@@ -12,7 +12,6 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
 
 class GoodsOrderItem extends StatefulWidget {
   final Brands? brand;
@@ -36,12 +35,12 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
   }
 
   Container _buildBody(BuildContext context) {
-    int goodsNum = 0;
-    double commissionPrice = 0;
-    widget.brand!.goods!.forEach((goods) {
-      goodsNum += goods.quantity!;
-      commissionPrice += goods.totalCommission!;
-    });
+    // int goodsNum = 0;
+    // double commissionPrice = 0;
+    // widget.brand!.goods!.forEach((goods) {
+    //   goodsNum += goods.quantity!;
+    //   commissionPrice += goods.totalCommission!;
+    // });
 
     String expressMsg = "";
     if (widget.shippingMethod == 0) {
@@ -51,6 +50,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
         expressMsg = "${widget.brand!.brandExpressTotalAmount}元";
       }
     }
+    print(expressMsg);
 
     return Container(
       margin:
@@ -82,65 +82,65 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
     );
   }
 
-  CustomImageButton _brandName() {
-    return CustomImageButton(
-      direction: Direction.horizontal,
-      height: rSize(35),
-      color: Colors.black,
-      pureDisplay: true,
-      contentSpacing: 10,
-      fontSize: 16 * 2.sp,
-      title: widget.brand!.brandName,
-      padding: EdgeInsets.symmetric(horizontal: 3),
-      icon: CustomCacheImage(
-        height: rSize(25),
-        width: rSize(25),
-        imageUrl: Api.getResizeImgUrl(widget.brand!.brandLogoUrl!, 40),
-        borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
-      ),
-    );
-  }
+  // CustomImageButton _brandName() {
+  //   return CustomImageButton(
+  //     direction: Direction.horizontal,
+  //     height: rSize(35),
+  //     color: Colors.black,
+  //     pureDisplay: true,
+  //     contentSpacing: 10,
+  //     fontSize: 16 * 2.sp,
+  //     title: widget.brand!.brandName,
+  //     padding: EdgeInsets.symmetric(horizontal: 3),
+  //     icon: CustomCacheImage(
+  //       height: rSize(25),
+  //       width: rSize(25),
+  //       imageUrl: Api.getResizeImgUrl(widget.brand!.brandLogoUrl!, 40),
+  //       borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
+  //     ),
+  //   );
+  // }
 
-  Container _bottomView(int goodsNum, double commission) {
-    return Container(
-      alignment: Alignment.centerRight,
-      margin: EdgeInsets.only(
-          top: rSize(7), left: rSize(4), right: rSize(4), bottom: rSize(3)),
-      child: RichText(
-          text: TextSpan(
-              text: "共 $goodsNum 件",
-              style: AppTextStyle.generate(13 * 2.sp, color: Colors.grey[600]),
-              children: [
-            TextSpan(
-                text: " 合计:",
-                style: AppTextStyle.generate(
-                  13 * 2.sp,
-                )),
-            TextSpan(
-                text:
-                    "￥${widget.brand!.brandGoodsTotalAmount!.toStringAsFixed(2)}",
-                style: AppTextStyle.generate(
-                  13 * 2.sp,
-                  color: Color.fromARGB(255, 249, 62, 13),
-                )),
-            AppConfig.commissionByRoleLevel
-                ? TextSpan(
-                    text: "  赚:",
-                    style: AppTextStyle.generate(
-                      13 * 2.sp,
-                    ))
-                : TextSpan(text: ''),
-            AppConfig.commissionByRoleLevel
-                ? TextSpan(
-                    text: '$commission',
-                    style: AppTextStyle.generate(
-                      13 * 2.sp,
-                      color: Color.fromARGB(255, 249, 62, 13),
-                    ))
-                : TextSpan(text: ''),
-          ])),
-    );
-  }
+  // Container _bottomView(int goodsNum, double commission) {
+  //   return Container(
+  //     alignment: Alignment.centerRight,
+  //     margin: EdgeInsets.only(
+  //         top: rSize(7), left: rSize(4), right: rSize(4), bottom: rSize(3)),
+  //     child: RichText(
+  //         text: TextSpan(
+  //             text: "共 $goodsNum 件",
+  //             style: AppTextStyle.generate(13 * 2.sp, color: Colors.grey[600]),
+  //             children: [
+  //           TextSpan(
+  //               text: " 合计:",
+  //               style: AppTextStyle.generate(
+  //                 13 * 2.sp,
+  //               )),
+  //           TextSpan(
+  //               text:
+  //                   "￥${widget.brand!.brandGoodsTotalAmount!.toStringAsFixed(2)}",
+  //               style: AppTextStyle.generate(
+  //                 13 * 2.sp,
+  //                 color: Color.fromARGB(255, 249, 62, 13),
+  //               )),
+  //           AppConfig.commissionByRoleLevel
+  //               ? TextSpan(
+  //                   text: "  赚:",
+  //                   style: AppTextStyle.generate(
+  //                     13 * 2.sp,
+  //                   ))
+  //               : TextSpan(text: ''),
+  //           AppConfig.commissionByRoleLevel
+  //               ? TextSpan(
+  //                   text: '$commission',
+  //                   style: AppTextStyle.generate(
+  //                     13 * 2.sp,
+  //                     color: Color.fromARGB(255, 249, 62, 13),
+  //                   ))
+  //               : TextSpan(text: ''),
+  //         ])),
+  //   );
+  // }
 
   _goods(context) {
     return MediaQuery.removePadding(
@@ -288,41 +288,41 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
       ),
     );
   }
-
-  _tile(String title, String value,
-      {VoidCallback? listener, bool needArrow = true}) {
-    return GestureDetector(
-      onTap: listener,
-      behavior: HitTestBehavior.translucent,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        child: Row(
-          children: <Widget>[
-            Container(
-                width: rSize(80),
-                child: Text(
-                  title,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
-                      fontWeight: FontWeight.w400),
-                )),
-            Expanded(
-              child: Text(
-                value,
-                maxLines: 1,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
-                    color: Colors.grey[600], fontWeight: FontWeight.w300),
-              ),
-            ),
-            Offstage(
-                offstage: !needArrow,
-                child: Icon(
-                  AppIcons.icon_next,
-                  size: rSize(14),
-                  color: Colors.grey,
-                ))
-          ],
-        ),
-      ),
-    );
-  }
+  //
+  // _tile(String title, String value,
+  //     {VoidCallback? listener, bool needArrow = true}) {
+  //   return GestureDetector(
+  //     onTap: listener,
+  //     behavior: HitTestBehavior.translucent,
+  //     child: Container(
+  //       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+  //       child: Row(
+  //         children: <Widget>[
+  //           Container(
+  //               width: rSize(80),
+  //               child: Text(
+  //                 title,
+  //                 style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+  //                     fontWeight: FontWeight.w400),
+  //               )),
+  //           Expanded(
+  //             child: Text(
+  //               value,
+  //               maxLines: 1,
+  //               style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+  //                   color: Colors.grey[600], fontWeight: FontWeight.w300),
+  //             ),
+  //           ),
+  //           Offstage(
+  //               offstage: !needArrow,
+  //               child: Icon(
+  //                 AppIcons.icon_next,
+  //                 size: rSize(14),
+  //                 color: Colors.grey,
+  //               ))
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

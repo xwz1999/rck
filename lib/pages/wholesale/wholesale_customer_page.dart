@@ -1,8 +1,4 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/constants/api.dart';
@@ -29,7 +25,7 @@ class WholesaleCustomerPage extends StatefulWidget {
 
 class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
     with TickerProviderStateMixin {
-  GlobalKey _globalKey = GlobalKey();
+  //GlobalKey _globalKey = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -98,7 +94,8 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                         10.wb,
                         GestureDetector(
                           onTap: (){
-                            launch("tel:${widget.model!.mobile}");
+                            //launch("tel:${widget.model!.mobile}");
+                            launchUrl(Uri(path: "tel:${widget.model!.mobile}"));
                           },
                           child: Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_CALL_PNG,width: 30.rw,height: 30.rw,)
                         )
@@ -191,7 +188,7 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                                       deleteListener: () async{
 
                                         Alert.dismiss(context);
-                                        bool isOpened = await openAppSettings();
+                                        await openAppSettings();
                                       },
                                       type: NormalTextDialogType.delete,
                                     ),
@@ -256,54 +253,54 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
     );
   }
 
-  _capturePng() async {
-    // '保存中...'
-    Function cancel = ReToast.loading();
-    RenderRepaintBoundary boundary =
-    _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    ui.Image image =
-    await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
-    ByteData byteData = (await (image.toByteData(format: ui.ImageByteFormat.png)))!;
-    Uint8List pngBytes = byteData.buffer.asUint8List();
-    if (pngBytes.length == 0) {
-      cancel();
-      ReToast.err(text: '保存失败');
-      return;
-    }
-    ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
-      cancel();
-      if (success) {
-        ReToast.success(text: '保存成功');
-
-      } else {
-        Alert.show(
-          context,
-          NormalContentDialog(
-            title: '提示',
-            content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
-            items: ["取消"],
-            listener: (index) {
-              Alert.dismiss(context);
-            },
-            deleteItem: "确认",
-            deleteListener: () async{
-
-              Alert.dismiss(context);
-              bool isOpened = await openAppSettings();
-            },
-            type: NormalTextDialogType.delete,
-          ),
-        );
-      }
-    });
-
-    // var filePath = await ImagePickerSaver.saveFile(fileData: pngBytes);
-
-    // var savedFile = File.fromUri(Uri.file(filePath));
-    // setState(() {
-    //   Future<File>.sync(() => savedFile);
-    // });
-    // // '保存成功'
-    // showSuccess("保存成功!");
-  }
+  // _capturePng() async {
+  //   // '保存中...'
+  //   Function cancel = ReToast.loading();
+  //   RenderRepaintBoundary boundary =
+  //   _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+  //   ui.Image image =
+  //   await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
+  //   ByteData byteData = (await (image.toByteData(format: ui.ImageByteFormat.png)))!;
+  //   Uint8List pngBytes = byteData.buffer.asUint8List();
+  //   if (pngBytes.length == 0) {
+  //     cancel();
+  //     ReToast.err(text: '保存失败');
+  //     return;
+  //   }
+  //   ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
+  //     cancel();
+  //     if (success) {
+  //       ReToast.success(text: '保存成功');
+  //
+  //     } else {
+  //       Alert.show(
+  //         context,
+  //         NormalContentDialog(
+  //           title: '提示',
+  //           content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+  //           items: ["取消"],
+  //           listener: (index) {
+  //             Alert.dismiss(context);
+  //           },
+  //           deleteItem: "确认",
+  //           deleteListener: () async{
+  //
+  //             Alert.dismiss(context);
+  //             await openAppSettings();
+  //           },
+  //           type: NormalTextDialogType.delete,
+  //         ),
+  //       );
+  //     }
+  //   });
+  //
+  //   // var filePath = await ImagePickerSaver.saveFile(fileData: pngBytes);
+  //
+  //   // var savedFile = File.fromUri(Uri.file(filePath));
+  //   // setState(() {
+  //   //   Future<File>.sync(() => savedFile);
+  //   // });
+  //   // // '保存成功'
+  //   // showSuccess("保存成功!");
+  // }
 }

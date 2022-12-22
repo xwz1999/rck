@@ -215,9 +215,9 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   }
 
   _vipTwoButtonRow() {
-    String? commission = widget.goodsDetail == null
-        ? null
-        : widget.goodsDetail!.data!.price!.min!.commission!.toStringAsFixed(2);
+    // String? commission = widget.goodsDetail == null
+    //     ? null
+    //     : widget.goodsDetail!.data!.price!.min!.commission!.toStringAsFixed(2);
     return Expanded(
       child: Row(
         children: <Widget>[

@@ -258,7 +258,7 @@ class _OrderListItemState extends State<OrderListItem> {
             fontSize: 14 * 2.sp,
             border: Border.all(color: Colors.grey[700]!, width: 0.3),
             onPressed: () {
-              if (widget.cancelOrder == null) return;
+              //if (widget.cancelOrder == null) return;
               widget.cancelOrder(widget.orderModel, callback: () {
                 setState(() {});
               });
@@ -277,7 +277,7 @@ class _OrderListItemState extends State<OrderListItem> {
             border: Border.all(color: AppColor.themeColor, width: 0.3),
             borderRadius: BorderRadius.all(Radius.circular(40)),
             onPressed: () {
-              if (widget.goToPay == null) return;
+              //if (widget.goToPay == null) return;
               widget.goToPay(widget.orderModel, callback: () {
                 setState(() {});
               });
@@ -336,9 +336,9 @@ class _OrderListItemState extends State<OrderListItem> {
           fontSize: 14 * 2.sp,
           border: Border.all(color: Colors.grey[700]!, width: 0.3),
           onPressed: () {
-            if (widget.confirm == null) {
-              return;
-            }
+            // if (widget.confirm == null) {
+            //   return;
+            // }
             widget.confirm(widget.orderModel);
           },
         ));
@@ -498,30 +498,30 @@ class _OrderListItemState extends State<OrderListItem> {
         }));
   }
 
-  _brandBottomPrice() {
-    // int quantity = 0;
-    // brand.goods.forEach((goods) {
-    //   quantity += goods.quantity;
-    // });
-    return Container(
-        alignment: Alignment.centerRight,
-        child: RichText(
-            textAlign: TextAlign.end,
-            text: TextSpan(
-                // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
-                text:
-                    "运费: ￥${widget.orderModel.expressTotalFee!.toStringAsFixed(2)}",
-                style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
-                children: [
-                  TextSpan(
-                      // text: "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
-                      text: "",
-                      style:
-                          AppTextStyle.generate(14 * 2.sp, color: Colors.grey)),
-                ])));
-  }
-
-  _brandBottomButtons() {}
+  // _brandBottomPrice() {
+  //   // int quantity = 0;
+  //   // brand.goods.forEach((goods) {
+  //   //   quantity += goods.quantity;
+  //   // });
+  //   return Container(
+  //       alignment: Alignment.centerRight,
+  //       child: RichText(
+  //           textAlign: TextAlign.end,
+  //           text: TextSpan(
+  //               // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
+  //               text:
+  //                   "运费: ￥${widget.orderModel.expressTotalFee!.toStringAsFixed(2)}",
+  //               style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
+  //               children: [
+  //                 TextSpan(
+  //                     // text: "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
+  //                     text: "",
+  //                     style:
+  //                         AppTextStyle.generate(14 * 2.sp, color: Colors.grey)),
+  //               ])));
+  // }
+  //
+  // _brandBottomButtons() {}
 
   _goodsItem(OrderGoodsModel goods) {
     return Container(
@@ -692,19 +692,19 @@ class _OrderListItemState extends State<OrderListItem> {
     );
   }
 
-  _refundStatus(OrderGoodsModel goods) {
-    if (goods.assType == 0) return "";
-    if (goods.refundStatus != 0) {
-      return goods.refundStatus == 1 ? "退款中" : "退款成功";
-    }
-
-    if (goods.returnStatus == 1) {
-      return "等待商家确认退货";
-    } else if (goods.returnStatus == 2) {
-      return "退货被拒绝";
-    } else if (goods.returnStatus == 3) {
-      return "退货成功";
-    }
-    return "";
-  }
+  // _refundStatus(OrderGoodsModel goods) {
+  //   if (goods.assType == 0) return "";
+  //   if (goods.refundStatus != 0) {
+  //     return goods.refundStatus == 1 ? "退款中" : "退款成功";
+  //   }
+  //
+  //   if (goods.returnStatus == 1) {
+  //     return "等待商家确认退货";
+  //   } else if (goods.returnStatus == 2) {
+  //     return "退货被拒绝";
+  //   } else if (goods.returnStatus == 3) {
+  //     return "退货成功";
+  //   }
+  //   return "";
+  // }
 }

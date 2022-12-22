@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/wholesale/models/wholesale_detail_model.dart';
-import 'package:recook/widgets/custom_image_button.dart';
 
 class WholesaleGoodPriceView extends StatefulWidget {
   final WholesaleDetailModel? detailModel;
@@ -398,20 +397,20 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
         : SizedBox();
   }
 
-  _serviceLabel(title) {
-    return CustomImageButton(
-        onPressed: () {},
-        title: title,
-        color: Colors.black,
-        direction: Direction.horizontal,
-        fontSize: 14 * 2.sp,
-        icon: Icon(
-          AppIcons.icon_check,
-          // color: Color(0xFFFC8381),
-          color: Colors.red,
-          size: 20 * 2.sp,
-        ));
-  }
+  // _serviceLabel(title) {
+  //   return CustomImageButton(
+  //       onPressed: () {},
+  //       title: title,
+  //       color: Colors.black,
+  //       direction: Direction.horizontal,
+  //       fontSize: 14 * 2.sp,
+  //       icon: Icon(
+  //         AppIcons.icon_check,
+  //         // color: Color(0xFFFC8381),
+  //         color: Colors.red,
+  //         size: 20 * 2.sp,
+  //       ));
+  // }
 
   /// 服务
 

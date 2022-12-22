@@ -12,9 +12,6 @@ import 'package:recook/models/order_detail_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/user/order/order_return_status_page.dart';
 import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
-import 'package:recook/utils/goods_status/goods_status_tool.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
@@ -104,11 +101,11 @@ abstract class OrderDetailState<T extends StatefulWidget>
     //         (orderDetail.brandCouponTotalAmount +
     //                 orderDetail.universeCouponTotalAmount)
     //             .toStringAsFixed(2));
-    Widget coin = _priceItemWidget(
-        title: UserLevelTool.currentRoleLevel() != '合伙人'
-            ? "${UserLevelTool.currentRoleLevel()}折扣"
-            : '折扣',
-        info: "-￥" + orderDetail!.coinTotalAmount!.toStringAsFixed(2));
+    // Widget coin = _priceItemWidget(
+    //     title: UserLevelTool.currentRoleLevel() != '合伙人'
+    //         ? "${UserLevelTool.currentRoleLevel()}折扣"
+    //         : '折扣',
+    //     info: "-￥" + orderDetail!.coinTotalAmount!.toStringAsFixed(2));
     // 余额抵扣 暂时不需要
     widgetList.add(priceItem);
     if (_openPriceInfo) {
@@ -188,72 +185,72 @@ abstract class OrderDetailState<T extends StatefulWidget>
     );
   }
 
-  _saleAmountInfo() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.only(
-        left: rSize(8),
-      ),
-      decoration: BoxDecoration(
-          border: Border(
-        top: BorderSide(color: Colors.grey[300]!, width: 0.3),
-      )),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-              constraints: BoxConstraints(minWidth: rSize(70)),
-              child: ExtendedText.rich(
-                TextSpan(children: [
-                  TextSpan(
-                    text: "销售额 ",
-                    style: AppTextStyle.generate(14, color: Color(0xff333333)),
-                  ),
-                  WidgetSpan(
-                      child: GestureDetector(
-                    onTap: () {
-                      Alert.show(
-                          context,
-                          NormalTextDialog(
-                            type: NormalTextDialogType.delete,
-                            title: "销售额",
-                            content: "销售额：实付款+瑞币抵扣+余额抵扣",
-                            items: [],
-                            deleteItem: "我知道了",
-                            listener: (index) {
-                              Alert.dismiss(context);
-                            },
-                            deleteListener: () {
-                              Alert.dismiss(context);
-                            },
-                          ));
-                    },
-                    child: Icon(
-                      Icons.help_outline,
-                      color: Colors.grey[400],
-                      size: 17,
-                    ),
-                  )),
-                ]),
-                textAlign: TextAlign.start,
-              )),
-          Expanded(
-            child: Container(
-              child: Text(
-                "￥" +
-                    (orderDetail!.actualTotalAmount! +
-                            orderDetail!.coinTotalAmount! +
-                            orderDetail!.brandCouponTotalAmount! +
-                            orderDetail!.universeCouponTotalAmount!)
-                        .toStringAsFixed(2),
-                style: AppTextStyle.generate(14, color: Color(0xff333333)),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  // _saleAmountInfo() {
+  //   return Container(
+  //     height: 50,
+  //     margin: EdgeInsets.only(
+  //       left: rSize(8),
+  //     ),
+  //     decoration: BoxDecoration(
+  //         border: Border(
+  //       top: BorderSide(color: Colors.grey[300]!, width: 0.3),
+  //     )),
+  //     child: Row(
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: <Widget>[
+  //         Container(
+  //             constraints: BoxConstraints(minWidth: rSize(70)),
+  //             child: ExtendedText.rich(
+  //               TextSpan(children: [
+  //                 TextSpan(
+  //                   text: "销售额 ",
+  //                   style: AppTextStyle.generate(14, color: Color(0xff333333)),
+  //                 ),
+  //                 WidgetSpan(
+  //                     child: GestureDetector(
+  //                   onTap: () {
+  //                     Alert.show(
+  //                         context,
+  //                         NormalTextDialog(
+  //                           type: NormalTextDialogType.delete,
+  //                           title: "销售额",
+  //                           content: "销售额：实付款+瑞币抵扣+余额抵扣",
+  //                           items: [],
+  //                           deleteItem: "我知道了",
+  //                           listener: (index) {
+  //                             Alert.dismiss(context);
+  //                           },
+  //                           deleteListener: () {
+  //                             Alert.dismiss(context);
+  //                           },
+  //                         ));
+  //                   },
+  //                   child: Icon(
+  //                     Icons.help_outline,
+  //                     color: Colors.grey[400],
+  //                     size: 17,
+  //                   ),
+  //                 )),
+  //               ]),
+  //               textAlign: TextAlign.start,
+  //             )),
+  //         Expanded(
+  //           child: Container(
+  //             child: Text(
+  //               "￥" +
+  //                   (orderDetail!.actualTotalAmount! +
+  //                           orderDetail!.coinTotalAmount! +
+  //                           orderDetail!.brandCouponTotalAmount! +
+  //                           orderDetail!.universeCouponTotalAmount!)
+  //                       .toStringAsFixed(2),
+  //               style: AppTextStyle.generate(14, color: Color(0xff333333)),
+  //             ),
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   orderInfo() {
     if (orderDetail == null) return Container();
@@ -527,7 +524,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
     String title,
     String? value, {
     bool needCopy = false,
-    CrossAxisAlignment crossAxisAlignment: CrossAxisAlignment.center,
+    // CrossAxisAlignment crossAxisAlignment: CrossAxisAlignment.center,
   }) {
     return Container(
       margin: EdgeInsets.only(
@@ -861,8 +858,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
-          return FlatButton(
-            onPressed: () {
+          return GestureDetector(
+            onTap: () {
               bool canPush = true;
               Goods goods = brand.goods![index];
               status!.forEach((element) {
@@ -890,8 +887,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
-          return FlatButton(
-            onPressed: () {
+          return GestureDetector(
+            onTap: () {
               bool canPush = true;
               Goods goods = brand.goods![index];
               status!.forEach((element) {
@@ -1220,8 +1217,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                   : GestureDetector(
                                       child: Container(
                                         margin: EdgeInsets.only(
-                                            left: ScreenAdapterUtils.setWidth(
-                                                10)),
+                                            left: 20.w),
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 0.5,
@@ -1275,62 +1271,62 @@ abstract class OrderDetailState<T extends StatefulWidget>
     );
   }
 
-  _goodsStatus(Goods goods) {
-    // 只有已付款的才有发货以及退换货状态
-    if (orderDetail!.status != 1) return "";
-    // 0 代表不是退款或退货的商品，则查询快递状态
-    if (goods.assType == 0) {
-      return GoodsStatusTool.goodsExpressStatusOrderDetailModel(goods);
-    }
-    // 退换货状态
-    return _refundStatus(goods);
-  }
+  // _goodsStatus(Goods goods) {
+  //   // 只有已付款的才有发货以及退换货状态
+  //   if (orderDetail!.status != 1) return "";
+  //   // 0 代表不是退款或退货的商品，则查询快递状态
+  //   if (goods.assType == 0) {
+  //     return GoodsStatusTool.goodsExpressStatusOrderDetailModel(goods);
+  //   }
+  //   // 退换货状态
+  //   return _refundStatus(goods);
+  // }
 
-  _refundStatus(Goods goods) {
-    if (goods.assType == 0) return "";
-    if (goods.refundStatus != 0) {
-      return goods.refundStatus == 1 ? "退款中" : "退款成功";
-    }
-
-    switch (goods.returnStatus) {
-      case 1:
-        return "等待商家确认退货";
-      case 2:
-        return "退货被拒绝";
-      case 3:
-        return "退货成功";
-    }
-    return "";
-  }
-
-  _brandBottomPrice(Brands brand) {
-    int quantity = 0;
-    brand.goods!.forEach((goods) {
-      quantity += goods.quantity!;
-    });
-    return Column(
-      children: <Widget>[
-        Container(
-            alignment: Alignment.centerRight,
-            child: RichText(
-                textAlign: TextAlign.end,
-                text: TextSpan(
-                    text: "共$quantity件商品  小计￥",
-                    style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
-                    children: [
-                      TextSpan(
-                          text:
-                              "${brand.brandGoodsTotalAmount!.toStringAsFixed(2)}",
-                          style: AppTextStyle.generate(14 * 2.sp,
-                              color: Colors.grey)),
-                      TextSpan(
-                        text:
-                            "(含运费￥${brand.brandExpressTotalAmount!.toStringAsFixed(2)})",
-                      ),
-                    ]))),
-      ],
-    );
-  }
+  // _refundStatus(Goods goods) {
+  //   if (goods.assType == 0) return "";
+  //   if (goods.refundStatus != 0) {
+  //     return goods.refundStatus == 1 ? "退款中" : "退款成功";
+  //   }
+  //
+  //   switch (goods.returnStatus) {
+  //     case 1:
+  //       return "等待商家确认退货";
+  //     case 2:
+  //       return "退货被拒绝";
+  //     case 3:
+  //       return "退货成功";
+  //   }
+  //   return "";
+  // }
+  //
+  // _brandBottomPrice(Brands brand) {
+  //   int quantity = 0;
+  //   brand.goods!.forEach((goods) {
+  //     quantity += goods.quantity!;
+  //   });
+  //   return Column(
+  //     children: <Widget>[
+  //       Container(
+  //           alignment: Alignment.centerRight,
+  //           child: RichText(
+  //               textAlign: TextAlign.end,
+  //               text: TextSpan(
+  //                   text: "共$quantity件商品  小计￥",
+  //                   style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
+  //                   children: [
+  //                     TextSpan(
+  //                         text:
+  //                             "${brand.brandGoodsTotalAmount!.toStringAsFixed(2)}",
+  //                         style: AppTextStyle.generate(14 * 2.sp,
+  //                             color: Colors.grey)),
+  //                     TextSpan(
+  //                       text:
+  //                           "(含运费￥${brand.brandExpressTotalAmount!.toStringAsFixed(2)})",
+  //                     ),
+  //                   ]))),
+  //     ],
+  //   );
+  // }
 
   _brandName(Brands brand) {
     return Row(

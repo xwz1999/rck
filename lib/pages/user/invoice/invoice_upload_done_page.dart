@@ -58,27 +58,23 @@ class _InvoiceUploadDonePageState extends State<InvoiceUploadDonePage> {
                     ),
                   ),
                   SizedBox(height: rSize(48)),
-                  FlatButton(
-                    color: AppColor.redColor,
-                    splashColor: Colors.black.withOpacity(0.3),
-                    padding: EdgeInsets.symmetric(
-                      vertical: rSize(12),
-                    ),
+                  TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                       Navigator.pop(context);
                       Navigator.pop(context);
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(rSize(4)),
-                    ),
-                    child: Text(
+                    child:Text(
                       '发票首页',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16 * 2.sp,
                       ),
                     ),
+                    style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),
+                        backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(rSize(4)),
+                        )) ),
                   ),
                   SizedBox(height: rSize(16)),
                   GestureDetector(

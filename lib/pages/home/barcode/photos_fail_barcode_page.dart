@@ -106,7 +106,7 @@ class _PhotosFailBarcodePageState
 
 
 
-                var image = await (picker.getImage(source: ImageSource.gallery));
+                var image = await (picker.pickImage(source: ImageSource.gallery));
 
 
                 // var image =

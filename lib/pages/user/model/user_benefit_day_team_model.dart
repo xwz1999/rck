@@ -70,15 +70,15 @@ class Team {
   num? salesVolume;
   num? amount;
   num? ratio;
-  num? order_count;
+  num? orderCount;
 
-  Team({this.salesVolume, this.amount, this.ratio, this.order_count});
+  Team({this.salesVolume, this.amount, this.ratio, this.orderCount});
 
   Team.fromJson(Map<String, dynamic> json) {
     salesVolume = json['salesVolume'];
     amount = json['amount'];
     ratio = json['ratio'];
-    order_count = json['order_count'];
+    orderCount = json['order_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,7 +86,7 @@ class Team {
     data['salesVolume'] = this.salesVolume;
     data['amount'] = this.amount;
     data['ratio'] = this.ratio;
-    data['order_count'] = this.order_count;
+    data['order_count'] = this.orderCount;
     return data;
   }
 }
@@ -95,15 +95,15 @@ class Recommend {
   num? salesVolume;
   num? amount;
   num? ratio;
-  num? order_count;
+  num? orderCount;
 
-  Recommend({this.salesVolume, this.amount, this.ratio, this.order_count});
+  Recommend({this.salesVolume, this.amount, this.ratio, this.orderCount});
 
   Recommend.fromJson(Map<String, dynamic> json) {
     salesVolume = json['salesVolume'];
     amount = json['amount'];
     ratio = json['ratio'];
-    order_count = json['order_count'];
+    orderCount = json['order_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -111,7 +111,7 @@ class Recommend {
     data['salesVolume'] = this.salesVolume;
     data['amount'] = this.amount;
     data['ratio'] = this.ratio;
-    data['order_count'] = this.order_count;
+    data['order_count'] = this.orderCount;
     return data;
   }
 }
@@ -120,15 +120,15 @@ class Reward {
   num? salesVolume;
   num? amount;
   num? ratio;
-  num? order_count;
+  num? orderCount;
 
-  Reward({this.salesVolume, this.amount, this.ratio, this.order_count});
+  Reward({this.salesVolume, this.amount, this.ratio, this.orderCount});
 
   Reward.fromJson(Map<String, dynamic> json) {
     salesVolume = json['salesVolume'];
     amount = json['amount'];
     ratio = json['ratio'];
-    order_count = json['order_count'];
+    orderCount = json['order_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -136,7 +136,7 @@ class Reward {
     data['salesVolume'] = this.salesVolume;
     data['amount'] = this.amount;
     data['ratio'] = this.ratio;
-    data['order_count'] = this.order_count;
+    data['order_count'] = this.orderCount;
     return data;
   }
 }
@@ -151,7 +151,7 @@ class UserIncomeDay {
   int? count;
   num? amount;
   int? roleLevel;
-  int? order_count;
+  int? orderCount;
 
   UserIncomeDay(
       {this.userId,
@@ -163,7 +163,7 @@ class UserIncomeDay {
       this.count,
       this.amount,
       this.roleLevel,
-      this.order_count});
+      this.orderCount});
 
   UserIncomeDay.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -175,7 +175,7 @@ class UserIncomeDay {
     count = json['count'];
     amount = json['amount'];
     roleLevel = json['roleLevel'];
-    order_count = json['order_count'];
+    orderCount = json['order_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -189,7 +189,7 @@ class UserIncomeDay {
     data['count'] = this.count;
     data['amount'] = this.amount;
     data['roleLevel'] = this.roleLevel;
-    data['order_count'] = this.order_count;
+    data['order_count'] = this.orderCount;
     return data;
   }
 }

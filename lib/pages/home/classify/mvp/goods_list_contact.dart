@@ -23,7 +23,7 @@ abstract class GoodsListPresenterI
 }
 
 abstract class GoodListModelI extends MvpModel {
-  fetchList(int? categoryID, int page, SortType type,int? countryId, {String? keyword,int? JDType});
+  fetchList(int? categoryID, int page, SortType type,int? countryId, {String? keyword,int? jDType});
   fetchBrandList(int? brandId, int page, SortType type);
   fetchSearchList(String keyword, int page);
 }

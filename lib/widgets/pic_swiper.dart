@@ -325,7 +325,7 @@ class MySwiperPlugin extends StatelessWidget {
             DPrint.printf("保存好了---$index");
           }, (success) {
             cancel();
-            //GSDialog.of(context).dismiss(context);
+            //BotToast.closeAllLoading();
             success?ReToast.success(text: '保存完成！'):Alert.show(
               context,
               NormalContentDialog(
@@ -339,7 +339,7 @@ class MySwiperPlugin extends StatelessWidget {
                 deleteListener: () async{
 
                   Alert.dismiss(context);
-                  bool isOpened = await openAppSettings();
+                  await openAppSettings();
                 },
                 type: NormalTextDialogType.delete,
               ),

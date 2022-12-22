@@ -7,13 +7,13 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/vip_shop_push_page.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
 import 'package:recook/pages/user/other_item_view_v.dart';
 import 'package:recook/pages/user/pifa_benefit_page.dart';
 import 'package:recook/pages/user/review/review_page.dart';
-import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
 import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
@@ -303,14 +303,14 @@ class _UserPageState extends BaseStoreState<UserPage> {
     required String leadingPath,
     required String title,
     required String alertTitle,
-    Widget? alertContent,
+    //Widget? alertContent,
     required String title1,
     required String title3,
     required num content1,
     required num content2,
     required num content3,
     required num content4,
-    UserBenefitPageType type = UserBenefitPageType.SELF,
+    //UserBenefitPageType type = UserBenefitPageType.SELF,
   }) {
     // if (title == "自购收益") {
     //   type = UserBenefitPageType.SELF;
@@ -580,7 +580,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   fontSize: 16 * 2.sp,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   onPressed: () {
-                    AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                    Get.offAll(() => LoginPage());
                   },
                 ),
               ),

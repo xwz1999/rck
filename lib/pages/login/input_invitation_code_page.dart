@@ -7,13 +7,17 @@
  * ====================================================
  */
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
@@ -106,7 +110,7 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
               radius: BorderRadius.all(Radius.circular(5)),
               backgroundColor: Theme.of(context).primaryColor,
               onTap: () {
-                GSDialog.of(context).showLoadingDialog(context, "");
+                ReToast.loading(text: '');
                 if (phoneLogin) {
                   _phoneRegister(context);
                 } else {
@@ -185,11 +189,11 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
     }
     UserDao.phoneRegister(widget.argument["mobile"], bindData,
         success: (data, code, msg) {
-      GSDialog.of(context).dismiss(context);
-      AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
+      BotToast.closeAllLoading();
+      Get.offAll(() => TabBarWidget());
       UserManager.updateUser(data!, getStore());
     }, failure: (code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       Toast.showError(msg);
     });
   }
@@ -203,11 +207,11 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
   //                 widget.argument[InvitationCodePage.KEY_USER_ID],
   //                 bindData,
   //                 success: (data, code, msg) {
-  //               GSDialog.of(context).dismiss(context);
+  //               BotToast.closeAllLoading();
   //               AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
   //               UserManager.updateUser(data, getStore());
   //             }, failure: (code, msg) {
-  //               GSDialog.of(context).dismiss(context);
+  //               BotToast.closeAllLoading();
   //               Toast.showError(msg);
   //             });
   // }

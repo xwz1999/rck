@@ -11,9 +11,7 @@ class ReviewPresenter {
       'status': status,
     });
 
-    return resultData == null
-        ? []
-        : resultData.data['data'] == null
+    return  resultData.data['data'] == null
             ? []
             : (resultData.data['data'] as List)
                 .map((e) => OrderReviewListModel.fromJson(e))

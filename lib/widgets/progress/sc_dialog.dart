@@ -126,7 +126,7 @@ class GSDialog {
       WidgetBuilder? builder,
       Duration duration = const Duration(milliseconds: 1000),
       bool barrierDismissible = true}) async {
-    final ThemeData theme = Theme.of(context);
+    final ThemeData? theme = Theme.of(context);
     showGeneralDialog(
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,

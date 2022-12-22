@@ -20,15 +20,15 @@ class GoodsStatusTool {
         return "";
     }
   }
-  _expressStatus(OrderModel goods) {
-    if (goods.status != 1) return "";
-    switch (goods.expressStatus) {
-      case 0:
-        return "待发货";
-      case 2:
-        return "全部发货";
-      case 1:
-        return "部分发货";
-    }
-  }
+  // _expressStatus(OrderModel goods) {
+  //   if (goods.status != 1) return "";
+  //   switch (goods.expressStatus) {
+  //     case 0:
+  //       return "待发货";
+  //     case 2:
+  //       return "全部发货";
+  //     case 1:
+  //       return "部分发货";
+  //   }
+  // }
 }

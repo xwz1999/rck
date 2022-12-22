@@ -18,7 +18,6 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/user_model.dart';
-import 'package:recook/pages/message/message_ceter_page.dart';
 import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/share_preference.dart';
@@ -34,7 +33,7 @@ class WelcomeWidget extends StatefulWidget {
 class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   String? debugLable = 'Unknown';
   String? _backgroundUrl;
-  bool _close = false;
+  //bool _close = false;
   int _countDownNum = 3;
   int? _goodsId = 0;
   Timer? _timer;
@@ -83,7 +82,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                 right: 30.rw,
                 child: GestureDetector(
                   onTap: () {
-                    _close = true;
+                    //_close = true;
                     _pushToTabbar();
                   },
                   child: Container(
@@ -109,7 +108,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                 // left: (width/2).w,
                 child: GestureDetector(
                   onTap: () {
-                    _close = true;
+                    //_close = true;
                     getStore().state.goodsId = _goodsId;
                     _pushToTabbar();
                   },
@@ -232,7 +231,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   }
 
   _rowBottomWidget() {
-    double width = MediaQuery.of(context).size.width;
+    //double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double picHeight = height * 0.82;
     double bottomHeight = height - picHeight;
@@ -378,7 +377,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   _launch(String? value) {
     Map<String, dynamic> params = Map();
     User? user;
-    if (value != null && value is String) {
+    if (value != null ) {
       user = User.fromJson(json.decode(value));
       if (user.info!.id != 0) {
         params.putIfAbsent("userId", () => user!.info!.id);

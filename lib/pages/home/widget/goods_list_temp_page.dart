@@ -31,13 +31,13 @@ class GoodsListTempPage extends StatefulWidget {
 
 class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with TickerProviderStateMixin {
   GoodsHotSellListModel? _listModel;
-  String? _title;
+  // String? _title;
   GoodsListTempType? _goodsListTempType;
   @override
   void initState() {
     super.initState();
     _goodsListTempType = widget.arguments!["type"];
-    _title = widget.arguments!['title'];
+    //_title = widget.arguments!['title'];
     _getGoodsHotSellList();
   }
 

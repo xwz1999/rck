@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
   FocusNode? _phoneNode;
 
   FocusNode? _addressCodeNode;
-  String _errorMsg = "";
+  // String _errorMsg = "";
   Timer? _timer;
   String _countDownStr = "获取验证码";
   int _countDownNum = 59;
@@ -286,7 +287,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
               _getCodeEnable = true;
               _sendEnable = _verifyLoginEnable();
             } else {
-              _errorMsg = "";
+              //_errorMsg = "";
               _getCodeEnable = false;
               _sendEnable = false;
             }
@@ -390,7 +391,8 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
                 Future.delayed(Duration(seconds: 2), () {
                   _cantSelected = false;
                 });
-                GSDialog.of(context).showLoadingDialog(context, "正在发送..");
+
+                ReToast.loading(text: '正在发送..');
                 _getSmsCode(context);
 
             },
@@ -441,7 +443,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
   _verifyLoginEnable() {
     if (!TextUtils.verifyPhone(_textEditController!.text)) {
       setState(() {
-        _errorMsg = "手机号格式不正确,请检查";
+        //_errorMsg = "手机号格式不正确,请检查";
       });
       return false;
     }
@@ -453,12 +455,12 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
    */
   _getSmsCode(_content) {
     UserDao.sendCode(phoneText, success: (data, code, msg) {
-      GSDialog.of(_content).dismiss(_content);
+      BotToast.closeAllLoading();
       Toast.showSuccess("验证码发送成功，请注意查收");
       _beginCountDown();
       FocusScope.of(_content).requestFocus(_smsCodeNode);
     }, failure: (code, error) {
-      GSDialog.of(_content).dismiss(_content);
+      BotToast.closeAllLoading();
       Toast.showError(error);
     });
   }
@@ -486,9 +488,9 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
             List<AssetEntity?> entitys = [];
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
-            if (entitys == null) {
-              return;
-            }
+            // if (entitys == null) {
+            //   return;
+            // }
             for (var element in entitys) {
               File? file = await element!.file;
               Uint8List? thumbData = await element.thumbnailData;

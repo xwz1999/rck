@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
 import 'package:recook/pages/live/sub_page/topic_page.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class TopicAttentionView extends StatefulWidget {
@@ -91,8 +91,10 @@ class _TopicAttentionViewState extends State<TopicAttentionView>
       subTitlePrefix: '共${model.substance}条内容',
       subTitleSuffix: '${model.partake}人参与',
       onTap: () {
-        CRoute.push(context,
-            TopicPage(topicId: model.id, initAttention: model.isFollow == 1));
+        // CRoute.push(context,
+        //     TopicPage(topicId: model.id, initAttention: model.isFollow == 1));
+
+        Get.to(()=> TopicPage(topicId: model.id, initAttention: model.isFollow == 1));
       },
       initAttention: model.isFollow == 1,
       onAttention: (bool oldState) {

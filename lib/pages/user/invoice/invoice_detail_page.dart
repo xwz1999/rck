@@ -182,7 +182,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                 ),
               ),
               inNeed: true,
-            ),
+          ),
             SCTile.listTile(
               '电子邮箱',
               TextFormField(
@@ -211,6 +211,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               inNeed: true,
             ),
           ],
+
         ),
         bottomNavigationBar: Container(
           padding: EdgeInsets.symmetric(
@@ -220,244 +221,243 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
           child: SafeArea(
             bottom: true,
             top: false,
-            child: FlatButton(
-              padding: EdgeInsets.symmetric(
-                vertical: rSize(12),
-              ),
-              color: AppColor.redColor,
-              disabledColor: Color(0xFFCCCCCC),
-              disabledTextColor: Colors.white,
+            child:
+            TextButton(
               onPressed: _parseCheck()
                   ? () {
-                      if (_formState.currentState!.validate()) {
-                        showGeneralDialog(
-                          barrierDismissible: true,
-                          barrierLabel: '',
-                          barrierColor: Colors.black.withOpacity(0.5),
-                          transitionDuration: Duration(milliseconds: 300),
-                          context: context,
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Material(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(
-                                        rSize(10),
+                if (_formState.currentState!.validate()) {
+                  showGeneralDialog(
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionDuration: Duration(milliseconds: 300),
+                    context: context,
+                    pageBuilder:
+                        (context, animation, secondaryAnimation) {
+                      return Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Material(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(
+                                  rSize(10),
+                                ),
+                              ),
+                            ),
+                            height: rSize(375),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment:
+                              CrossAxisAlignment.stretch,
+                              children: [
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: rSize(15)),
+                                    child: Text(
+                                      '开具电子发票',
+                                      style: TextStyle(
+                                        fontSize: 18 * 2.sp,
+                                        color: Color(0xFF333333),
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                  height: rSize(375),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Center(
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: rSize(15)),
-                                          child: Text(
-                                            '开具电子发票',
-                                            style: TextStyle(
-                                              fontSize: 18 * 2.sp,
-                                              color: Color(0xFF333333),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
+                                ),
+                                Expanded(
+                                    child: ListView(
+                                      children: [
+                                        Divider(
+                                          height: 0.5,
+                                          color: Color(0xFF666666),
                                         ),
-                                      ),
-                                      Expanded(
-                                          child: ListView(
-                                        children: [
-                                          Divider(
-                                            height: 0.5,
-                                            color: Color(0xFF666666),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              vertical: rSize(12),
-                                              horizontal: rSize(16),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  '发票类型',
-                                                  style: TextStyle(
-                                                    fontSize: rSize(16),
-                                                    color: Color(0xFF999999),
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                                Text(
-                                                  '电子发票',
-                                                  style: TextStyle(
-                                                    fontSize: rSize(14),
-                                                    color: Color(0xFF333333),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Divider(
-                                            height: 0.5,
-                                            color: Color(0xFF666666),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              vertical: rSize(12),
-                                              horizontal: rSize(16),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  '发票抬头',
-                                                  style: TextStyle(
-                                                    fontSize: rSize(16),
-                                                    color: Color(0xFF999999),
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                                Text(
-                                                  _isCompany
-                                                      ? _cName.text
-                                                      : _pName.text,
-                                                  style: TextStyle(
-                                                    fontSize: rSize(14),
-                                                    color: Color(0xFF333333),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Divider(
-                                            height: 0.5,
-                                            color: Color(0xFF666666),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              vertical: rSize(12),
-                                              horizontal: rSize(16),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  '开票金额',
-                                                  style: TextStyle(
-                                                    fontSize: rSize(16),
-                                                    color: Color(0xFF999999),
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                                Text(
-                                                  widget.arguments!['price']
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: rSize(14),
-                                                    color: AppColor.redColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '元',
-                                                  style: TextStyle(
-                                                    fontSize: rSize(14),
-                                                    color: Color(0xFF333333),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Divider(
-                                            height: 0.5,
-                                            color: Color(0xFF666666),
-                                          ),
-                                        ],
-                                      )),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: rSize(16),
-                                          vertical: rSize(12),
-                                        ),
-                                        child: Padding(
+                                        Container(
                                           padding: EdgeInsets.symmetric(
-                                            horizontal: rSize(16),
                                             vertical: rSize(12),
+                                            horizontal: rSize(16),
                                           ),
-                                          child: TextButton(
-                                            onPressed: _parseCheck()
-                                                ? () async {
-                                                    await _invoicePresenter
-                                                        .createBill(
-                                                      ids: widget
-                                                          .arguments!['ids'],
-                                                      buyername: _isCompany
-                                                          ? _cName.text
-                                                          : _pName.text,
-                                                      taxnum: _taxNum.text,
-                                                      addr: _addr.text,
-                                                      telephone:
-                                                          _telePhone.text,
-                                                      phone: _phone.text,
-                                                      email: _email.text,
-                                                      account: _bankNum.text,
-                                                      totalAmount: widget
-                                                          .arguments!['price'],
-                                                      invoiceStatus: 1,
-                                                      message: _message.text,
-                                                    )
-                                                        .then((value) {
-                                                      if (value) {
-                                                        AppRouter.pushAndReplaced(
-                                                            context,
-                                                            RouteName
-                                                                .USER_INVOICE_UPLOAD_DONE);
-                                                      } else {
-                                                        Navigator.pop(context);
-                                                        Navigator.pop(context);
-                                                        Navigator.pop(context);
-                                                      }
-                                                    });
-                                                  }
-                                                : null,
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        AppColor.redColor)),
-                                            child: Text(
-                                              '确认提交',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16 * 2.sp,
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '发票类型',
+                                                style: TextStyle(
+                                                  fontSize: rSize(16),
+                                                  color: Color(0xFF999999),
+                                                ),
                                               ),
-                                            ),
+                                              Spacer(),
+                                              Text(
+                                                '电子发票',
+                                                style: TextStyle(
+                                                  fontSize: rSize(14),
+                                                  color: Color(0xFF333333),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
+                                        Divider(
+                                          height: 0.5,
+                                          color: Color(0xFF666666),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: rSize(12),
+                                            horizontal: rSize(16),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '发票抬头',
+                                                style: TextStyle(
+                                                  fontSize: rSize(16),
+                                                  color: Color(0xFF999999),
+                                                ),
+                                              ),
+                                              Spacer(),
+                                              Text(
+                                                _isCompany
+                                                    ? _cName.text
+                                                    : _pName.text,
+                                                style: TextStyle(
+                                                  fontSize: rSize(14),
+                                                  color: Color(0xFF333333),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Divider(
+                                          height: 0.5,
+                                          color: Color(0xFF666666),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: rSize(12),
+                                            horizontal: rSize(16),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '开票金额',
+                                                style: TextStyle(
+                                                  fontSize: rSize(16),
+                                                  color: Color(0xFF999999),
+                                                ),
+                                              ),
+                                              Spacer(),
+                                              Text(
+                                                widget.arguments!['price']
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontSize: rSize(14),
+                                                  color: AppColor.redColor,
+                                                ),
+                                              ),
+                                              Text(
+                                                '元',
+                                                style: TextStyle(
+                                                  fontSize: rSize(14),
+                                                  color: Color(0xFF333333),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Divider(
+                                          height: 0.5,
+                                          color: Color(0xFF666666),
+                                        ),
+                                      ],
+                                    )),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: rSize(16),
+                                    vertical: rSize(12),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: rSize(16),
+                                      vertical: rSize(12),
+                                    ),
+                                    child: TextButton(
+                                      onPressed: _parseCheck()
+                                          ? () async {
+                                        await _invoicePresenter
+                                            .createBill(
+                                          ids: widget
+                                              .arguments!['ids'],
+                                          buyername: _isCompany
+                                              ? _cName.text
+                                              : _pName.text,
+                                          taxnum: _taxNum.text,
+                                          addr: _addr.text,
+                                          telephone:
+                                          _telePhone.text,
+                                          phone: _phone.text,
+                                          email: _email.text,
+                                          account: _bankNum.text,
+                                          totalAmount: widget
+                                              .arguments!['price'],
+                                          invoiceStatus: 1,
+                                          message: _message.text,
+                                        )
+                                            .then((value) {
+                                          if (value) {
+                                            AppRouter.pushAndReplaced(
+                                                context,
+                                                RouteName
+                                                    .USER_INVOICE_UPLOAD_DONE);
+                                          } else {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          }
+                                        });
+                                      }
+                                          : null,
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                          MaterialStateProperty.all(
+                                              AppColor.redColor)),
+                                      child: Text(
+                                        '确认提交',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16 * 2.sp,
+                                        ),
                                       ),
-                                      SizedBox(
-                                        height: MediaQuery.of(context)
-                                            .viewPadding
-                                            .bottom,
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                    }
+                                SizedBox(
+                                  height: MediaQuery.of(context)
+                                      .viewPadding
+                                      .bottom,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              }
                   : null,
-              child: Text(
+              child:Text(
                 '提交',
                 style: TextStyle(
                   fontSize: 16 * 2.sp,
                   color: Colors.white,
                 ),
               ),
+              style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),
+                  backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(rSize(4)),
+                  )) ),
             ),
           ),
         ),

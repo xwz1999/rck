@@ -9,7 +9,6 @@ import 'package:recook/pages/user/recharge/recharge_page.dart';
 import 'package:recook/pages/user/recharge/user_recharge_detail_page.dart';
 import 'package:recook/widgets/image_scaffold.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/refresh_widget.dart';
 
 
 class UserRechargePage extends StatefulWidget {
@@ -22,8 +21,8 @@ class UserRechargePage extends StatefulWidget {
 }
 
 class _UserRechargePageState extends State<UserRechargePage> {
-  GSRefreshController _refreshController =
-  GSRefreshController(initialRefresh: true);
+  // GSRefreshController _refreshController =
+  // GSRefreshController(initialRefresh: true);
 
 
 

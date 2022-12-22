@@ -49,7 +49,7 @@ class BusinessFocusItem extends StatefulWidget {
 }
 
 class _BusinessFocusItemState extends State<BusinessFocusItem> {
-  GlobalKey _globalKey = GlobalKey();
+  //GlobalKey _globalKey = GlobalKey();
   List<MainPhotos> _selectPhotos = [];
   GoodsDetailModel? _goodsDetail;
   String? _bigImageUrl = "";
@@ -362,7 +362,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                         return;
                       } else {
 
-                        var cancel =  ReToast.loading(text:'保存图片中...' );
+                        ReToast.loading(text:'保存图片中...' );
                         byteData = await WidgetToImage.widgetToImage( Directionality(
                           textDirection: TextDirection.ltr,
                           child: Material(
@@ -389,7 +389,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
 
               }else{
 
-                var cancel =  ReToast.loading(text:'保存图片中...' );
+                ReToast.loading(text:'保存图片中...' );
                 byteData = await WidgetToImage.widgetToImage( Directionality(
                   textDirection: TextDirection.ltr,
                   child: Material(

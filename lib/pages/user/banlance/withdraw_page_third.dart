@@ -2,9 +2,11 @@ import 'dart:ui';
 
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
 import 'package:recook/pages/user/model/company_info_model.dart';
 import 'package:recook/pages/user/model/contact_info_model.dart';
@@ -239,7 +241,7 @@ class _WithDrawPageThirdState extends State<WithDrawPageThird>
                         //   model: model,
                         // ));
                         if (UserManager.instance!.user.info!.id == 0) {
-                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Get.offAll(() => LoginPage());
                           Toast.showError('请先登录...');
                           return;
                         }

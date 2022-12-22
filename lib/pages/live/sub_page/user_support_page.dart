@@ -20,7 +20,7 @@ class UserSupportPage extends StatefulWidget {
 
 class _UserSupportPageState extends State<UserSupportPage>
     with SingleTickerProviderStateMixin {
-  TabController? _tabController;
+  //TabController? _tabController;
 
   bool get selfFlag => widget.id == UserManager.instance!.user.info!.id;
   GSRefreshController _controller = GSRefreshController();

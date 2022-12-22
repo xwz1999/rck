@@ -9,7 +9,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
@@ -19,7 +18,6 @@ import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_presenter_impl.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/home/items/item_brand_detail_grid.dart';
-import 'package:recook/pages/home/items/item_tag_widget.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -75,27 +73,27 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   int _filterIndex = 0;
 
   GSRefreshController _refreshController = GSRefreshController();
-  GoodsHotSellListModel? _listModel;
+  // GoodsHotSellListModel? _listModel;
   GifController? _gifController;
 
-  _getGoodsHotSellList() async {
-    ResultData resultData = await HttpManager.post(HomeApi.hot_sell_list, {});
-    if (!resultData.result) {
-      showError(resultData.msg??'');
-      return;
-    }
-    GoodsHotSellListModel model =
-        GoodsHotSellListModel.fromJson(resultData.data);
-    if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg??'');
-      return;
-    }
-    for (Data data in model.data!) {
-      data.index = model.data!.indexOf(data);
-    }
-    _listModel = model;
-    if (mounted) setState(() {});
-  }
+  // _getGoodsHotSellList() async {
+  //   ResultData resultData = await HttpManager.post(HomeApi.hot_sell_list, {});
+  //   if (!resultData.result) {
+  //     showError(resultData.msg??'');
+  //     return;
+  //   }
+  //   GoodsHotSellListModel model =
+  //       GoodsHotSellListModel.fromJson(resultData.data);
+  //   if (model.code != HttpStatus.SUCCESS) {
+  //     showError(model.msg??'');
+  //     return;
+  //   }
+  //   for (Data data in model.data!) {
+  //     data.index = model.data!.indexOf(data);
+  //   }
+  //   _listModel = model;
+  //   if (mounted) setState(() {});
+  // }
 
   int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
   String _jdTypeText = '全部';
@@ -526,7 +524,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         //   0,
         // );
         _presenter!.fetchList(-99, 0, _sortType, widget.countryId,
-            keyword: _searchText, JDType: _jDType);
+            keyword: _searchText, jDType: _jDType);
         setState(() {
 
         });
@@ -542,7 +540,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           _sortType,
           widget.countryId,
           keyword: _searchText,
-          JDType: _jDType,
+          jDType: _jDType,
           onLoadDone: () {
             Future.delayed(Duration(milliseconds: 100), () {
               if (mounted) setState(() {});
@@ -736,42 +734,42 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     );
   }
 
-  _buildGridView() {
-    return GridView.builder(
-        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
-        physics: AlwaysScrollableScrollPhysics(),
-        itemCount: _listViewController!.getData().length,
-        gridDelegate:
-            ItemTagWidget.getSliverGridDelegate(_displayList, context),
-        itemBuilder: (context, index) {
-          GoodsSimple goods = _listViewController!.getData()[index];
-          return MaterialButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(goods.id as int?));
-              },
-              child: _displayList
-                  // ? BrandDetailListItem(goods: goods)
-                  // ? NormalGoodsItem(model: goods, buildCtx: context,)
-                  ? GoodsItemWidget.normalGoodsItem(
-                      gifController: GifController(vsync: this)
-                        ..repeat(
-                          min: 0,
-                          max: 20,
-                          period: Duration(milliseconds: 700),
-                        ),
-                      onBrandClick: () {
-                        AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
-                            arguments: BrandGoodsListPage.setArguments(
-                                goods.brandId as int?, goods.brandName));
-                      },
-                      buildCtx: context,
-                      model: goods,
-                    )
-                  : BrandDetailGridItem(goods: goods));
-        });
-  }
+  // _buildGridView() {
+  //   return GridView.builder(
+  //       padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
+  //       physics: AlwaysScrollableScrollPhysics(),
+  //       itemCount: _listViewController!.getData().length,
+  //       gridDelegate:
+  //           ItemTagWidget.getSliverGridDelegate(_displayList, context),
+  //       itemBuilder: (context, index) {
+  //         GoodsSimple goods = _listViewController!.getData()[index];
+  //         return MaterialButton(
+  //             padding: EdgeInsets.zero,
+  //             onPressed: () {
+  //               AppRouter.push(context, RouteName.COMMODITY_PAGE,
+  //                   arguments: CommodityDetailPage.setArguments(goods.id as int?));
+  //             },
+  //             child: _displayList
+  //                 // ? BrandDetailListItem(goods: goods)
+  //                 // ? NormalGoodsItem(model: goods, buildCtx: context,)
+  //                 ? GoodsItemWidget.normalGoodsItem(
+  //                     gifController: GifController(vsync: this)
+  //                       ..repeat(
+  //                         min: 0,
+  //                         max: 20,
+  //                         period: Duration(milliseconds: 700),
+  //                       ),
+  //                     onBrandClick: () {
+  //                       AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+  //                           arguments: BrandGoodsListPage.setArguments(
+  //                               goods.brandId as int?, goods.brandName));
+  //                     },
+  //                     buildCtx: context,
+  //                     model: goods,
+  //                   )
+  //                 : BrandDetailGridItem(goods: goods));
+  //       });
+  // }
 
   Future _callRefresh() async {
     final cancel = ReToast.raw(Container(
@@ -791,7 +789,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       _sortType,
       widget.countryId,
       keyword: _searchText,
-      JDType: _jDType,
+      jDType: _jDType,
     );
 
     _recommendWords = await HomeFuc.recommendWords(_searchText);
@@ -937,7 +935,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   _searchHistoryWidget() {
     List<Widget> choiceChipList = [];
-    if (_searchHistory != null && _searchHistory.length > 0) {
+    if (_searchHistory.isEmpty && _searchHistory.length > 0) {
       for (var text in _searchHistory) {
         choiceChipList.add(Padding(
           padding: EdgeInsets.only(right: 10, bottom: 5),
@@ -1013,7 +1011,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   _recommendWidget() {
     List<Widget> keyWordList = [];
-    int leg = 0;
+    //int leg = 0;
     if (_recommendWords.length > 0) {
       for (int i=0;i<_recommendWords.length;i++) {
         keyWordList.add(Padding(
@@ -1066,7 +1064,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     if (UserManager.instance!.haveLogin) {
       _searchHistory = prefs.getStringList(
           UserManager.instance!.user.info!.id.toString() + "userSearhHistory")??[];
-      if (_searchHistory == null) {
+      if (_searchHistory.isEmpty) {
         _searchHistory = [];
       }
       setState(() {});

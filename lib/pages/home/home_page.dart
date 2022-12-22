@@ -16,7 +16,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/home_dao.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -163,7 +162,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   Color? getCurrentThemeColor() {
-    return getStore().state.themeData!.appBarTheme.color;
+    return getStore().state.themeData!.appBarTheme.backgroundColor;
   }
 
   Color? getCurrentAppItemColor() {
@@ -538,7 +537,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       //
       //             Get.to(()=>WholesaleCustomerPage(model: model,));
       //           } else {
-      //             AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+      //             Get.offAll(() => LoginPage());
       //             // showError("请先登录!");
       //             Toast.showError("请先登录");
       //           }
@@ -1060,269 +1059,269 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
-  _brandWidget() {
-    return Container(
-      color: AppColor.frenchColor,
-      padding: EdgeInsets.all(8.rw),
-      child: Container(
-        //margin: EdgeInsets.symmetric(horizontal:8.rw ,vertical: 8.rw),
-        height: 146.rw,
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          image: DecorationImage(
-            image: AssetImage(Assets.homeBrandBg.path),
-            fit: BoxFit.cover,
-            //alignment: Alignment.center,
-          ),
-        ),
-        child: Row(
-          children: [
-            18.wb,
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 36.rw,
-                  width: 36.rw,
-                  color: Colors.white,
-                ),
-                16.hb,
-                Text(
-                  '三足松鼠品牌馆',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10 * 2.sp),
-                ),
-                8.hb,
-                Text(
-                  '健康轻食新主张',
-                  style: TextStyle(
-                      color: Colors.white.withOpacity(0.7), fontSize: 8 * 2.sp),
-                ),
-                16.hb,
-                Container(
-                  width: 52.rw,
-                  height: 18.rw,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.rw),
-                    border: Border.all(color: Color(0xFFFFC8A5)),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 1.rw),
-                        color: Color(0xFFD42E20),
-                        blurRadius: 3.rw,
-                      ),
-                    ],
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: <Color>[
-                        Color(0xFFFFE4AA),
-                        Color(0xFFEE6E4D),
-                      ],
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    '立即查看',
-                    style: TextStyle(
-                        color: Color(0xFFD5101A),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 9 * 2.sp),
-                  ),
-                )
-              ],
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  42.wb,
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.rw),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(Assets.homeBrandGoodBg.path),
-                            fit: BoxFit.fill,
-                            //alignment: Alignment.center,
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            16.hb,
-                            Container(
-                              width: 62.rw,
-                              height: 62.rw,
-                              color: Colors.red,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 6.rw),
-                                child: Column(
-                                  children: [
-                                    5.hb,
-                                    Text(
-                                      '三只松鼠 夏威夷果 3大包',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Color(0xFF333333),
-                                        fontSize: 10.rsp,
-                                      ),
-                                    ),
-                                    5.hb,
-                                    Row(
-                                      children: [
-                                        Text(' ¥',
-                                            style: TextStyle(
-                                                color: Color(0xFFC92219),
-                                                fontSize: 10.rsp,
-                                                fontWeight: FontWeight.bold)),
-                                        Text('30.00',
-                                            style: TextStyle(
-                                                color: Color(0xFFC92219),
-                                                fontSize: 12.rsp,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  15.wb,
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.rw),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(Assets.homeBrandGoodBg.path),
-                            fit: BoxFit.fill,
-                            //alignment: Alignment.center,
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            16.hb,
-                            Container(
-                              width: 62.rw,
-                              height: 62.rw,
-                              color: Colors.red,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 6.rw),
-                                child: Column(
-                                  children: [
-                                    5.hb,
-                                    Text(
-                                      '三只松鼠 夏威夷果 3大包',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Color(0xFF333333),
-                                        fontSize: 10.rsp,
-                                      ),
-                                    ),
-                                    5.hb,
-                                    Row(
-                                      children: [
-                                        Text(' ¥',
-                                            style: TextStyle(
-                                                color: Color(0xFFC92219),
-                                                fontSize: 10.rsp,
-                                                fontWeight: FontWeight.bold)),
-                                        Text('30.00',
-                                            style: TextStyle(
-                                                color: Color(0xFFC92219),
-                                                fontSize: 12.rsp,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  15.wb,
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.rw),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(Assets.homeBrandGoodBg.path),
-                            fit: BoxFit.fill,
-                            //alignment: Alignment.center,
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            16.hb,
-                            Container(
-                              width: 62.rw,
-                              height: 62.rw,
-                              color: Colors.red,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 6.rw),
-                                child: Column(
-                                  children: [
-                                    5.hb,
-                                    Text(
-                                      '三只松鼠 夏威夷果 3大包',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Color(0xFF333333),
-                                        fontSize: 10.rsp,
-                                      ),
-                                    ),
-                                    5.hb,
-                                    Row(
-                                      children: [
-                                        Text(' ¥',
-                                            style: TextStyle(
-                                                color: Color(0xFFC92219),
-                                                fontSize: 10.rsp,
-                                                fontWeight: FontWeight.bold)),
-                                        Text('30.00',
-                                            style: TextStyle(
-                                                color: Color(0xFFC92219),
-                                                fontSize: 12.rsp,
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  20.wb,
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  // _brandWidget() {
+  //   return Container(
+  //     color: AppColor.frenchColor,
+  //     padding: EdgeInsets.all(8.rw),
+  //     child: Container(
+  //       //margin: EdgeInsets.symmetric(horizontal:8.rw ,vertical: 8.rw),
+  //       height: 146.rw,
+  //       decoration: BoxDecoration(
+  //         color: Colors.transparent,
+  //         image: DecorationImage(
+  //           image: AssetImage(Assets.homeBrandBg.path),
+  //           fit: BoxFit.cover,
+  //           //alignment: Alignment.center,
+  //         ),
+  //       ),
+  //       child: Row(
+  //         children: [
+  //           18.wb,
+  //           Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Container(
+  //                 height: 36.rw,
+  //                 width: 36.rw,
+  //                 color: Colors.white,
+  //               ),
+  //               16.hb,
+  //               Text(
+  //                 '三足松鼠品牌馆',
+  //                 style: TextStyle(
+  //                     color: Colors.white,
+  //                     fontWeight: FontWeight.bold,
+  //                     fontSize: 10 * 2.sp),
+  //               ),
+  //               8.hb,
+  //               Text(
+  //                 '健康轻食新主张',
+  //                 style: TextStyle(
+  //                     color: Colors.white.withOpacity(0.7), fontSize: 8 * 2.sp),
+  //               ),
+  //               16.hb,
+  //               Container(
+  //                 width: 52.rw,
+  //                 height: 18.rw,
+  //                 decoration: BoxDecoration(
+  //                   borderRadius: BorderRadius.circular(15.rw),
+  //                   border: Border.all(color: Color(0xFFFFC8A5)),
+  //                   boxShadow: [
+  //                     BoxShadow(
+  //                       offset: Offset(0, 1.rw),
+  //                       color: Color(0xFFD42E20),
+  //                       blurRadius: 3.rw,
+  //                     ),
+  //                   ],
+  //                   gradient: LinearGradient(
+  //                     begin: Alignment.topCenter,
+  //                     end: Alignment.bottomCenter,
+  //                     colors: <Color>[
+  //                       Color(0xFFFFE4AA),
+  //                       Color(0xFFEE6E4D),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 alignment: Alignment.center,
+  //                 child: Text(
+  //                   '立即查看',
+  //                   style: TextStyle(
+  //                       color: Color(0xFFD5101A),
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 9 * 2.sp),
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //           Expanded(
+  //             child: Row(
+  //               children: [
+  //                 42.wb,
+  //                 Expanded(
+  //                   child: Padding(
+  //                     padding: EdgeInsets.symmetric(vertical: 10.rw),
+  //                     child: Container(
+  //                       decoration: BoxDecoration(
+  //                         image: DecorationImage(
+  //                           image: AssetImage(Assets.homeBrandGoodBg.path),
+  //                           fit: BoxFit.fill,
+  //                           //alignment: Alignment.center,
+  //                         ),
+  //                       ),
+  //                       child: Column(
+  //                         children: [
+  //                           16.hb,
+  //                           Container(
+  //                             width: 62.rw,
+  //                             height: 62.rw,
+  //                             color: Colors.red,
+  //                           ),
+  //                           Expanded(
+  //                             child: Padding(
+  //                               padding: EdgeInsets.symmetric(horizontal: 6.rw),
+  //                               child: Column(
+  //                                 children: [
+  //                                   5.hb,
+  //                                   Text(
+  //                                     '三只松鼠 夏威夷果 3大包',
+  //                                     maxLines: 2,
+  //                                     overflow: TextOverflow.ellipsis,
+  //                                     style: TextStyle(
+  //                                       color: Color(0xFF333333),
+  //                                       fontSize: 10.rsp,
+  //                                     ),
+  //                                   ),
+  //                                   5.hb,
+  //                                   Row(
+  //                                     children: [
+  //                                       Text(' ¥',
+  //                                           style: TextStyle(
+  //                                               color: Color(0xFFC92219),
+  //                                               fontSize: 10.rsp,
+  //                                               fontWeight: FontWeight.bold)),
+  //                                       Text('30.00',
+  //                                           style: TextStyle(
+  //                                               color: Color(0xFFC92219),
+  //                                               fontSize: 12.rsp,
+  //                                               fontWeight: FontWeight.bold)),
+  //                                     ],
+  //                                   )
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 15.wb,
+  //                 Expanded(
+  //                   child: Padding(
+  //                     padding: EdgeInsets.symmetric(vertical: 10.rw),
+  //                     child: Container(
+  //                       decoration: BoxDecoration(
+  //                         image: DecorationImage(
+  //                           image: AssetImage(Assets.homeBrandGoodBg.path),
+  //                           fit: BoxFit.fill,
+  //                           //alignment: Alignment.center,
+  //                         ),
+  //                       ),
+  //                       child: Column(
+  //                         children: [
+  //                           16.hb,
+  //                           Container(
+  //                             width: 62.rw,
+  //                             height: 62.rw,
+  //                             color: Colors.red,
+  //                           ),
+  //                           Expanded(
+  //                             child: Padding(
+  //                               padding: EdgeInsets.symmetric(horizontal: 6.rw),
+  //                               child: Column(
+  //                                 children: [
+  //                                   5.hb,
+  //                                   Text(
+  //                                     '三只松鼠 夏威夷果 3大包',
+  //                                     maxLines: 2,
+  //                                     overflow: TextOverflow.ellipsis,
+  //                                     style: TextStyle(
+  //                                       color: Color(0xFF333333),
+  //                                       fontSize: 10.rsp,
+  //                                     ),
+  //                                   ),
+  //                                   5.hb,
+  //                                   Row(
+  //                                     children: [
+  //                                       Text(' ¥',
+  //                                           style: TextStyle(
+  //                                               color: Color(0xFFC92219),
+  //                                               fontSize: 10.rsp,
+  //                                               fontWeight: FontWeight.bold)),
+  //                                       Text('30.00',
+  //                                           style: TextStyle(
+  //                                               color: Color(0xFFC92219),
+  //                                               fontSize: 12.rsp,
+  //                                               fontWeight: FontWeight.bold)),
+  //                                     ],
+  //                                   )
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 15.wb,
+  //                 Expanded(
+  //                   child: Padding(
+  //                     padding: EdgeInsets.symmetric(vertical: 10.rw),
+  //                     child: Container(
+  //                       decoration: BoxDecoration(
+  //                         image: DecorationImage(
+  //                           image: AssetImage(Assets.homeBrandGoodBg.path),
+  //                           fit: BoxFit.fill,
+  //                           //alignment: Alignment.center,
+  //                         ),
+  //                       ),
+  //                       child: Column(
+  //                         children: [
+  //                           16.hb,
+  //                           Container(
+  //                             width: 62.rw,
+  //                             height: 62.rw,
+  //                             color: Colors.red,
+  //                           ),
+  //                           Expanded(
+  //                             child: Padding(
+  //                               padding: EdgeInsets.symmetric(horizontal: 6.rw),
+  //                               child: Column(
+  //                                 children: [
+  //                                   5.hb,
+  //                                   Text(
+  //                                     '三只松鼠 夏威夷果 3大包',
+  //                                     maxLines: 2,
+  //                                     overflow: TextOverflow.ellipsis,
+  //                                     style: TextStyle(
+  //                                       color: Color(0xFF333333),
+  //                                       fontSize: 10.rsp,
+  //                                     ),
+  //                                   ),
+  //                                   5.hb,
+  //                                   Row(
+  //                                     children: [
+  //                                       Text(' ¥',
+  //                                           style: TextStyle(
+  //                                               color: Color(0xFFC92219),
+  //                                               fontSize: 10.rsp,
+  //                                               fontWeight: FontWeight.bold)),
+  //                                       Text('30.00',
+  //                                           style: TextStyle(
+  //                                               color: Color(0xFFC92219),
+  //                                               fontSize: 12.rsp,
+  //                                               fontWeight: FontWeight.bold)),
+  //                                     ],
+  //                                   )
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 20.wb,
+  //               ],
+  //             ),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   FlexibleSpaceBar _flexibleSpaceBar(context) {
     return FlexibleSpaceBar(
@@ -2202,26 +2201,26 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   bool get wantKeepAlive => true;
 
-  _getKeyWords() async {
-    ResultData resultData =
-        await HttpManager.post(APIV2.userAPI.getKeyWords, {});
-    if (resultData.data != null) {
-      if (resultData.data['data'] != null) {
-        setState(() {
-          keyWords = resultData.data['data'];
-        });
-      }
-      return;
-    }
-    // BannerListModel model = BannerListModel.fromJson(resultData.data);
-    // if (model.code != HttpStatus.SUCCESS) {
-    //   showError(model.msg);
-    //   return;
-    // }
-    // _bannerState(() {
-    //   _bannerList = model.data;
-    // });
-  }
+  // _getKeyWords() async {
+  //   ResultData resultData =
+  //       await HttpManager.post(APIV2.userAPI.getKeyWords, {});
+  //   if (resultData.data != null) {
+  //     if (resultData.data['data'] != null) {
+  //       setState(() {
+  //         keyWords = resultData.data['data'];
+  //       });
+  //     }
+  //     return;
+  //   }
+  //   // BannerListModel model = BannerListModel.fromJson(resultData.data);
+  //   // if (model.code != HttpStatus.SUCCESS) {
+  //   //   showError(model.msg);
+  //   //   return;
+  //   // }
+  //   // _bannerState(() {
+  //   //   _bannerList = model.data;
+  //   // });
+  // }
 
   _getBannerList() async {
     ResultData resultData = await HttpManager.post(HomeApi.banner_list, {

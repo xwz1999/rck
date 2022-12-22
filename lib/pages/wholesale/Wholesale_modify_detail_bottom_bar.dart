@@ -169,123 +169,123 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
     return safeArea;
   }
 
-  _oneButtonRow() {
-    return Expanded(
-      child: Stack(
-        children: <Widget>[
-          CustomImageButton(
-            height: rSize(40),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            backgroundColor: AppColor.pinkColor,
-            fontSize: 15 * 2.sp,
-            onPressed: () {},
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
-            child: GestureDetector(
-                // onTap: widget.shareListener,
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "抱歉!当前商品已售罄",
-                  style: TextStyle(
-                      letterSpacing: -0.5,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 13 * 2.sp,
-                      color: Colors.black),
-                ),
-              ],
-            )),
-          ),
-        ],
-      ),
-    );
-  }
+  // _oneButtonRow() {
+  //   return Expanded(
+  //     child: Stack(
+  //       children: <Widget>[
+  //         CustomImageButton(
+  //           height: rSize(40),
+  //           borderRadius: BorderRadius.all(Radius.circular(30)),
+  //           backgroundColor: AppColor.pinkColor,
+  //           fontSize: 15 * 2.sp,
+  //           onPressed: () {},
+  //         ),
+  //         Positioned(
+  //           left: 0,
+  //           right: 0,
+  //           bottom: 0,
+  //           top: 0,
+  //           child: GestureDetector(
+  //               // onTap: widget.shareListener,
+  //               child: Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: <Widget>[
+  //               Text(
+  //                 "抱歉!当前商品已售罄",
+  //                 style: TextStyle(
+  //                     letterSpacing: -0.5,
+  //                     fontWeight: FontWeight.w300,
+  //                     fontSize: 13 * 2.sp,
+  //                     color: Colors.black),
+  //               ),
+  //             ],
+  //           )),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _vipTwoButtonRow() {
-    String? commission = widget.goodsDetail == null
-        ? null
-        : widget.goodsDetail!.price!.min!.commission!.toStringAsFixed(2);
-    return Expanded(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  child: Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.asset(
-                        'assets/goodsdetail_bottom_bar_red.png',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  right: 0,
-                  left: 0,
-                  top: (55 - rSize(40)) / 2,
-                  bottom: (55 - rSize(40)) / 2,
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  top: 0,
-                  child: GestureDetector(
-                    onTap: widget.buyListener,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/goodsdetail_bottom_share_white.png',
-                              width: rSize(13),
-                              height: 13 * 2.h,
-                            ),
-                            Container(
-                              width: 2,
-                            ),
-                            Text(
-                              "领券购买",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 14 * 2.sp,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        TextUtils.isEmpty(commission) ||
-                                UserLevelTool.currentRoleLevelEnum() ==
-                                    UserRoleLevel.Vip
-                            ? Container(
-                                height: 0,
-                              )
-                            : Text(
-                                "省￥" + commission!,
-                                style: TextStyle(
-                                    letterSpacing: -0.5,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 9 * 2.sp,
-                                    color: Colors.white),
-                              ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // _vipTwoButtonRow() {
+  //   String? commission = widget.goodsDetail == null
+  //       ? null
+  //       : widget.goodsDetail!.price!.min!.commission!.toStringAsFixed(2);
+  //   return Expanded(
+  //     child: Row(
+  //       children: <Widget>[
+  //         Expanded(
+  //           child: Stack(
+  //             children: <Widget>[
+  //               Positioned(
+  //                 child: Container(
+  //                   child: ClipRRect(
+  //                     borderRadius: BorderRadius.circular(30),
+  //                     child: Image.asset(
+  //                       'assets/goodsdetail_bottom_bar_red.png',
+  //                       fit: BoxFit.fill,
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 right: 0,
+  //                 left: 0,
+  //                 top: (55 - rSize(40)) / 2,
+  //                 bottom: (55 - rSize(40)) / 2,
+  //               ),
+  //               Positioned(
+  //                 left: 0,
+  //                 right: 0,
+  //                 bottom: 0,
+  //                 top: 0,
+  //                 child: GestureDetector(
+  //                   onTap: widget.buyListener,
+  //                   child: Column(
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: <Widget>[
+  //                       Row(
+  //                         mainAxisAlignment: MainAxisAlignment.center,
+  //                         children: <Widget>[
+  //                           Image.asset(
+  //                             'assets/goodsdetail_bottom_share_white.png',
+  //                             width: rSize(13),
+  //                             height: 13 * 2.h,
+  //                           ),
+  //                           Container(
+  //                             width: 2,
+  //                           ),
+  //                           Text(
+  //                             "领券购买",
+  //                             style: TextStyle(
+  //                                 fontWeight: FontWeight.w300,
+  //                                 fontSize: 14 * 2.sp,
+  //                                 color: Colors.white),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                       TextUtils.isEmpty(commission) ||
+  //                               UserLevelTool.currentRoleLevelEnum() ==
+  //                                   UserRoleLevel.Vip
+  //                           ? Container(
+  //                               height: 0,
+  //                             )
+  //                           : Text(
+  //                               "省￥" + commission!,
+  //                               style: TextStyle(
+  //                                   letterSpacing: -0.5,
+  //                                   fontWeight: FontWeight.w300,
+  //                                   fontSize: 9 * 2.sp,
+  //                                   color: Colors.white),
+  //                             ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _twoButtonRow() {
 

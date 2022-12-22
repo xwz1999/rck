@@ -1,14 +1,13 @@
 import 'dart:ui';
-
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/banlance/withdraw_page_third.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
 import 'package:recook/pages/user/model/withdraw_amount_model.dart';
@@ -247,7 +246,7 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                         //   model: model,
                         // ));
                         if (UserManager.instance!.user.info!.id == 0) {
-                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Get.offAll(() => LoginPage());
                           Toast.showError('请先登录...');
                           return;
                         }
@@ -599,7 +598,7 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
               else{
                 bool apply = await UserBalanceFunc.applyWithdrawal(
                     UserManager.instance!.userBrief!.balance, isElectronics ? 1 : 2,
-                    logistics_name: logistics, waybill_code: logisticsNumber);
+                    logisticsName: logistics, waybillCode: logisticsNumber);
 
                 if (apply) {
                   ReToast.success(text: '提交成功');
@@ -642,49 +641,49 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
     );
   }
 
-  _textItem(String title, String content, {bool show = false}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 60.rw,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Color(0xFF999999),
-              fontSize: 14.rsp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        16.wb,
-        Expanded(
-          child: Text(
-            content,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Color(0xFF333333),
-              fontSize: 14.rsp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        show
-            ? GestureDetector(
-                onTap: () {
-                  ClipboardData data = new ClipboardData(text: content);
-                  Clipboard.setData(data);
-                  ReToast.success(text: '复制成功');
-                },
-                child: Image.asset(
-                  Assets.icWithdrawalCopy.path,
-                  width: 16.rw,
-                  height: 16.rw,
-                ),
-              )
-            : SizedBox(),
-      ],
-    );
-  }
+  // _textItem(String title, String content, {bool show = false}) {
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       SizedBox(
+  //         width: 60.rw,
+  //         child: Text(
+  //           title,
+  //           style: TextStyle(
+  //             color: Color(0xFF999999),
+  //             fontSize: 14.rsp,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //       16.wb,
+  //       Expanded(
+  //         child: Text(
+  //           content,
+  //           maxLines: 3,
+  //           overflow: TextOverflow.ellipsis,
+  //           style: TextStyle(
+  //             color: Color(0xFF333333),
+  //             fontSize: 14.rsp,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ),
+  //       show
+  //           ? GestureDetector(
+  //               onTap: () {
+  //                 ClipboardData data = new ClipboardData(text: content);
+  //                 Clipboard.setData(data);
+  //                 ReToast.success(text: '复制成功');
+  //               },
+  //               child: Image.asset(
+  //                 Assets.icWithdrawalCopy.path,
+  //                 width: 16.rw,
+  //                 height: 16.rw,
+  //               ),
+  //             )
+  //           : SizedBox(),
+  //     ],
+  //   );
+  // }
 }

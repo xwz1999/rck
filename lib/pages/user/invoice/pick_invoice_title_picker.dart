@@ -141,16 +141,24 @@ class _InvoicePickerState extends State<InvoicePicker> {
                 horizontal: rSize(16),
                 vertical: rSize(12),
               ),
-              child: FlatButton(
-                color: AppColor.redColor,
+              child:
+              TextButton(
                 onPressed: () {
                   Get.off(InvoiceAddTitlePage());
                 },
-                padding: EdgeInsets.symmetric(
-                  vertical: rSize(12),
+                child:Text(
+                  '添加常用发票抬头',
+                  style: TextStyle(
+                    fontSize: 16 * 2.sp,
+                    color: Colors.white,
+                  ),
                 ),
-                child: Text('添加常用发票抬头'),
+                style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),
+                    backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(rSize(4)),
+                    )) ),
               ),
+
             ),
             SizedBox(
               height: MediaQuery.of(context).viewPadding.bottom,

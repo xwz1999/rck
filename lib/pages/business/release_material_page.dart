@@ -21,6 +21,7 @@ import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/image_selected_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
@@ -211,9 +212,9 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
               fontSize: 16,
               onPressed: () {
                 if (_contentText.isEmpty) {
-                  GSDialog.of(context).showError(context, '请输入您的想法！');
+                  ReToast.err(text:'请输入您的想法！');
                 } else if (_goodsModel == null) {
-                  GSDialog.of(context).showError(context, '请添加一个关联产品！');
+                  ReToast.err(text:'请添加一个关联产品！');
                 } else {
                   _publish();
                 }
@@ -260,7 +261,7 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
     Map<String, dynamic> params = {
       "userId": UserManager.instance!.user.info!.id,
       "goodsId": _goodsModel!.id,
-      "text": _contentText == null ? "" : _contentText,
+      "text":  _contentText,
     };
     List<Map<String, dynamic>> images = [];
     for (MediaModel media in _imageFiles) {
@@ -356,11 +357,11 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
             listener: (index) async {
           ActionSheet.dismiss(context);
           if (index == 0) {
-            List<AssetEntity?> entitys = [];
+            List<AssetEntity?>? entitys = [];
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
 
-            if (entitys == null) {
+            if (entitys.isEmpty) {
               return;
             }
 

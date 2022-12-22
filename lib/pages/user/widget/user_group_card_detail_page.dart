@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/constants/api.dart';
@@ -7,6 +8,7 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/model/member_info_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -128,14 +130,13 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                       // suffix: (widget.comment ?? '').text.make(),
                       suffix: TextField(
                         onEditingComplete: () async {
-                          GSDialog.of(context)
-                              .showLoadingDialog(context, '修改中');
+                          ReToast.loading(text: '修改中');
                           await HttpManager.post(UserApi.invite_remark_name, {
                             "userId": widget.id,
                             "remarkName": _editingController!.text
                           });
                           setState(() {});
-                          GSDialog.of(context).dismiss(context);
+                          BotToast.closeAllLoading();
                           _refreshController.requestRefresh();
                         },
                         controller: _editingController,
@@ -174,7 +175,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                         onTap: () {
                           Clipboard.setData(ClipboardData(
                               text: _memberInfoModel!.wechatNo ?? ''));
-                          GSDialog.of(context).showSuccess(context, '复制成功');
+                          ReToast.success(text:'复制成功' );
                         },
                         child: Image.asset(
                           R.ASSETS_USER_COPY_PNG,

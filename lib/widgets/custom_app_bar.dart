@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/header.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -63,12 +64,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           actions: actions,
           flexibleSpace: flexibleSpace,
           titleSpacing: titleSpacing,
-          brightness:
-              themeData == null ? Brightness.dark : themeData!.brightness,
+          systemOverlayStyle:themeData == null ?SystemUiOverlayStyle.dark : themeData!.systemOverlayStyle,
+          // brightness:
+          //     themeData == null ? Brightness.dark : themeData!.brightness,
           backgroundColor:
-              appBackground ?? (themeData == null ? null : themeData!.color),
+              appBackground ?? (themeData == null ? null : themeData!.backgroundColor),
           iconTheme: themeData == null ? null : themeData!.iconTheme,
-          textTheme: themeData == null ? null : themeData!.textTheme,
+          toolbarTextStyle:themeData == null ? null : themeData!.toolbarTextStyle,
+          //textTheme: themeData == null ? null : themeData!.textTheme,
           elevation: elevation,
           toolbarOpacity: 1,
           centerTitle: true,
@@ -87,7 +90,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               size: 17,
               color: themeData == null
                   ? Colors.white
-                  : themeData!.textTheme!.headline6!.color,
+                  : themeData!.toolbarTextStyle?.color,
             ),
             onPressed: backEvent ??
                 () {

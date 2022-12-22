@@ -141,49 +141,53 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
           child: SafeArea(
             bottom: true,
             top: false,
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(rSize(4)),
-              ),
-              disabledColor: Color(0xFFCCCCCC),
-              disabledTextColor: Colors.white,
-              padding: EdgeInsets.symmetric(vertical: rSize(13)),
+            child:TextButton(
               onPressed: _parseCheck()
                   ? () {
-                      if (widget.arguments != null) {
-                        _invoicePresenter
-                            .updateLetterHead(
-                          _isCompany ? 1 : 2,
-                          _isCompany ? _cName.text : _pName.text,
-                          model!.id,
-                          taxNum: _taxNum.text,
-                          addr: _addr.text,
-                          phone: _phone.text,
-                          bankNum: _bankNum.text,
-                          defaultValue: defaultValue ? 1 : 0,
-                        )
-                            .then((value) {
-                          Navigator.pop(context);
-                        });
-                      } else
-                        _invoicePresenter
-                            .addLetterHead(
-                          _isCompany ? 1 : 2,
-                          _isCompany ? _cName.text : _pName.text,
-                          taxNum: _taxNum.text,
-                          addr: _addr.text,
-                          phone: _phone.text,
-                          bankNum: _bankNum.text,
-                          defaultValue: defaultValue ? 1 : 0,
-                        )
-                            .then((value) {
-                          Navigator.pop(context);
-                        });
-                    }
+                if (widget.arguments != null) {
+                  _invoicePresenter
+                      .updateLetterHead(
+                    _isCompany ? 1 : 2,
+                    _isCompany ? _cName.text : _pName.text,
+                    model!.id,
+                    taxNum: _taxNum.text,
+                    addr: _addr.text,
+                    phone: _phone.text,
+                    bankNum: _bankNum.text,
+                    defaultValue: defaultValue ? 1 : 0,
+                  )
+                      .then((value) {
+                    Navigator.pop(context);
+                  });
+                } else
+                  _invoicePresenter
+                      .addLetterHead(
+                    _isCompany ? 1 : 2,
+                    _isCompany ? _cName.text : _pName.text,
+                    taxNum: _taxNum.text,
+                    addr: _addr.text,
+                    phone: _phone.text,
+                    bankNum: _bankNum.text,
+                    defaultValue: defaultValue ? 1 : 0,
+                  )
+                      .then((value) {
+                    Navigator.pop(context);
+                  });
+              }
                   : null,
-              child: Text('保存'),
-              color: AppColor.redColor,
+              child:Text(
+                '保存',
+                style: TextStyle(
+                  fontSize: 16 * 2.sp,
+                  color: Colors.white,
+                ),
+              ),
+              style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),
+                  backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(rSize(4)),
+                  )) ),
             ),
+
           ),
         ),
       ),
@@ -212,7 +216,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
           ),
           inNeed: true,
         ),
-        _BuildDivider(),
+        _buildDivider(),
         SCTile.listTile(
           '公司税号',
           TextField(
@@ -232,7 +236,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
           ),
           inNeed: true,
         ),
-        _BuildDivider(),
+        _buildDivider(),
         SCTile.listTile(
           '注册地址',
           TextField(
@@ -251,7 +255,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
             ),
           ),
         ),
-        _BuildDivider(),
+        _buildDivider(),
         SCTile.listTile(
           '注册电话',
           TextField(
@@ -270,7 +274,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
             ),
           ),
         ),
-        _BuildDivider(),
+        _buildDivider(),
         SCTile.listTile(
           '银行账号',
           TextField(
@@ -323,7 +327,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
     );
   }
 
-  _BuildDivider() {
+  _buildDivider() {
     return Divider(
       height: rSize(0.5),
       thickness: rSize(0.5),

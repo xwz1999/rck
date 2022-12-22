@@ -17,16 +17,16 @@ class NavigatorUtils {
   }
 
   /// 返回并跳转新界面
-  static Future popAndPushNamed(BuildContext context, String routeName, {required arguments}) {
-    return Navigator.popAndPushNamed(
-        context, routeName, arguments: arguments);
-  }
+  // static Future popAndPushNamed(BuildContext context, String routeName, {required arguments}) {
+  //   return Navigator.popAndPushNamed(
+  //       context, routeName, arguments: arguments);
+  // }
 
   /// 返回并跳转新界面
-  static Future pushNamedAndRemoveUntil(BuildContext context, String routeName, {required arguments}) {
-    return Navigator.pushNamedAndRemoveUntil(
-        context, routeName, (route) => route == null, arguments: arguments);
-  }
+  // static Future pushNamedAndRemoveUntil(BuildContext context, String routeName, {required arguments}) {
+  //   return Navigator.pushNamedAndRemoveUntil(
+  //       context, routeName, (route) => route == null, arguments: arguments);
+  // }
 
 
   /// ios系统push

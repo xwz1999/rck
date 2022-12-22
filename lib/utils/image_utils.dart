@@ -135,7 +135,7 @@ class ImageUtils {
       List<Uint8List> fileDatas,
       void Function(String index) callBack,
       void Function(bool success,String path) endBack,{int quality=80}) async {
-     Map<dynamic, dynamic> result;
+     //Map<dynamic, dynamic> result;
      print(fileDatas);
     //
     try{

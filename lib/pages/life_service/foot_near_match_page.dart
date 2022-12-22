@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/life_service/nba_model.dart';
@@ -135,7 +134,7 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
                                   children: [
                                     Text(
                                       e.team1Score ?? '',
-                                      style: e.status==3?TextStyle(
+                                      style: e.status=='3'?TextStyle(
                                           color: int.parse(
                                               e.team2Score ?? '0') >
                                               int.parse(e.team1Score ?? '0')
@@ -156,7 +155,7 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
                                     60.wb,
                                     Text(
                                       e.team2Score ?? '',
-                                      style: e.status==3?TextStyle(
+                                      style: e.status=='3'?TextStyle(
                                           color: int.parse(
                                               e.team2Score ?? '0') >
                                               int.parse(e.team1Score ?? '0')

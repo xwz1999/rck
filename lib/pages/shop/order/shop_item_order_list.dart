@@ -159,26 +159,26 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
     );
   }
 
-  _deleteButtonWidget() {
-    return CustomImageButton(
-      title: "删除订单",
-      padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
-//            backgroundColor: AppColor.themeColor,
-      color: AppColor.themeColor,
-      fontSize: 14 * 2.sp,
-      border: Border.all(color: AppColor.themeColor, width: 0.3),
-      borderRadius: BorderRadius.all(Radius.circular(40)),
-      onPressed: () {
-        if (widget.delete != null) {
-          widget.delete!(widget.orderModel);
-        }
-        // if (widget.goToPay == null) return;
-        // widget.goToPay(widget.orderModel, callback: () {
-        //   setState(() {});
-        // });
-      },
-    );
-  }
+//   _deleteButtonWidget() {
+//     return CustomImageButton(
+//       title: "删除订单",
+//       padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
+// //            backgroundColor: AppColor.themeColor,
+//       color: AppColor.themeColor,
+//       fontSize: 14 * 2.sp,
+//       border: Border.all(color: AppColor.themeColor, width: 0.3),
+//       borderRadius: BorderRadius.all(Radius.circular(40)),
+//       onPressed: () {
+//         if (widget.delete != null) {
+//           widget.delete!(widget.orderModel);
+//         }
+//         // if (widget.goToPay == null) return;
+//         // widget.goToPay(widget.orderModel, callback: () {
+//         //   setState(() {});
+//         // });
+//       },
+//     );
+//   }
 
   _buildBrandsItem() {
     return Column(
@@ -272,30 +272,30 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
         }));
   }
 
-  _brandBottomPrice() {
-    // int quantity = 0;
-    // brand.goods.forEach((goods) {
-    //   quantity += goods.quantity;
-    // });
-    return Container(
-        alignment: Alignment.centerRight,
-        child: RichText(
-            textAlign: TextAlign.end,
-            text: TextSpan(
-                // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
-                text:
-                    "运费: ￥${widget.orderModel!.expressTotalFee!.toStringAsFixed(2)}",
-                style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
-                children: [
-                  TextSpan(
-                      // text: "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
-                      text: "",
-                      style:
-                          AppTextStyle.generate(14 * 2.sp, color: Colors.grey)),
-                ])));
-  }
-
-  _brandBottomButtons() {}
+  // _brandBottomPrice() {
+  //   // int quantity = 0;
+  //   // brand.goods.forEach((goods) {
+  //   //   quantity += goods.quantity;
+  //   // });
+  //   return Container(
+  //       alignment: Alignment.centerRight,
+  //       child: RichText(
+  //           textAlign: TextAlign.end,
+  //           text: TextSpan(
+  //               // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
+  //               text:
+  //                   "运费: ￥${widget.orderModel!.expressTotalFee!.toStringAsFixed(2)}",
+  //               style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
+  //               children: [
+  //                 TextSpan(
+  //                     // text: "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
+  //                     text: "",
+  //                     style:
+  //                         AppTextStyle.generate(14 * 2.sp, color: Colors.grey)),
+  //               ])));
+  // }
+  //
+  // _brandBottomButtons() {}
 
   _goodsItem(OrderGoodsModel goods) {
     return Container(

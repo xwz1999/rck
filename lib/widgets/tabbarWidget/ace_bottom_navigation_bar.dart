@@ -230,7 +230,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
                   blurRadius: 5, // 影颜色,
                   offset: Offset(0, -8)),
             ],
-            color: widget.bgColor != null ? widget.bgColor : Colors.white,
+            color:  widget.bgColor,
           );
   }
 

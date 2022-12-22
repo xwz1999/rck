@@ -98,8 +98,8 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
     // int index11 = Random().nextInt(2);
     // int itemCount = Random().nextInt(5) + 1;
     int itemCount = widget.model!.photos!.length;
-    Color? focusedColor =
-        !widget.model!.isAttention! ? Color(0xFFFF1E31) : Colors.grey[600];
+    // Color? focusedColor =
+    //     !widget.model!.isAttention! ? Color(0xFFFF1E31) : Colors.grey[600];
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, top: 5),
@@ -276,7 +276,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                       return;
                     } else {
 
-                      var cancel =  ReToast.loading(text:'保存图片中...' );
+                      ReToast.loading(text:'保存图片中...' );
                       byteData = await WidgetToImage.widgetToImage( Directionality(
                         textDirection: TextDirection.ltr,
                         child: Material(
@@ -302,7 +302,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
 
             }else{
 
-              var cancel =  ReToast.loading(text:'保存图片中...' );
+             ReToast.loading(text:'保存图片中...' );
               byteData = await WidgetToImage.widgetToImage( Directionality(
                 textDirection: TextDirection.ltr,
                 child: Material(

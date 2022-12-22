@@ -117,7 +117,7 @@ class MyFavoriteItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
-              Radius.circular(ScreenAdapterUtils.setWidth(12.5))),
+              Radius.circular(25.w)),
           border: Border.all(color: Color(0xffEE5252), width: 0.5),
         ),
         width: 70,

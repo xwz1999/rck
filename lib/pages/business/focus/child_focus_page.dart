@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,14 +10,12 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
-import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/material_list_model.dart';
 import 'package:recook/pages/business/focus/mvp/focus_mvp_contact.dart';
 import 'package:recook/pages/business/focus/mvp/focus_presenter_implementation.dart';
 import 'package:recook/pages/business/items/item_business_focus.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/alert.dart';
@@ -27,7 +23,6 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/pic_swiper.dart';
-import 'package:recook/widgets/share_page/post_all.dart';
 import 'package:recook/widgets/toast.dart';
 
 
@@ -45,10 +40,10 @@ class _FocusPageState extends BaseStoreState<FocusPage>
     implements FocusViewI {
   FocusPresenterImpl? _presenter;
   MvpListViewController<MaterialModel>? _listViewController;
-  List<MainPhotos> _selectPhotos = [];
-  GoodsDetailModel? _goodsDetail;
-  int _goodsId = 0;
-  String _bigImageUrl = "";
+  //List<MainPhotos> _selectPhotos = [];
+  //GoodsDetailModel? _goodsDetail;
+  //int _goodsId = 0;
+  //String _bigImageUrl = "";
 
 
   // _getDetail(int goodsId) async {
@@ -148,7 +143,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
                               deleteItem: "确认",
                               deleteListener: () async {
                                 Alert.dismiss(context);
-                                bool isOpened = await openAppSettings();
+                                await openAppSettings();
                               },
                               type: NormalTextDialogType.delete,
                             ),
@@ -294,7 +289,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
               deleteItem: "确认",
               deleteListener: () async {
                 Alert.dismiss(context);
-                bool isOpened = await openAppSettings();
+                await openAppSettings();
               },
               type: NormalTextDialogType.delete,
             ),
@@ -305,81 +300,81 @@ class _FocusPageState extends BaseStoreState<FocusPage>
 
   }
 
-  _getPoster(){
-    double postImageHorizontalMargin = 30;
-    double postHorizontalMargin = 50;
-    double postWidth = 300 - postHorizontalMargin;
-    double truePhotoWidth = postWidth - postImageHorizontalMargin;
-    double truePhotoHeight = truePhotoWidth;
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      width: MediaQuery.of(context).size.width,
-      height: 480.rw,
-      child: Column(
-        children: <Widget>[
-          UserManager.instance!.homeWeatherModel != null
-              ? Container(
-            color: Colors.white,
-            padding: EdgeInsets.only(
-              top: postImageHorizontalMargin / 2,
-            ),
-            height: 43.rw,
-            child: PostWeatherWidget(
-              homeWeatherModel: UserManager.instance!.homeWeatherModel,
-            ),
-          )
-              : Container(),
-          Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 8,
-            ),
-            child: PostUserInfo(
-              name: UserManager.instance!.user.info!.nickname! + "的店铺",
-              gysId: _goodsDetail!.data!.vendorId,
-            ),
-          ),
-          Container(
-            color: AppColor.frenchColor,
-            width: truePhotoWidth,
-            height: truePhotoHeight,
-            child: CachedNetworkImage(
-              imageUrl: _bigImageUrl,
-            ),
-          ),
-          PostBannerInfo(
-            timeInfo: _getTimeInfo(),
-          ),
-          PostBottomWidget(
-            goodsDetailModel: _goodsDetail,
-          ),
-          Container(
-            height: postImageHorizontalMargin / 2,
-          ),
-        ],
-      ),
-    );
-  }
+  // _getPoster(){
+  //   double postImageHorizontalMargin = 30;
+  //   double postHorizontalMargin = 50;
+  //   double postWidth = 300 - postHorizontalMargin;
+  //   double truePhotoWidth = postWidth - postImageHorizontalMargin;
+  //   double truePhotoHeight = truePhotoWidth;
+  //   return Container(
+  //     color: Colors.white,
+  //     padding: EdgeInsets.symmetric(horizontal: 15),
+  //     width: MediaQuery.of(context).size.width,
+  //     height: 480.rw,
+  //     child: Column(
+  //       children: <Widget>[
+  //         UserManager.instance!.homeWeatherModel != null
+  //             ? Container(
+  //           color: Colors.white,
+  //           padding: EdgeInsets.only(
+  //             top: postImageHorizontalMargin / 2,
+  //           ),
+  //           height: 43.rw,
+  //           child: PostWeatherWidget(
+  //             homeWeatherModel: UserManager.instance!.homeWeatherModel,
+  //           ),
+  //         )
+  //             : Container(),
+  //         Container(
+  //           padding: EdgeInsets.symmetric(
+  //             vertical: 8,
+  //           ),
+  //           child: PostUserInfo(
+  //             name: UserManager.instance!.user.info!.nickname! + "的店铺",
+  //             gysId: _goodsDetail!.data!.vendorId,
+  //           ),
+  //         ),
+  //         Container(
+  //           color: AppColor.frenchColor,
+  //           width: truePhotoWidth,
+  //           height: truePhotoHeight,
+  //           child: CachedNetworkImage(
+  //             imageUrl: _bigImageUrl,
+  //           ),
+  //         ),
+  //         PostBannerInfo(
+  //           timeInfo: _getTimeInfo(),
+  //         ),
+  //         PostBottomWidget(
+  //           goodsDetailModel: _goodsDetail,
+  //         ),
+  //         Container(
+  //           height: postImageHorizontalMargin / 2,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  String _getTimeInfo() {
-    if (_goodsDetail!.data!.promotion != null &&
-        _goodsDetail!.data!.promotion!.id! > 0) {
-      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail!) ==
-          PromotionStatus.start) {
-        //活动中
-        DateTime endTime = DateTime.parse(_goodsDetail!.data!.promotion!.endTime!);
-        return "结束时间\n${DateUtil.formatDate(endTime, format: 'M月d日 HH:mm')}";
-      }
-      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail!) ==
-          PromotionStatus.ready) {
-        DateTime startTime =
-        DateTime.parse(_goodsDetail!.data!.promotion!.startTime!);
-        return "开始时间\n${DateUtil.formatDate(startTime, format: 'M月d日 HH:mm')}";
-      }
-    }
-    return "";
-  }
+  // String _getTimeInfo() {
+  //   if (_goodsDetail!.data!.promotion != null &&
+  //       _goodsDetail!.data!.promotion!.id! > 0) {
+  //     if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+  //         _goodsDetail!) ==
+  //         PromotionStatus.start) {
+  //       //活动中
+  //       DateTime endTime = DateTime.parse(_goodsDetail!.data!.promotion!.endTime!);
+  //       return "结束时间\n${DateUtil.formatDate(endTime, format: 'M月d日 HH:mm')}";
+  //     }
+  //     if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+  //         _goodsDetail!) ==
+  //         PromotionStatus.ready) {
+  //       DateTime startTime =
+  //       DateTime.parse(_goodsDetail!.data!.promotion!.startTime!);
+  //       return "开始时间\n${DateUtil.formatDate(startTime, format: 'M月d日 HH:mm')}";
+  //     }
+  //   }
+  //   return "";
+  // }
 
 }

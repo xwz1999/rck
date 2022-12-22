@@ -102,7 +102,7 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
                     deleteListener: () async{
 
                       Alert.dismiss(context);
-                      bool isOpened = await openAppSettings();
+                      await openAppSettings();
                     },
                     type: NormalTextDialogType.delete,
                   ),

@@ -9,6 +9,7 @@ import 'package:recook/models/base_model.dart';
 import 'package:recook/utils/amount_format.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/result_page.dart';
 
 class RuiCoinTransferToBalancePage extends StatefulWidget {
@@ -153,7 +154,7 @@ class _RuiCoinTransferToBalancePageState extends BaseStoreState<RuiCoinTransferT
     });
 
     if (!resultData.result) {
-      GSDialog.of(context).showError(context, resultData.msg);
+      ReToast.err(text: resultData.msg);
       return;
     }
     // UpgradeCardModel model = UpgradeCardModel.fromJson(resultData.data);

@@ -50,7 +50,7 @@ class _OrderReturnStatusPageState
     extends BaseStoreState<OrderReturnStatusPage> {
   int? _orderGoodsId;
   int? _afterSalesGoodsId;
-  int? _returnStatus;
+  //int? _returnStatus;
   OrderReturnStatusModel? _statusModel;
   DateTime _residueDateTime = DateTime(0, 0, 0, 24, 0, 0);
   TextStyle textStyle = TextStyle(color: Colors.grey[500], fontSize: 12 * 2.sp);
@@ -61,7 +61,7 @@ class _OrderReturnStatusPageState
   @override
   void initState() {
     super.initState();
-    _returnStatus = widget.arguments!['returnStatus'];
+    //_returnStatus = widget.arguments!['returnStatus'];
     _orderGoodsId = widget.arguments!['orderGoodsId'];
     _afterSalesGoodsId = widget.arguments!['afterSalesGoodsId'];
     _getOrderDetail().then((value) {
@@ -401,8 +401,11 @@ class _OrderReturnStatusPageState
       margin: EdgeInsets.only(top: 40 * 2.h),
       padding: EdgeInsets.symmetric(horizontal: rSize(20)),
       height: 40 * 2.h,
-      child: FlatButton(
-        onPressed: () {
+      child:
+
+
+      GestureDetector(
+        onTap: () {
           AppRouter.push(context, RouteName.ORDER_RETURN_ADDRESS,
                   arguments: OrderReturnAddressPage.setArguments(_statusModel))
               .then((status) {
@@ -507,45 +510,45 @@ class _OrderReturnStatusPageState
     );
   }
 
-  _getReturnStatus() {
-    // 1审核中 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
-    switch (_statusModel!.data!.returnStatus) {
-      case 1:
-        return '审核中';
-      case 2:
-        return '审核被拒绝';
-      case 3:
-        return '审核成功';
-      case 4:
-        return '买家已填写退货物流信息';
-      case 5:
-        return '收到退货，确认退款完成';
-      case 6:
-        return '退货被拒绝';
-      default:
-        return '';
-    }
-  }
+  // _getReturnStatus() {
+  //   // 1审核中 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
+  //   switch (_statusModel!.data!.returnStatus) {
+  //     case 1:
+  //       return '审核中';
+  //     case 2:
+  //       return '审核被拒绝';
+  //     case 3:
+  //       return '审核成功';
+  //     case 4:
+  //       return '买家已填写退货物流信息';
+  //     case 5:
+  //       return '收到退货，确认退款完成';
+  //     case 6:
+  //       return '退货被拒绝';
+  //     default:
+  //       return '';
+  //   }
+  // }
 
-  _getReturnSubStatus() {
-    // 1审核中 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
-    switch (_returnStatus) {
-      case 1:
-        return '请耐心等待系统审核';
-      case 2:
-        return '审核被拒绝';
-      case 3:
-        return '审核成功';
-      case 4:
-        return '买家已填写退货物流信息';
-      case 5:
-        return '收到退货，确认退款完成';
-      case 6:
-        return '退货被拒绝';
-      default:
-        return '';
-    }
-  }
+  // _getReturnSubStatus() {
+  //   // 1审核中 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
+  //   switch (_returnStatus) {
+  //     case 1:
+  //       return '请耐心等待系统审核';
+  //     case 2:
+  //       return '审核被拒绝';
+  //     case 3:
+  //       return '审核成功';
+  //     case 4:
+  //       return '买家已填写退货物流信息';
+  //     case 5:
+  //       return '收到退货，确认退款完成';
+  //     case 6:
+  //       return '退货被拒绝';
+  //     default:
+  //       return '';
+  //   }
+  // }
 
   Container _goodsListView() {
     return Container(

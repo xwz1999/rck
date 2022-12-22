@@ -36,9 +36,10 @@ class WholesaleSkuChoosePage extends StatefulWidget {
 
 class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage> {
   WholesaleSku? _sku;
-  String? _commission, _price;
+  String? _price;
+
   late List<String> _skuDes;
-  StringBuffer? _stringBuffer;
+  //StringBuffer? _stringBuffer;
   int? _num;
   List _photoList = [];
   List<PicSwiperItem> picSwiperItem = [];
@@ -54,7 +55,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
     ///为了图片和规格选择顺序对应 先进行排序
     widget.model!.sku!.sort((a,b)=>a!.combineId!.compareTo(b!.combineId!));
     _num = 1;
-    _stringBuffer = StringBuffer();
+    //_stringBuffer = StringBuffer();
     _skuDes = [];
     // widget.itemModels.forEach((element) {
     //   if(element.selected){
@@ -96,10 +97,10 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
     }
 
     if (maxCommission == minCommission) {
-      _commission = maxCommission!.toStringAsFixed(2);
+      //_commission = maxCommission!.toStringAsFixed(2);
     } else {
-      _commission =
-      "${minCommission!.toStringAsFixed(2)}-${maxCommission!.toStringAsFixed(2)}";
+      // _commission =
+      // "${minCommission!.toStringAsFixed(2)}-${maxCommission!.toStringAsFixed(2)}";
     }
   }
 

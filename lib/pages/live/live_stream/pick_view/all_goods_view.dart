@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -6,7 +7,6 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/category_model.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class AllGoodsView extends StatefulWidget {
@@ -133,15 +133,21 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                 itemBuilder: (context, index) {
                                   return CustomImageButton(
                                     onPressed: () {
-                                      CRoute.push(
-                                        context,
-                                        BrandGoodsListView(
-                                          onPick: () {},
-                                          categoryId: e.sub![index].id,
-                                          name: e.sub![index].name,
-                                          logo: e.sub![index].logoUrl,
-                                        ),
-                                      );
+                                      // CRoute.push(
+                                      //   context,
+                                      //   BrandGoodsListView(
+                                      //     onPick: () {},
+                                      //     categoryId: e.sub![index].id,
+                                      //     name: e.sub![index].name,
+                                      //     logo: e.sub![index].logoUrl,
+                                      //   ),
+                                      // );
+                                      Get.off(()=>   BrandGoodsListView(
+                                        onPick: () {},
+                                        categoryId: e.sub![index].id,
+                                        name: e.sub![index].name,
+                                        logo: e.sub![index].logoUrl,
+                                      ),);
                                     },
                                     child: Column(
                                       children: [

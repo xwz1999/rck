@@ -84,7 +84,7 @@ class PermissionTool {
           deleteItem: "去开启",
           deleteListener: () async {
             Alert.dismiss(context);
-            bool isOpened = await openAppSettings();
+            await openAppSettings();
           },
         ));
 

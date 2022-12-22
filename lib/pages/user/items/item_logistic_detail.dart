@@ -107,7 +107,7 @@ class LogisticDetailItem extends StatelessWidget {
         child: Text(
           expressStatus!.context!,
           style: AppTextStyle.generate(
-              ScreenAdapterUtils.setWidth(firstItem ? 14 : 13),
+              firstItem ? 28.w : 26.w,
               color: firstItem ? Colors.black : Colors.grey[500]),
           // maxLines: 3,
         ),

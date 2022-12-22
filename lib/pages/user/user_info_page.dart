@@ -271,9 +271,9 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         List<AssetEntity?> entitys = [];
         var values = await CameraPicker.pickFromCamera(context);
         entitys.add(values);
-        if (entitys == null) {
-          return;
-        }
+        // if (entitys == null) {
+        //   return;
+        // }
         for (var element in entitys) {
           File? file = await element!.file;
           Uint8List? thumbData = await element.thumbnailData;
@@ -386,31 +386,31 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
     UserManager.updateUserInfo(getStore());
   }
 
-  _updateAddress(String address) async {
-    HttpResultModel resultModel = await _presenter.updateAddress(
-        UserManager.instance!.user.info!.id, address);
-    if (!resultModel.result) {
-      showError(resultModel.msg??'');
-      return;
-    }
-    setState(() {
-      UserManager.instance!.user.info!.addr = address;
-    });
-    UserManager.updateUserInfo(getStore());
-  }
+  // _updateAddress(String address) async {
+  //   HttpResultModel resultModel = await _presenter.updateAddress(
+  //       UserManager.instance!.user.info!.id, address);
+  //   if (!resultModel.result) {
+  //     showError(resultModel.msg??'');
+  //     return;
+  //   }
+  //   setState(() {
+  //     UserManager.instance!.user.info!.addr = address;
+  //   });
+  //   UserManager.updateUserInfo(getStore());
+  // }
 
-  _updateWechatNo(String wechatNo) async {
-    HttpResultModel resultModel = await _presenter.updateWechatNo(
-        UserManager.instance!.user.info!.id, wechatNo);
-    if (!resultModel.result) {
-      showError(resultModel.msg??'');
-      return;
-    }
-    setState(() {
-      UserManager.instance!.user.info!.wechatNo = wechatNo;
-    });
-    UserManager.updateUserInfo(getStore());
-  }
+  // _updateWechatNo(String wechatNo) async {
+  //   HttpResultModel resultModel = await _presenter.updateWechatNo(
+  //       UserManager.instance!.user.info!.id, wechatNo);
+  //   if (!resultModel.result) {
+  //     showError(resultModel.msg??'');
+  //     return;
+  //   }
+  //   setState(() {
+  //     UserManager.instance!.user.info!.wechatNo = wechatNo;
+  //   });
+  //   UserManager.updateUserInfo(getStore());
+  // }
 
   _updatePhone(String phone) async {
     HttpResultModel resultModel =

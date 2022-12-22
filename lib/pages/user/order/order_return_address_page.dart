@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -19,6 +20,7 @@ import 'package:recook/models/order_return_status_model.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/sc_tile.dart';
 import 'package:recook/widgets/toast.dart';
 
@@ -44,7 +46,7 @@ class _OrderReturnAddressPageState
 
   FocusNode? _expressFocusNode;
   TextEditingController? _expressController;
-  FocusNode? _expressFeeFocusNode;
+  // FocusNode? _expressFeeFocusNode;
   TextEditingController? _expressFeeController;
 
   bool _commitButtonEnable = false;
@@ -62,7 +64,7 @@ class _OrderReturnAddressPageState
     _expressController = TextEditingController();
     _expressFocusNode = FocusNode();
     _expressFeeController = TextEditingController();
-    _expressFeeFocusNode = FocusNode();
+    //_expressFeeFocusNode = FocusNode();
   }
 
   _getAddressDetail() async {
@@ -204,53 +206,53 @@ class _OrderReturnAddressPageState
     );
   }
 
-  _inputExpressFeeWidget() {
-    return Container(
-      color: Colors.white,
-      height: 35 * 2.h,
-      margin: EdgeInsets.symmetric(vertical: 8 * 2.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(left: rSize(10)),
-            alignment: Alignment.centerLeft,
-            width: rSize(60),
-            child: Text(
-              '运费补偿',
-              style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
-            ),
-          ),
-          Expanded(
-            child: TextField(
-              onChanged: (String string) {
-                setState(() {
-                  if (string.length > 0) {
-                    _commitButtonEnable = true;
-                  } else {
-                    _commitButtonEnable = false;
-                  }
-                });
-              },
-              controller: _expressFeeController,
-              focusNode: _expressFeeFocusNode,
-              keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.black, fontSize: 15 * 2.sp),
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "请填写您的发货费用",
-                hintStyle: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey[400],
-                    fontSize: 15 * 2.sp),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // _inputExpressFeeWidget() {
+  //   return Container(
+  //     color: Colors.white,
+  //     height: 35 * 2.h,
+  //     margin: EdgeInsets.symmetric(vertical: 8 * 2.h),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       children: <Widget>[
+  //         Container(
+  //           margin: EdgeInsets.only(left: rSize(10)),
+  //           alignment: Alignment.centerLeft,
+  //           width: rSize(60),
+  //           child: Text(
+  //             '运费补偿',
+  //             style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
+  //           ),
+  //         ),
+  //         Expanded(
+  //           child: TextField(
+  //             onChanged: (String string) {
+  //               setState(() {
+  //                 if (string.length > 0) {
+  //                   _commitButtonEnable = true;
+  //                 } else {
+  //                   _commitButtonEnable = false;
+  //                 }
+  //               });
+  //             },
+  //             controller: _expressFeeController,
+  //             focusNode: _expressFeeFocusNode,
+  //             keyboardType: TextInputType.number,
+  //             style: TextStyle(color: Colors.black, fontSize: 15 * 2.sp),
+  //             cursorColor: Colors.black,
+  //             decoration: InputDecoration(
+  //               border: InputBorder.none,
+  //               hintText: "请填写您的发货费用",
+  //               hintStyle: TextStyle(
+  //                   fontWeight: FontWeight.w300,
+  //                   color: Colors.grey[400],
+  //                   fontSize: 15 * 2.sp),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _addressWidget() {
     return Container(
@@ -291,8 +293,8 @@ class _OrderReturnAddressPageState
       margin: EdgeInsets.only(top: 40 * 2.h),
       padding: EdgeInsets.symmetric(horizontal: rSize(20)),
       height: 40 * 2.h,
-      child: FlatButton(
-        onPressed: () {
+      child: GestureDetector(
+        onTap: () {
           if (!_commitButtonEnable) {
             return;
           }
@@ -376,18 +378,19 @@ class _OrderReturnAddressPageState
       return;
     }
 
-    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
+    ReToast.loading(text: '');
+
     ResultData resultData =
         await HttpManager.post(OrderApi.express_company_list, {});
-    GSDialog.of(context).dismiss(context);
+    BotToast.closeAllLoading();
 
     if (!resultData.result) {
-      GSDialog.of(globalContext).showError(context, resultData.msg);
+      ReToast.err(text: resultData.msg);
       return;
     }
     ExpressCompanyModel model = ExpressCompanyModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      GSDialog.of(globalContext).showError(context, model.msg);
+      ReToast.err(text: model.msg);
       return;
     }
     _expressCompanies = model.data;

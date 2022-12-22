@@ -1,10 +1,8 @@
-
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
-import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/order/order_detail_page.dart';
 import 'package:recook/pages/user/user_benefit_shop_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
@@ -51,7 +49,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   String? _distributionALL = '0.00';
   String? _agentALL = '0.00';
 
-  bool _itemReverse = false;
+  // bool _itemReverse = false;
 
   bool _yearChoose = false; //0为年 1为月
   bool _monthChoose = true; //0为年 1为月
@@ -62,14 +60,14 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
 
   ///累计收益
   ///
-  UserAccumulateModel _model = UserAccumulateModel.zero();
+  // UserAccumulateModel _model = UserAccumulateModel.zero();
   DateTime _date = DateTime.now();
   String formatType = 'yyyy-MM'; //时间选择器按钮样式
-  String TableformatType = 'M月d日'; //时间样式
+  String tableFormatType = 'M月d日'; //时间样式
 
-  int team_level = 1;
-  String _TformatType = 'yyyy-MM'; //团队时间样式
-  String _TTableformatType = 'M月d日'; //团队表格时间样式
+  int teamLevel = 1;
+  // String _TformatType = 'yyyy-MM'; //团队时间样式
+  String _tTableformatType = 'M月d日'; //团队表格时间样式
 
   UserIncomeModel? _models; //自购导购未到已到收益
   bool _onload = true;
@@ -79,11 +77,11 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   void initState() {
     super.initState();
     if (widget.receivedType == '未到账') {
-      _TformatType = 'yyyy-MM';
-      _TTableformatType = 'M月d日';
+      //_TformatType = 'yyyy-MM';
+      _tTableformatType = 'M月d日';
     } else if (widget.receivedType == '已到账') {
-      _TformatType = 'yyyy';
-      _TTableformatType = 'M月';
+      //_TformatType = 'yyyy';
+      _tTableformatType = 'M月';
     }
     if (!_notSelfNotGUide) {
       if (widget.receivedType == '已到账') {
@@ -111,23 +109,23 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   }
 
   _chooseMonth() {
-    String MonthText = '';
+    String monthText = '';
     if (widget.receivedType == '未到账') {
-      MonthText = '未到账明细(月)';
+      monthText = '未到账明细(月)';
     } else if (widget.receivedType == '已到账') {
-      MonthText = '已到账明细(月)';
+      monthText = '已到账明细(月)';
     }
     return CustomImageButton(
       onPressed: () {
         _yearChoose = false;
         _monthChoose = true;
         formatType = 'yyyy-MM';
-        TableformatType = 'M月d日';
+        tableFormatType = 'M月d日';
 
         _refreshController.requestRefresh();
         setState(() {});
       },
-      child: Text(MonthText,
+      child: Text(monthText,
           style: TextStyle(
               fontSize: 14.rsp,
               color: getColor(_monthChoose),
@@ -136,24 +134,24 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   }
 
   _chooseYear() {
-    String YearText = '';
+    String yearText = '';
 
     if (widget.receivedType == '未到账') {
-      YearText = '未到账明细(年)';
+      yearText = '未到账明细(年)';
     } else if (widget.receivedType == '已到账') {
-      YearText = '已到账明细(年)';
+      yearText = '已到账明细(年)';
     }
     return CustomImageButton(
       onPressed: () {
         _yearChoose = true;
         _monthChoose = false;
         formatType = 'yyyy';
-        TableformatType = 'M月';
+        tableFormatType = 'M月';
 
         _refreshController.requestRefresh();
         setState(() {});
       },
-      child: Text(YearText,
+      child: Text(yearText,
           style: TextStyle(
               fontSize: 14.rsp,
               color: getColor(_yearChoose),
@@ -167,7 +165,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
         _selfChoose = true;
         _distributionChoose = false;
         _agentChoose = false;
-        team_level = 1;
+        teamLevel = 1;
         _refreshController.requestRefresh();
         setState(() {});
       },
@@ -201,7 +199,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
         _selfChoose = false;
         _distributionChoose = true;
         _agentChoose = false;
-        team_level = 2;
+        teamLevel = 2;
         _refreshController.requestRefresh();
         setState(() {});
       },
@@ -235,7 +233,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
         _selfChoose = false;
         _distributionChoose = false;
         _agentChoose = true;
-        team_level = 3;
+        teamLevel = 3;
         _refreshController.requestRefresh();
         setState(() {});
       },
@@ -305,7 +303,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   }
 
   Widget _buildTag() {
-    String benefitValue = '';
+    //String benefitValue = '';
     String text = '本月收益';
 
     if (_notSelfNotGUide) {
@@ -354,13 +352,13 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   }
 
   Widget _buildCard() {
-    String CumulativeText = '';
+    String cumulativeText = '';
     if (widget.receivedType == '未到账') {
-      CumulativeText = '累计未到账收益(瑞币)';
+      cumulativeText = '累计未到账收益(瑞币)';
     } else if (widget.receivedType == '已到账') {
-      CumulativeText = '累计已到账收益(瑞币)';
+      cumulativeText = '累计已到账收益(瑞币)';
     }
-    UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
+    //UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
 
     return Container(
       margin:
@@ -407,7 +405,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CumulativeText.text.color(Color(0xFF3A3943)).make(),
+                      cumulativeText.text.color(Color(0xFF3A3943)).make(),
                       8.hb,
                       (_all ?? '0.00').text.black.size(34.rsp).make(),
                     ],
@@ -477,30 +475,30 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
       body: RefreshWidget(
         controller: _refreshController,
         onRefresh: () async {
-          int BenefitType = 0;
+          int benefitType = 0;
 
           if (widget.type == UserBenefitPageType.SELF) {
-            BenefitType = 1;
+            benefitType = 1;
           } else if (widget.type == UserBenefitPageType.GUIDE) {
-            BenefitType = 2;
+            benefitType = 2;
           }
 
           if (!_notSelfNotGUide) {
             if (widget.receivedType == '已到账') {
               if (_yearChoose == true) {
                 _models = await UserBenefitFunc.receicedIncome(
-                    DateUtil.formatDate(_date, format: 'yyyy'), BenefitType);
+                    DateUtil.formatDate(_date, format: 'yyyy'), benefitType);
               } else if (_monthChoose == true) {
                 _models = await UserBenefitFunc.receicedIncome(
-                    DateUtil.formatDate(_date, format: 'yyyyMM'), BenefitType);
+                    DateUtil.formatDate(_date, format: 'yyyyMM'), benefitType);
               }
             } else if (widget.receivedType == '未到账') {
               if (_yearChoose == true) {
                 _models = await UserBenefitFunc.notReceicedIncome(
-                    DateUtil.formatDate(_date, format: 'yyyy'), BenefitType);
+                    DateUtil.formatDate(_date, format: 'yyyy'), benefitType);
               } else if (_monthChoose == true) {
                 _models = await UserBenefitFunc.notReceicedIncome(
-                    DateUtil.formatDate(_date, format: 'yyyyMM'), BenefitType);
+                    DateUtil.formatDate(_date, format: 'yyyyMM'), benefitType);
               }
             }
             _onload = false;
@@ -508,11 +506,11 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
             //团队补贴
 
             if (widget.receivedType == '未到账') {
-              _models = await UserBenefitFunc.teamNotReceicedIncome(team_level);
+              _models = await UserBenefitFunc.teamNotReceicedIncome(teamLevel);
             } else if (widget.receivedType == '已到账') {
               _models = await UserBenefitFunc.teamReceicedIncome(
                   int.parse(DateUtil.formatDate(_date, format: 'yyyy')),
-                  team_level);
+                  teamLevel);
 
               _selfALL = _models?.team?.toStringAsFixed(2);
               _distributionALL = _models?.recommend?.toStringAsFixed(2);
@@ -799,10 +797,10 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                   !_notSelfNotGUide
                       ? DateUtil.formatDate(
                           DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
-                          format: TableformatType)
+                          format: tableFormatType)
                       : DateUtil.formatDate(
                           DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
-                          format: _TTableformatType),
+                          format: _tTableformatType),
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),

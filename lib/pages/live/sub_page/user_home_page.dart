@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
@@ -15,7 +16,6 @@ import 'package:recook/pages/live/sub_page/user_support_page.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
 import 'package:recook/pages/user/user_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
@@ -69,7 +69,7 @@ class _UserHomePageState extends State<UserHomePage>
           return [
             SliverAppBar(
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle.light,
               leading: RecookBackButton(),
               centerTitle: true,
               title: Text(
@@ -132,7 +132,8 @@ class _UserHomePageState extends State<UserHomePage>
                                       );
                                     else {
                                       showToast('未登陆，请先登陆');
-                                      CRoute.push(context, UserPage());
+                                      Get.to(()=> UserPage());
+                                      //CRoute.push(context, UserPage());
                                     }
                                   },
                                 ),
@@ -149,10 +150,9 @@ class _UserHomePageState extends State<UserHomePage>
                             _buildVerticalView(
                               '关注',
                               model.follows!,
-                              onTap: () => CRoute.push(
-                                context,
-                                UserAttentionPage(id: widget.userId),
-                              ),
+                              onTap: () =>
+
+                                Get.to(()=> UserAttentionPage(id: widget.userId),)
                             ),
                             _buildVerticalView(
                               '粉丝',

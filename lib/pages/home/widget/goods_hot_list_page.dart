@@ -10,7 +10,6 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/wholesale/more_goods/whoesale_goods_normal.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/goods_item.dart';
 
 class GoodsHotListPage extends StatefulWidget {
@@ -355,16 +354,16 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
     // );
   }
 
-  _imageWidget(Data data) {
-    return Stack(children: [
-      CustomCacheImage(
-        width: rSize(100),
-        height: rSize(100),
-        imageUrl: Api.getImgUrl(data.mainPhotoUrl),
-        fit: BoxFit.cover,
-      ),
-    ]);
-  }
+  // _imageWidget(Data data) {
+  //   return Stack(children: [
+  //     CustomCacheImage(
+  //       width: rSize(100),
+  //       height: rSize(100),
+  //       imageUrl: Api.getImgUrl(data.mainPhotoUrl),
+  //       fit: BoxFit.cover,
+  //     ),
+  //   ]);
+  // }
 
   _getGoodsHotSellList() async {
     Map<String, dynamic> data = {};

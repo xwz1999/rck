@@ -11,6 +11,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -19,7 +20,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
-import 'package:recook/models/express_company_model.dart';
 import 'package:recook/models/media_model.dart';
 import 'package:recook/models/order_detail_model.dart';
 import 'package:recook/pages/user/model/return_reason_model.dart';
@@ -29,6 +29,7 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
@@ -52,13 +53,13 @@ class GoodsReturnPage extends StatefulWidget {
 class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
   List<Goods>? _goodsList;
   List<int>? _goodsIds;
-  List<String>? _expressCompanies;
+  // List<String>? _expressCompanies;
   TextEditingController? _reasonController;
-  TextEditingController? _expressController;
+  // TextEditingController? _expressController;
   List<MediaModel> _imageFiles = [];
   ReturnReasonModel? _returnReasonModel;
   ReasonModel? _selectReasonModel;
-  String? _expressCompany;
+  // String? _expressCompany;
 
   @override
   void initState() {
@@ -67,7 +68,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
     _goodsList = widget.arguments!["goodsList"];
     _goodsIds = widget.arguments!["goodsIds"];
     _reasonController = TextEditingController();
-    _expressController = TextEditingController();
+    //_expressController = TextEditingController();
   }
 
   @override
@@ -346,109 +347,109 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
     );
   }
 
-  _showExpressCompanyList(List<String>? companies) {
-    showCustomModalBottomSheet(
-        context: globalContext!,
-        builder: (context) {
-          return GestureDetector(
-            onTap: () {},
-            child: Container(
-              constraints:
-                  BoxConstraints(maxHeight: DeviceInfo.screenHeight! * 0.6),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(rSize(8)))),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(
-                          vertical: rSize(8), horizontal: rSize(10)),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "请选择快递公司:",
-                            style: AppTextStyle.generate(14 * 2.sp,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Spacer(),
-                          CustomImageButton(
-                            icon: Icon(
-                              AppIcons.icon_delete,
-                              size: rSize(18),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      )),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: companies!.length,
-                        itemBuilder: (_, index) {
-                          return CustomImageButton(
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding:
-                                  EdgeInsets.symmetric(vertical: rSize(10)),
-                              child: Text(
-                                companies[index],
-                                style: AppTextStyle.generate(rSize(15)),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              setState(() {
-                                _expressCompany = _expressCompanies![index];
-                              });
-                            },
-                          );
-                        }),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  // _showExpressCompanyList(List<String>? companies) {
+  //   showCustomModalBottomSheet(
+  //       context: globalContext!,
+  //       builder: (context) {
+  //         return GestureDetector(
+  //           onTap: () {},
+  //           child: Container(
+  //             constraints:
+  //                 BoxConstraints(maxHeight: DeviceInfo.screenHeight! * 0.6),
+  //             decoration: BoxDecoration(
+  //                 color: Colors.white,
+  //                 borderRadius:
+  //                     BorderRadius.vertical(top: Radius.circular(rSize(8)))),
+  //             child: Column(
+  //               children: <Widget>[
+  //                 Container(
+  //                     alignment: Alignment.centerLeft,
+  //                     padding: EdgeInsets.symmetric(
+  //                         vertical: rSize(8), horizontal: rSize(10)),
+  //                     child: Row(
+  //                       children: <Widget>[
+  //                         Text(
+  //                           "请选择快递公司:",
+  //                           style: AppTextStyle.generate(14 * 2.sp,
+  //                               fontWeight: FontWeight.w500),
+  //                         ),
+  //                         Spacer(),
+  //                         CustomImageButton(
+  //                           icon: Icon(
+  //                             AppIcons.icon_delete,
+  //                             size: rSize(18),
+  //                           ),
+  //                           onPressed: () {
+  //                             Navigator.of(context).pop();
+  //                           },
+  //                         )
+  //                       ],
+  //                     )),
+  //                 Expanded(
+  //                   child: ListView.builder(
+  //                       itemCount: companies!.length,
+  //                       itemBuilder: (_, index) {
+  //                         return CustomImageButton(
+  //                           child: Container(
+  //                             alignment: Alignment.center,
+  //                             padding:
+  //                                 EdgeInsets.symmetric(vertical: rSize(10)),
+  //                             child: Text(
+  //                               companies[index],
+  //                               style: AppTextStyle.generate(rSize(15)),
+  //                             ),
+  //                           ),
+  //                           onPressed: () {
+  //                             Navigator.pop(context);
+  //                             setState(() {
+  //                               //_expressCompany = _expressCompanies![index];
+  //                             });
+  //                           },
+  //                         );
+  //                       }),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
-  _getExpressCompany() async {
-    if (_expressCompanies != null && _expressCompanies!.length > 0) {
-      _showExpressCompanyList(_expressCompanies);
-      return;
-    }
-
-    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
-    ResultData resultData =
-        await HttpManager.post(OrderApi.express_company_list, {});
-    GSDialog.of(context).dismiss(context);
-
-    if (!resultData.result) {
-      GSDialog.of(globalContext).showError(context, resultData.msg);
-      return;
-    }
-    ExpressCompanyModel model = ExpressCompanyModel.fromJson(resultData.data);
-    if (model.code != HttpStatus.SUCCESS) {
-      GSDialog.of(globalContext).showError(context, model.msg);
-      return;
-    }
-    _expressCompanies = model.data;
-    _showExpressCompanyList(model.data);
-  }
+  // _getExpressCompany() async {
+  //   if (_expressCompanies != null && _expressCompanies!.length > 0) {
+  //     _showExpressCompanyList(_expressCompanies);
+  //     return;
+  //   }
+  //
+  //   GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
+  //   ResultData resultData =
+  //       await HttpManager.post(OrderApi.express_company_list, {});
+  //   BotToast.closeAllLoading();
+  //
+  //   if (!resultData.result) {
+  //     GSDialog.of(globalContext).showError(context, resultData.msg);
+  //     return;
+  //   }
+  //   ExpressCompanyModel model = ExpressCompanyModel.fromJson(resultData.data);
+  //   if (model.code != HttpStatus.SUCCESS) {
+  //     GSDialog.of(globalContext).showError(context, model.msg);
+  //     return;
+  //   }
+  //   _expressCompanies = model.data;
+  //   _showExpressCompanyList(model.data);
+  // }
 
   _getReturnReasons() async {
     // GSDialog.of(globalContext).showLoadingDialog(globalContext, "");
     ResultData resultData = await HttpManager.post(OrderApi.return_reasons, {});
-    // GSDialog.of(context).dismiss(context);
+    // BotToast.closeAllLoading();
     if (!resultData.result) {
-      GSDialog.of(globalContext).showError(context, resultData.msg);
+      ReToast.err(text: resultData.msg);
       return;
     }
     ReturnReasonModel model = ReturnReasonModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      GSDialog.of(globalContext).showError(context, model.msg);
+      ReToast.err(text: model.msg);
       return;
     }
     _returnReasonModel = model;
@@ -478,12 +479,13 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
       Toast.showInfo("请填写退货原因");
       return;
     }
-    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
+
+    ReToast.loading(text: '');
     await _uploadImages();
     String images = "";
     for (MediaModel media in _imageFiles) {
       if (TextUtils.isEmpty(media.result!.url)) {
-        GSDialog.of(globalContext).dismiss(globalContext!);
+        BotToast.closeAllLoading();
         showError("第${_imageFiles.indexOf(media) + 1}图片${media.result!.msg}");
         return;
       }
@@ -499,14 +501,14 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
       "reasonId": _selectReasonModel!.id,
       "reasonImg": images,
     });
-    GSDialog.of(globalContext).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     if (!resultData.result) {
-      GSDialog.of(globalContext).showError(globalContext!, resultData.msg);
+      ReToast.err(text: resultData.msg);
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      GSDialog.of(globalContext).showError(globalContext!, model.msg);
+      ReToast.err(text: resultData.msg);
       return;
     }
     Toast.showInfo("申请退货成功，请等待商家审核...");
@@ -557,9 +559,9 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
 
-            if (entitys == null) {
-              return;
-            }
+            // if (entitys == null) {
+            //   return;
+            // }
 
             for (var element in entitys) {
               File? file = await element!.file;

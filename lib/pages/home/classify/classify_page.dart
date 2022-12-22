@@ -247,11 +247,11 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
           return Container(
             // color: Colors.blueGrey,
             // height: rSize(48),
-            height: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
+            height: DeviceInfo.screenWidth! / 4,
             child: CustomCacheImage(
-                width: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
+                width: DeviceInfo.screenWidth! / 4,
                 height:
-                    ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4 * 3),
+                    DeviceInfo.screenWidth! / 4 * 3,
                 imageUrl: Api.getImgUrl(widget.data![index].logoUrl)),
           );
         },

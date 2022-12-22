@@ -186,7 +186,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
                       deleteListener: () async{
 
                         Alert.dismiss(context);
-                        bool isOpened = await openAppSettings();
+                        await openAppSettings();
                       },
                       type: NormalTextDialogType.delete,
                     ),
@@ -219,7 +219,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
               deleteListener: () async{
 
                 Alert.dismiss(context);
-                bool isOpened = await openAppSettings();
+                await openAppSettings();
               },
               type: NormalTextDialogType.delete,
             ),
@@ -249,10 +249,10 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     setState(() {});
   }
 
-  _getMissingChildren() async {
-    _missingChildrenModel = await GoodsDetailModelImpl.getMissingChildrenInfo();
-    print(Api.getImgUrl(_missingChildrenModel!.pic));
-  }
+  // _getMissingChildren() async {
+  //   _missingChildrenModel = await GoodsDetailModelImpl.getMissingChildrenInfo();
+  //   print(Api.getImgUrl(_missingChildrenModel!.pic));
+  // }
 
   _bottomWidget() {
     return Row(

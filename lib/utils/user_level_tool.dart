@@ -266,7 +266,7 @@ class UserLevelTool {
     return roleLevel;
   }
 
-  static String roleLevelWithEnum(UserRoleLevel level) {
+  static String roleLevelWithEnum(UserRoleLevel? level) {
     if (level == null) {
       return "";
     }

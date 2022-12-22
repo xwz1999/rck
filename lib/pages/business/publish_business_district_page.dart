@@ -46,7 +46,7 @@ class PublishBusinessDistrictPage extends StatefulWidget {
 
 class _PublishBusinessDistrictPageState
     extends BaseStoreState<PublishBusinessDistrictPage> {
-  String _contentText = "";
+  String? _contentText = "";
 
   List<AssetEntity> entitys = [];
 

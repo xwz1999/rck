@@ -79,13 +79,13 @@ class SelectedListItem extends StatefulWidget {
 }
 
 class _SelectedListItemState extends State<SelectedListItem> {
-  int? _index;
+  //int? _index;
   bool _isFirstLoad = true;
 
   @override
   void initState() {
     super.initState();
-    _index = widget.itemModel!.selectedIndex;
+   // _index = widget.itemModel!.selectedIndex;
     WidgetsBinding.instance?.addPostFrameCallback((callback) {
       widget.itemClick(widget.itemModel!.selectedIndex!);
     });
@@ -130,7 +130,7 @@ class _SelectedListItemState extends State<SelectedListItem> {
       if (widget.itemModel!.items.length == 1 && _isFirstLoad) {
         _isFirstLoad = false;
         setState(() {
-          _index = index;
+          //_index = index;
           widget.itemModel!.selectedIndex = index;
         });
       }
@@ -142,10 +142,10 @@ class _SelectedListItemState extends State<SelectedListItem> {
             : () {
                 setState(() {
                   if (selected) {
-                    _index = null;
+                   // _index = null;
                     widget.itemModel!.selectedIndex = null;
                   } else {
-                    _index = index;
+                   // _index = index;
                     widget.itemModel!.selectedIndex = index;
                   }
                 });

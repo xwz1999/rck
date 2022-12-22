@@ -8,6 +8,7 @@ import 'package:recook/pages/business/release_material_page.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/message/message_ceter_page.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/pages/user/user_page.dart';
@@ -70,7 +71,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
   _loginListener() {
     print("context ---- $_context, ${UserManager.instance!.haveLogin}");
     if (_context != null && UserManager.instance!.haveLogin == false) {
-      AppRouter.pushAndRemoveUntil(_context!, RouteName.LOGIN);
+
+      Get.offAll(() => LoginPage());
     }
   }
 
@@ -347,7 +349,7 @@ class _BottomBarState extends State<BottomBar> {
         print(" $index");
         if (widget.tabChangeListener != null) {
           // if ((index == 4 || index == 5) && !UserManager.instance.haveLogin) {
-          // AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          // Get.offAll(() => LoginPage());
           // return;
           // }
           if (index == 3) {

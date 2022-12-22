@@ -18,7 +18,7 @@ class _WholesaleHomePageState extends State<WholesaleHomePage> with SingleTicker
 
   //页面列表
   List<Widget> _pages = <Widget>[];
-  TabController? _tabController;
+  //TabController? _tabController;
   int _currentIndex = 0;
 
 
@@ -31,8 +31,8 @@ class _WholesaleHomePageState extends State<WholesaleHomePage> with SingleTicker
       WholesaleOrderHomePage(),
     ];
 
-    _tabController = TabController(
-        length: _pages.length, vsync: this);
+    // _tabController = TabController(
+    //     length: _pages.length, vsync: this);
   }
 
   @override

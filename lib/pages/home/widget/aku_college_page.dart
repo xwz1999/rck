@@ -26,7 +26,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
       GSRefreshController(initialRefresh: true);
   TextEditingController? _textEditController;
   AkuVideoListModel? _akuVideoListModel;
-  List<AkuVideo>? _akuVideoList;
+  //List<AkuVideo>? _akuVideoList;
   String? _searchText;
   int page = 1;
   @override

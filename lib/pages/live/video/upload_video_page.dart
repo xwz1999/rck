@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:flutter_txugcupload/flutter_txugcupload.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
@@ -11,7 +13,7 @@ import 'package:recook/pages/live/models/video_goods_model.dart';
 import 'package:recook/pages/live/video/pick_topic_page.dart';
 import 'package:recook/pages/live/video/video_goods_page.dart';
 import 'package:recook/pages/live/video/video_preview_page.dart';
-import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
 
 class UploadVideoPage extends StatefulWidget {
@@ -59,18 +61,22 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
             color: Color(0xFF333333),
           ),
         ),
-        leading: FlatButton(
-          color: Colors.white,
-          splashColor: Colors.black12,
-          padding: EdgeInsets.zero,
-          onPressed: () => Navigator.pop(context),
-          child: Text(
-            '取消',
-            style: TextStyle(
-              color: Color(0xFF333333),
-              fontSize: rSP(16),
+        leading:
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding:EdgeInsets.zero,
+            child: Text(
+              '取消',
+              style: TextStyle(
+                color: Color(0xFF333333),
+                fontSize: rSP(16),
+              ),
             ),
           ),
+          style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),backgroundColor: MaterialStateProperty.all(Colors.white,)),
         ),
         actions: [
           Center(
@@ -83,20 +89,20 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
               ),
               onPressed: () {
                 if (TextUtils.isEmpty(_editingController.text)) {
-                  GSDialog.of(context).showError(context, '说明不能为空');
+                  ReToast.err(text: '说明不能为空');
                 } else if (_videoGoodsModel == null) {
-                  GSDialog.of(context).showError(context, '需要选择一个商品');
+                  ReToast.err(text: '需要选择一个商品');
                 } else {
-                  GSDialog.of(context).showLoadingDialog(context, '初始化');
+                  ReToast.loading(text: '初始化');
                   // TXUGCPublish txugcPublish = TXUGCPublish(
                   //     customKey: '${UserManager.instance.user.info.id}');
                   HttpManager.post(LiveAPI.uploadKey, {}).then((resultData) {
-                    GSDialog.of(context).dismiss(context);
+                    BotToast.closeAllLoading();
                     if (resultData.data['data'] == null)
                       showToast(resultData.data['msg']);
                     else {
-                      GSDialog.of(context).showLoadingDialog(context, '上传视频中');
-                      String? sign = resultData.data['data']['sign'];
+                      //GSDialog.of(context).showLoadingDialog(context, '上传视频中');
+                      //String? sign = resultData.data['data']['sign'];
                       // txugcPublish.setVideoPublishListener(VideoPublishListener(
                       //   onVideoPublishProgress: (uploadBytes, totalBytes) {
                       //     int progress =
@@ -104,7 +110,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                       //     print(progress);
                       //   },
                       //   onVideoPublishComplete: (result) {
-                      //     GSDialog.of(context).dismiss(context);
+                      //     BotToast.closeAllLoading();
                       //     if (result.retCode == 0) {
                       //       GSDialog.of(context)
                       //           .showLoadingDialog(context, '发布中');
@@ -117,7 +123,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                       //         'goodsId': _videoGoodsModel.id,
                       //       }).then((resultData) {
                       //         ReToast.success(text: '短视频发布成功，等待平台审核');
-                      //         GSDialog.of(context).dismiss(context);
+                      //         BotToast.closeAllLoading();
                       //         Navigator.pop(context);
                       //       });
                       //     }
@@ -177,8 +183,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                     fit: BoxFit.cover,
                     child: InkWell(
                       onTap: () {
-                        CRoute.push(
-                            context, VideoPreviewPage(file: uploadFile));
+                        Get.to(()=> VideoPreviewPage(file: uploadFile),);
                       },
                       child: Container(
                         width: rSize(100),
@@ -225,16 +230,25 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
               height: rSize(16),
             ),
             onTap: () {
-              CRoute.push(
-                context,
-                PickTopicPage(
-                  onPick: (model) {
-                    _topicListModel = model;
-                  },
-                ),
-              ).then((value) {
+
+              Get.to(()=> PickTopicPage(
+                onPick: (model) {
+                  _topicListModel = model;
+                },
+              ),)?.then((value) {
                 setState(() {});
               });
+
+              // CRoute.push(
+              //   context,
+              //   PickTopicPage(
+              //     onPick: (model) {
+              //       _topicListModel = model;
+              //     },
+              //   ),
+              // ).then((value) {
+              //   setState(() {});
+              // });
             },
           ),
           RecookListTile(
@@ -247,14 +261,22 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
               height: rSize(16),
             ),
             onTap: () {
-              CRoute.push(
-                context,
-                VideoGoodsPage(
-                  onPick: (model) {
-                    _videoGoodsModel = model;
-                  },
-                ),
-              ).then((value) {
+              // CRoute.push(
+              //   context,
+              //   VideoGoodsPage(
+              //     onPick: (model) {
+              //       _videoGoodsModel = model;
+              //     },
+              //   ),
+              // ).then((value) {
+              //   setState(() {});
+              // });
+
+              Get.to(()=>    VideoGoodsPage(
+                onPick: (model) {
+                  _videoGoodsModel = model;
+                },
+              ),)?.then((value) {
                 setState(() {});
               });
             },

@@ -1,4 +1,5 @@
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
+import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/webView.dart';
 
@@ -209,7 +212,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
               if (result.errCode == -2) {
                 Toast.showInfo('用户取消登录');
               } else if (result.errCode != 0) {
-                GSDialog.of(context).dismiss(_context!);
+                BotToast.closeAllLoading();
                 Toast.showInfo(result.errStr);
               } else {
                 if (!_weChatLoginLoading) {
@@ -257,37 +260,37 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
     );
   }
 
-  Container _buildPhoneLogin(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
-      height: rSize(40),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[700]!, width: 0.7),
-          borderRadius: BorderRadius.all(Radius.circular(3))),
-      child: MaterialButton(
-        onPressed: () {
-          AppRouter.push(context, RouteName.PHONE_LOGIN);
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              AppIcons.icon_login_phone,
-              size: 20,
-              color: Colors.grey[700],
-            ),
-            Container(
-              width: 5,
-            ),
-            Text(
-              "手机登录",
-              style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  // Container _buildPhoneLogin(BuildContext context) {
+  //   return Container(
+  //     margin: EdgeInsets.symmetric(horizontal: 30),
+  //     height: rSize(40),
+  //     decoration: BoxDecoration(
+  //         border: Border.all(color: Colors.grey[700]!, width: 0.7),
+  //         borderRadius: BorderRadius.all(Radius.circular(3))),
+  //     child: MaterialButton(
+  //       onPressed: () {
+  //         AppRouter.push(context, RouteName.PHONE_LOGIN);
+  //       },
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: <Widget>[
+  //           Icon(
+  //             AppIcons.icon_login_phone,
+  //             size: 20,
+  //             color: Colors.grey[700],
+  //           ),
+  //           Container(
+  //             width: 5,
+  //           ),
+  //           Text(
+  //             "手机登录",
+  //             style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _recognizer(context, int type) {
     final TapGestureRecognizer recognizer = new TapGestureRecognizer();
@@ -307,9 +310,11 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
   }
 
   _weChatLogin(String? code) {
-    GSDialog.of(context).showLoadingDialog(context, "登录中...");
+   // GSDialog.of(context).showLoadingDialog(context, "登录中...");
+
+    ReToast.loading(text: '登录中...');
     UserDao.weChatLogin(code, success: (user, code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       DPrint.printf("user.status ----------------- ${user!.status}");
       _weChatLoginLoading = false;
       if (user.status == 0) {
@@ -324,7 +329,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
         //         mode: 1, userID: user.info.id, nickName: user.info.nickname));
       } else {
 
-        AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
+        Get.offAll(() => TabBarWidget());
 
         if(UserManager.instance!.goodsId!=0){
           Get.to(()=>CommodityDetailPage(arguments:
@@ -334,7 +339,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
         UserManager.updateUser(user, getStore());
       }
     }, failure: (code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       _weChatLoginLoading = false;
       // Toast.showError(msg);
     });

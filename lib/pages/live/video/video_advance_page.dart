@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/upload_video_page.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class VideoAdvancePage extends StatefulWidget {
@@ -39,15 +40,19 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
               ),
               onPressed: () {
                 if (_coverFile == null) {
-                  GSDialog.of(context).showError(context, '未选择封面');
+                  ReToast.err(text: '未选择封面');
                 } else {
-                  CRoute.pushReplace(
-                    context,
-                    UploadVideoPage(
-                      videoFile: widget.file,
-                      coverImageFile: _coverFile,
-                    ),
-                  );
+                  // CRoute.pushReplace(
+                  //   context,
+                  //   UploadVideoPage(
+                  //     videoFile: widget.file,
+                  //     coverImageFile: _coverFile,
+                  //   ),
+                  // );
+                  Get.off(()=> UploadVideoPage(
+                    videoFile: widget.file,
+                    coverImageFile: _coverFile,
+                  ),);
                 }
               },
               color: Color(0xFFFA3B3E),
@@ -71,13 +76,9 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
               children: [
 
                 _buildButton(
-
                   '封面',
                   () {
-
-
-
-                    picker.getImage(
+                    picker.pickImage(
                       source: ImageSource.gallery,
                       maxWidth: 500,
                       maxHeight: 500,

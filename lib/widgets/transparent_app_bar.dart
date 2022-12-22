@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -184,7 +185,6 @@ class __SliverAppBarState extends State<_SliverAppBar>
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-        brightness: Brightness.light,
         elevation: 2,
         centerTitle: true,
         titleSpacing: 20,
@@ -220,7 +220,7 @@ class __SliverAppBarState extends State<_SliverAppBar>
                 )),
           ],
         ),
-        bottom: widget.bottom);
+        bottom: widget.bottom, systemOverlayStyle: SystemUiOverlayStyle.light);
   }
 
   Center _backButton(BuildContext context) {

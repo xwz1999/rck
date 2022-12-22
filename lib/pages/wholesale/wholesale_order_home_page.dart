@@ -393,7 +393,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
         child: Text(
           title,
           style: AppTextStyle.generate(
-              ScreenAdapterUtils.setSp(selected ? 14 : 13),
+              selected ? 28.sp : 26.sp,
               color: selected ? AppColor.themeColor : Colors.black,
               fontWeight: selected
                   ? FontWeight.w500
@@ -409,8 +409,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
         alignment: Alignment.center,
         child: Text(
           title,
-          style: AppTextStyle.generate(
-              ScreenAdapterUtils.setSp(selected ? 14 : 13),
+          style: AppTextStyle.generate(selected ? 28.sp : 26.sp,
               color: selected ? AppColor.themeColor : Colors.black,
               fontWeight: selected
                   ? FontWeight.w500

@@ -165,7 +165,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   ///[ header] 外加头
   ///[ option] 配置
   static Future<ResultData> netFetch(
-      url, params, Map<String, String?> header, Options option,
+      url, params, Map<String, String?> header, Options? option,
       {noTip = false}) async {
     Map<String, String?> headers = new HashMap();
     headers.addAll(header);
@@ -377,13 +377,13 @@ class ResultData {
 }
 
 
-class JuHeResultData {
-  var result;
-
-  String reason;
-
-  int error_code;
-
-  JuHeResultData( this.result, this.error_code,this.reason );
-}
+// class JuHeResultData {
+//   var result;
+//
+//   String reason;
+//
+//   int error_code;
+//
+//   JuHeResultData( this.result, this.error_code,this.reason );
+// }
 

@@ -385,10 +385,10 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                   ),
                 ),
                 SizedBox(height: rSize(16)),
-                FlatButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('我知道了'),
-                  color: Color.fromRGBO(244, 3, 5, 1),
+                TextButton(
+                    onPressed: () {  Navigator.pop(context); },
+                    child:  Text('我知道了',style: TextStyle(color: Colors.white),),
+                    style:ButtonStyle(backgroundColor: MaterialStateProperty.all( Color.fromRGBO(244, 3, 5, 1)),)
                 ),
               ],
             ),
@@ -443,37 +443,37 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     );
   }
 
-  _couponTile() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: rSize(8)),
-      child: Row(
-        children: <Widget>[
-          Image.asset(
-            AppImageName.coupon_common,
-            width: ScreenAdapterUtils.setWidth(rSize(60)),
-          ),
-          Expanded(
-              child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: rSize(8)),
-                  child: Text(
-                    _orderModel!.data!.coupon == null
-                        ? "暂无优惠券"
-                        : _orderModel!.data!.coupon!.couponName!,
-                    style: AppTextStyle.generate(13 * 2.sp,
-                        color: Color(0xff373737)),
-                    // style: AppTextStyle.generate(13*2.sp,
-                    //     fontWeight: FontWeight.w300, color: Colors.grey[700]),
-                    textAlign: TextAlign.end,
-                  ))),
-//          Icon(
-//            AppIcons.icon_next,
-//            size: rSize(14),
-//            color: Colors.grey,
-//          )
-        ],
-      ),
-    );
-  }
+//   _couponTile() {
+//     return Container(
+//       margin: EdgeInsets.symmetric(vertical: rSize(8)),
+//       child: Row(
+//         children: <Widget>[
+//           Image.asset(
+//             AppImageName.coupon_common,
+//             width: ScreenAdapterUtils.setWidth(rSize(60)),
+//           ),
+//           Expanded(
+//               child: Container(
+//                   margin: EdgeInsets.symmetric(horizontal: rSize(8)),
+//                   child: Text(
+//                     _orderModel!.data!.coupon == null
+//                         ? "暂无优惠券"
+//                         : _orderModel!.data!.coupon!.couponName!,
+//                     style: AppTextStyle.generate(13 * 2.sp,
+//                         color: Color(0xff373737)),
+//                     // style: AppTextStyle.generate(13*2.sp,
+//                     //     fontWeight: FontWeight.w300, color: Colors.grey[700]),
+//                     textAlign: TextAlign.end,
+//                   ))),
+// //          Icon(
+// //            AppIcons.icon_next,
+// //            size: rSize(14),
+// //            color: Colors.grey,
+// //          )
+//         ],
+//       ),
+//     );
+//   }
 
   _expressTile(String title, String value,
       {Widget? customTitle, VoidCallback? listener, bool needArrow = true}) {
@@ -490,14 +490,14 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                     child: Text(
                       title,
                       style: AppTextStyle.generate(
-                          ScreenAdapterUtils.setSp(13.5),
+                          27.sp,
                           fontWeight: FontWeight.w400),
                     )),
             Expanded(
               child: Text(
                 value,
                 maxLines: 1,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+                style: AppTextStyle.generate(27.sp,
                     color: Colors.grey[600], fontWeight: FontWeight.w300),
               ),
             ),
@@ -523,16 +523,16 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               width: rSize(80),
               child: Text(
                 title,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+                style: AppTextStyle.generate(27.sp,
                     fontWeight: FontWeight.w400),
               )),
           Expanded(
             child: InputView(
               showClear: false,
               padding: EdgeInsets.zero,
-              textStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+              textStyle: AppTextStyle.generate(27.sp,
                   color: Colors.grey[600], fontWeight: FontWeight.w300),
-              hintStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+              hintStyle: AppTextStyle.generate(27.sp,
                   color: Colors.grey[600], fontWeight: FontWeight.w300),
               controller: _editController,
               focusNode: _focusNode,
@@ -573,52 +573,52 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     return reslut;
   }
 
-  _coinTile() {
-    String text = _orderModel!.data!.coinStatus!.coin! > 0
-        ? "可用：¥${_orderModel!.data!.coinStatus!.coin!.toStringAsFixed(2)}"
-        : "可用：¥0.0";
-    // _orderModel.data.coupon = null;
-    return Container(
-      margin:
-          EdgeInsets.only(left: rSize(13), right: rSize(13), bottom: rSize(10)),
-      padding: EdgeInsets.symmetric(horizontal: rSize(8), vertical: rSize(6)),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.white),
-      child: Column(
-        children: <Widget>[
-          _titleRow("优惠券", "已选择最大优惠",
-              "-￥${(_orderModel!.data!.brandCouponTotalAmount! + _orderModel!.data!.universeCouponTotalAmount!).toStringAsFixed(2)}",''),
-          Container(
-            height: 5,
-          ),
-          Builder(
-            builder: (context) {
-              double? coin = _orderModel!.data!.goodsTotalAmount! >
-                      _orderModel!.data!.coinStatus!.coin!.toDouble()
-                  ? _orderModel!.data!.coinStatus!.coin!.toDouble()
-                  : _orderModel!.data!.goodsTotalAmount;
-              return _titleRow(
-                "瑞币",
-                text,
-                "本单抵扣: ￥${isUseCoin ? coin!.toStringAsFixed(2) : '0.00'}",'',
-                rightTitleColor: Colors.black,
-                switchValue: isUseCoin, //后台回显 TODO:
-                switchEnable: switchEnabled,
-                switchChange: (change) {
-                  // 切换瑞币抵扣状态
-                  //_changeOrderCoinOnOff();
-                },
-              );
-            },
-          ),
-          Container(
-            height: 10,
-          ),
-        ],
-      ),
-    );
-  }
+  // _coinTile() {
+  //   String text = _orderModel!.data!.coinStatus!.coin! > 0
+  //       ? "可用：¥${_orderModel!.data!.coinStatus!.coin!.toStringAsFixed(2)}"
+  //       : "可用：¥0.0";
+  //   // _orderModel.data.coupon = null;
+  //   return Container(
+  //     margin:
+  //         EdgeInsets.only(left: rSize(13), right: rSize(13), bottom: rSize(10)),
+  //     padding: EdgeInsets.symmetric(horizontal: rSize(8), vertical: rSize(6)),
+  //     decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.all(Radius.circular(10)),
+  //         color: Colors.white),
+  //     child: Column(
+  //       children: <Widget>[
+  //         _titleRow("优惠券", "已选择最大优惠",
+  //             "-￥${(_orderModel!.data!.brandCouponTotalAmount! + _orderModel!.data!.universeCouponTotalAmount!).toStringAsFixed(2)}",''),
+  //         Container(
+  //           height: 5,
+  //         ),
+  //         Builder(
+  //           builder: (context) {
+  //             double? coin = _orderModel!.data!.goodsTotalAmount! >
+  //                     _orderModel!.data!.coinStatus!.coin!.toDouble()
+  //                 ? _orderModel!.data!.coinStatus!.coin!.toDouble()
+  //                 : _orderModel!.data!.goodsTotalAmount;
+  //             return _titleRow(
+  //               "瑞币",
+  //               text,
+  //               "本单抵扣: ￥${isUseCoin ? coin!.toStringAsFixed(2) : '0.00'}",'',
+  //               rightTitleColor: Colors.black,
+  //               switchValue: isUseCoin, //后台回显 TODO:
+  //               switchEnable: switchEnabled,
+  //               switchChange: (change) {
+  //                 // 切换瑞币抵扣状态
+  //                 //_changeOrderCoinOnOff();
+  //               },
+  //             );
+  //           },
+  //         ),
+  //         Container(
+  //           height: 10,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _bottomInfoTitle() {
     return Container(
@@ -836,44 +836,44 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       UserManager.instance!.user.info!.realName!.removeAllWhitespace ==
       _orderModel!.data!.addr!.receiverName!.removeAllWhitespace;
 
-  _allAmountTitle() {
-    return Container(
-      height: 55,
-      margin:
-          EdgeInsets.only(left: rSize(13), right: rSize(13), bottom: rSize(10)),
-      padding: EdgeInsets.symmetric(horizontal: rSize(8), vertical: rSize(6)),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.white),
-      child: Row(
-        children: <Widget>[
-          Container(
-              child: Text(
-            "小计  ",
-            style: AppTextStyle.generate(27.sp, fontWeight: FontWeight.w400),
-          )),
-          Expanded(
-            child: Text(
-              "(共${_orderModel!.data!.totalGoodsCount}件)",
-              maxLines: 1,
-              style: AppTextStyle.generate(27.sp,
-                  color: Colors.grey[600], fontWeight: FontWeight.w300),
-            ),
-          ),
-          Container(
-              child: Text(
-            "￥${_orderModel!.data!.goodsTotalAmount!.toStringAsFixed(2)}",
-            style: AppTextStyle.generate(27.sp,
-                fontWeight: FontWeight.w400,
-                color: Color.fromARGB(255, 249, 62, 13)),
-          )),
-          Container(
-            width: 5,
-          ),
-        ],
-      ),
-    );
-  }
+  // _allAmountTitle() {
+  //   return Container(
+  //     height: 55,
+  //     margin:
+  //         EdgeInsets.only(left: rSize(13), right: rSize(13), bottom: rSize(10)),
+  //     padding: EdgeInsets.symmetric(horizontal: rSize(8), vertical: rSize(6)),
+  //     decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.all(Radius.circular(10)),
+  //         color: Colors.white),
+  //     child: Row(
+  //       children: <Widget>[
+  //         Container(
+  //             child: Text(
+  //           "小计  ",
+  //           style: AppTextStyle.generate(27.sp, fontWeight: FontWeight.w400),
+  //         )),
+  //         Expanded(
+  //           child: Text(
+  //             "(共${_orderModel!.data!.totalGoodsCount}件)",
+  //             maxLines: 1,
+  //             style: AppTextStyle.generate(27.sp,
+  //                 color: Colors.grey[600], fontWeight: FontWeight.w300),
+  //           ),
+  //         ),
+  //         Container(
+  //             child: Text(
+  //           "￥${_orderModel!.data!.goodsTotalAmount!.toStringAsFixed(2)}",
+  //           style: AppTextStyle.generate(27.sp,
+  //               fontWeight: FontWeight.w400,
+  //               color: Color.fromARGB(255, 249, 62, 13)),
+  //         )),
+  //         Container(
+  //           width: 5,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Container _bottomBar(BuildContext context, int? totalNum) {
     bool isOversea = false;
@@ -890,12 +890,12 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       if (!_accept) canDeliver = false;
     }
 
-    double ruiCoin = 0;
-    _orderModel!.data!.brands!.forEach((brand) {
-      brand.goods!.forEach((good) {
-        ruiCoin += good.totalCommission!;
-      });
-    });
+    // double ruiCoin = 0;
+    // _orderModel!.data!.brands!.forEach((brand) {
+    //   brand.goods!.forEach((good) {
+    //     ruiCoin += good.totalCommission!;
+    //   });
+    // });
     Container bottomWidget = Container(
       color: Colors.transparent,
       child: Column(
@@ -1121,7 +1121,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   //   GSDialog.of(context).showLoadingDialog(context, "");
   //   HttpResultModel<OrderPreviewModel> model = await _presenterImpl.changeAddress(
   //       UserManager.instance.user.info.id, _orderModel.data.id, id);
-  //   GSDialog.of(context).dismiss(context);
+  //   BotToast.closeAllLoading();
   //   if (!model.result) {
   //     GSDialog.of(context).showError(globalContext, model.msg);
   //     return;
@@ -1141,7 +1141,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
             _orderModel!.data!.id,
             method,
             storeId);
-    // GSDialog.of(context).dismiss(context);
+    // BotToast.closeAllLoading();
     if (!resultModel.result) {
       // GSDialog.of(context).showError(globalContext, resultModel.msg);
       ReToast.err(text: resultModel.msg);

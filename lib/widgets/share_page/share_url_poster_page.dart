@@ -168,7 +168,7 @@ class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
                   deleteListener: () async{
 
                     Alert.dismiss(context);
-                    bool isOpened = await openAppSettings();
+                    await openAppSettings();
                   },
                   type: NormalTextDialogType.delete,
                 ),

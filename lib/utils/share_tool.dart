@@ -10,6 +10,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
@@ -279,7 +280,7 @@ class ShareTool {
 
   inviteShare(BuildContext context, {Widget? customTitle, String code = ""}) {
     if (UserManager.instance!.user.info!.id == 0) {
-      AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+      Get.offAll(() => LoginPage());
       Toast.showError('请先登录...');
       return;
     }

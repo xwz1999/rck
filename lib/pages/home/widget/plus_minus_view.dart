@@ -157,7 +157,7 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 },
                 controller: _controller,
                 onValueChanged: (string) {
-                  if(string==null){
+                  if(string==''){
                     widget.onValueChanged(0);
                     _controller!.text = '0';
                   } else {

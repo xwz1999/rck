@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -16,6 +17,7 @@ import 'package:recook/pages/user/mvp/order_list_contact.dart';
 import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
 import 'package:recook/pages/user/order/order_detail_state.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class ShopOrderDetailPage extends StatefulWidget {
@@ -118,7 +120,7 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
 
   @override
   cancelOrderSuccess(OrderModel? order) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     Toast.showInfo("已取消订单");
     Future.delayed(Duration(milliseconds: 300), () {
       Navigator.pop(globalContext!, 2);
@@ -127,7 +129,7 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
 
   @override
   failure(String? msg) {
-    GSDialog.of(globalContext).showError(globalContext!, msg);
+    ReToast.err(text: msg);
   }
 
   @override
@@ -139,7 +141,7 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
 
   @override
   refundSuccess(msg) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     Toast.showInfo(msg);
     _presenter.getShopOrderDetail(
         UserManager.instance!.user.info!.id, orderDetail!.id);
@@ -153,7 +155,8 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
 
   @override
   applyInvoiceSuccess() {
-    GSDialog.of(globalContext).showSuccess(globalContext!, "申请成功");
+    //GSDialog.of(globalContext).showSuccess(globalContext!, "申请成功");
+    ReToast.success(text: "申请成功");
     _presenter.getShopOrderDetail(
         UserManager.instance!.user.info!.id, orderDetail!.id);
   }

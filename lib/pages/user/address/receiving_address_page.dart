@@ -7,7 +7,9 @@
  * ====================================================
  */
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -17,7 +19,6 @@ import 'package:recook/pages/user/address/mvp/address_mvp_contact.dart';
 import 'package:recook/pages/user/address/mvp/address_presenter_impl.dart';
 import 'package:recook/pages/user/address/new_address_page.dart';
 import 'package:recook/pages/user/address/widgets/item_my_address.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -25,6 +26,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class ReceivingAddressPage extends StatefulWidget {
@@ -102,16 +104,30 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
             padding: EdgeInsets.symmetric(horizontal: 10),
             fontSize: 14 * 2.sp,
             onPressed: () async {
-              await CRoute.push(
-                  context,
-                  NewAddressPage(
-                    isFirstAdd: _controller.getData().isEmpty,
-                  )).then((newAddress) {
+              // await CRoute.push(
+              //     context,
+              //     NewAddressPage(
+              //       isFirstAdd: _controller.getData().isEmpty,
+              //     )).then((newAddress) {
+              //   if ((newAddress is Address)) {
+              //     if (_originAddr == null) {
+              //       _shouldUpdated = true;
+              //     }
+              //     ReToast.success(text:'添加地址成功' );
+              //     _presenterImpl!
+              //         .fetchAddressList(UserManager.instance!.user.info!.id);
+              //   }
+              //   setState(() {});
+              // });
+
+              await Get.to(()=> NewAddressPage(
+                isFirstAdd: _controller.getData().isEmpty,
+              ))?.then((newAddress) {
                 if ((newAddress is Address)) {
                   if (_originAddr == null) {
                     _shouldUpdated = true;
                   }
-                  GSDialog.of(context).showSuccess(context, "添加地址成功");
+                  ReToast.success(text:'添加地址成功' );
                   _presenterImpl!
                       .fetchAddressList(UserManager.instance!.user.info!.id);
                 }
@@ -184,7 +200,8 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
               // if ((newAddress as Address).id == _originAddr.addressId) {
               _shouldUpdated = true;
               // }
-              GSDialog.of(context).showSuccess(context, "更新地址成功");
+
+              ReToast.success(text:'更新地址成功' );
               _presenterImpl!
                   .fetchAddressList(UserManager.instance!.user.info!.id);
             }
@@ -206,7 +223,7 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
 
   @override
   deleteSuccess(Address address) {
-    GSDialog.of(context).showSuccess(globalContext!, "删除成功");
+    ReToast.success(text:'删除成功');
     setState(() {
       _controller.getData().remove(address);
     });
@@ -224,8 +241,8 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
 
   @override
   requestFail(String msg) {
-    GSDialog.of(context).dismiss(globalContext!);
-    GSDialog.of(context).showError(globalContext!, msg);
+    BotToast.closeAllLoading();
+    ReToast.err(text: msg);
   }
 
   @override

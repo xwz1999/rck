@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/base_model.dart';
 import 'package:recook/models/order_list_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 typedef ItemClickListener = Function(OrderModel order, {VoidCallback? callback});
@@ -241,7 +237,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                   border: Border.all(color: AppColor.themeColor, width: 0.3),
                   borderRadius: BorderRadius.all(Radius.circular(40)),
                   onPressed: () {
-                    if (widget.goToPay == null) return;
+                    //if (widget.goToPay == null) return;
                     widget.goToPay(widget.orderModel, callback: () {
                       setState(() {});
                     });
@@ -301,9 +297,9 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
           fontSize: 14 * 2.sp,
           border: Border.all(color: Colors.grey[700]!, width: 0.3),
           onPressed: () {
-            if (widget.confirm == null) {
-              return;
-            }
+            // if (widget.confirm == null) {
+            //   return;
+            // }
             widget.confirm(widget.orderModel);
           },
         ));
@@ -318,26 +314,26 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
     );
   }
 
-  Future<dynamic> _addToShoppingCart(
-      int skuID, String skuName, int quantity) async {
-    ResultData resultData = await addToShoppingCart(
-        UserManager.instance!.user.info!.id, skuID, skuName, quantity);
-    if (!resultData.result) {
-      ReToast.err(text: resultData.msg);
-
-      return;
-    }
-    BaseModel model = BaseModel.fromJson(resultData.data);
-    if (model.code != HttpStatus.SUCCESS) {
-      Toast.showError(model.msg);
-
-      return;
-    }
-    UserManager.instance!.refreshShoppingCart.value = true;
-    UserManager.instance!.refreshShoppingCartNumber.value = true;
-    UserManager.instance!.refreshShoppingCartNumberWithPage.value = true;
-    ReToast.success(text: '加入成功');
-  }
+  // Future<dynamic> _addToShoppingCart(
+  //     int skuID, String skuName, int quantity) async {
+  //   ResultData resultData = await addToShoppingCart(
+  //       UserManager.instance!.user.info!.id, skuID, skuName, quantity);
+  //   if (!resultData.result) {
+  //     ReToast.err(text: resultData.msg);
+  //
+  //     return;
+  //   }
+  //   BaseModel model = BaseModel.fromJson(resultData.data);
+  //   if (model.code != HttpStatus.SUCCESS) {
+  //     Toast.showError(model.msg);
+  //
+  //     return;
+  //   }
+  //   UserManager.instance!.refreshShoppingCart.value = true;
+  //   UserManager.instance!.refreshShoppingCartNumber.value = true;
+  //   UserManager.instance!.refreshShoppingCartNumberWithPage.value = true;
+  //   ReToast.success(text: '加入成功');
+  // }
 
   Future<ResultData> addToShoppingCart(
       int? userID, int skuID, String skuName, int quantity) async {
@@ -474,30 +470,29 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
         }));
   }
 
-  _brandBottomPrice() {
-    // int quantity = 0;
-    // brand.goods.forEach((goods) {
-    //   quantity += goods.quantity;
-    // });
-    return Container(
-        alignment: Alignment.centerRight,
-        child: RichText(
-            textAlign: TextAlign.end,
-            text: TextSpan(
-                // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
-                text:
-                    "运费: ￥${widget.orderModel.expressTotalFee!.toStringAsFixed(2)}",
-                style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
-                children: [
-                  TextSpan(
-                      // text: "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
-                      text: "",
-                      style:
-                          AppTextStyle.generate(14 * 2.sp, color: Colors.grey)),
-                ])));
-  }
+  // _brandBottomPrice() {
+  //   // int quantity = 0;
+  //   // brand.goods.forEach((goods) {
+  //   //   quantity += goods.quantity;
+  //   // });
+  //   return Container(
+  //       alignment: Alignment.centerRight,
+  //       child: RichText(
+  //           textAlign: TextAlign.end,
+  //           text: TextSpan(
+  //               // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
+  //               text:
+  //                   "运费: ￥${widget.orderModel.expressTotalFee!.toStringAsFixed(2)}",
+  //               style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
+  //               children: [
+  //                 TextSpan(
+  //                     // text: "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
+  //                     text: "",
+  //                     style:
+  //                         AppTextStyle.generate(14 * 2.sp, color: Colors.grey)),
+  //               ])));
+  // }
 
-  _brandBottomButtons() {}
 
   _goodsItem(OrderGoodsModel goods) {
     return Container(
@@ -684,19 +679,19 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
     );
   }
 
-  _refundStatus(OrderGoodsModel goods) {
-    if (goods.assType == 0) return "";
-    if (goods.refundStatus != 0) {
-      return goods.refundStatus == 1 ? "退款中" : "退款成功";
-    }
-
-    if (goods.returnStatus == 1) {
-      return "等待商家确认退货";
-    } else if (goods.returnStatus == 2) {
-      return "退货被拒绝";
-    } else if (goods.returnStatus == 3) {
-      return "退货成功";
-    }
-    return "";
-  }
+  // _refundStatus(OrderGoodsModel goods) {
+  //   if (goods.assType == 0) return "";
+  //   if (goods.refundStatus != 0) {
+  //     return goods.refundStatus == 1 ? "退款中" : "退款成功";
+  //   }
+  //
+  //   if (goods.returnStatus == 1) {
+  //     return "等待商家确认退货";
+  //   } else if (goods.returnStatus == 2) {
+  //     return "退货被拒绝";
+  //   } else if (goods.returnStatus == 3) {
+  //     return "退货成功";
+  //   }
+  //   return "";
+  // }
 }

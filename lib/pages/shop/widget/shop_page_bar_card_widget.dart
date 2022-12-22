@@ -64,8 +64,8 @@ class _ShopPageIncomeCardWidgetState extends State<ShopPageIncomeCardWidget> {
     List<Widget> widgetList = [];
     widgetList = widget.subModels!.map((model){
       return _textColumn(
-        titleText: model==null?"": model.title,
-        infoText: model==null?"": model.info,
+        titleText:  model.title,
+        infoText: model.info,
       );
     }).toList();
     return widgetList;

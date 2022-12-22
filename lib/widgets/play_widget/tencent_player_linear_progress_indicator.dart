@@ -1,7 +1,7 @@
 
 
 import 'dart:math' as math;
-import 'dart:ui' as ui show instantiateImageCodec, Codec, Image;
+import 'dart:ui' as ui show instantiateImageCodec, Image;
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -75,7 +75,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// To specify a constant color use: `AlwaysStoppedAnimation<Color>(color)`.
   ///
   /// If null, the progress indicator is rendered with the current theme's
-  /// [ThemeData.accentColor].
+  /// [ThemeData.colorScheme.secondary].
   ///
   /// This property is ignored if used in an adaptive constructor inside an iOS
   /// environment.
@@ -111,7 +111,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   final String?  semanticsValue;
 
   Color _getBackgroundColor(BuildContext context) => backgroundColor ?? Theme.of(context).backgroundColor;
-  Color _getValueColor(BuildContext context) => valueColor?.value ?? Theme.of(context).accentColor;
+  Color _getValueColor(BuildContext context) => valueColor?.value ?? Theme.of(context).colorScheme.secondary;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -400,7 +400,7 @@ class _TencentLinearProgressIndicatorState extends State<TencentLinearProgressIn
 
   /// 通过assets路径，获取资源图片
   Future<ui.Image> _loadImage(String assets) async {
-    final ByteData data = await rootBundle.load(assets);
+    final ByteData? data = await rootBundle.load(assets);
     if (data == null) throw 'Unable to read data';
     Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
     FrameInfo frame = await codec.getNextFrame();

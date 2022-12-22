@@ -66,22 +66,22 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
     print("---");
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.data != null ? _buildTitle() : SizedBox(),
+        title: _buildTitle() ,
         // leading: Container(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
       ),
-      body: widget.data == null ? noDataView('没有找到该国家的商品') : _buildContent(),
+      body:  _buildContent(),
     );
   }
 
-  Widget _blankView() {
-    return Center(
-      child: Text(
-        "正在加载中...",
-        style: AppTextStyle.generate(16),
-      ),
-    );
-  }
+  // Widget _blankView() {
+  //   return Center(
+  //     child: Text(
+  //       "正在加载中...",
+  //       style: AppTextStyle.generate(16),
+  //     ),
+  //   );
+  // }
 
   Widget _buildTitle() {
     return Container(
@@ -276,11 +276,11 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
           return Container(
             // color: Colors.blueGrey,
             // height: rSize(48),
-            height: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
+            height: (DeviceInfo.screenWidth! / 4).w,
             child: CustomCacheImage(
-                width: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
+                width: (DeviceInfo.screenWidth! / 4).w,
                 height:
-                    ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4 * 3),
+                (DeviceInfo.screenWidth! / 4*3).w,
                 imageUrl: Api.getImgUrl(widget.data[index].first!.logoUrl)),
           );
         },

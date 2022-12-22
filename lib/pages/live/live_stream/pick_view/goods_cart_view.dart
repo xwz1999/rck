@@ -108,13 +108,13 @@ class _GoodsCartViewState extends State<GoodsCartView>
                         ),
                       ),
                       Spacer(),
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           setState(() {
                             if (PickCart.carManager) {
                               PickCart.carPicked.removeWhere((carPicked) {
                                 return _goodsModels.indexWhere((element) =>
-                                        element.id == carPicked.id) !=
+                                element.id == carPicked.id) !=
                                     -1;
                               });
                             } else {
@@ -129,15 +129,17 @@ class _GoodsCartViewState extends State<GoodsCartView>
                             widget.onPick!();
                           });
                         },
-                        padding: EdgeInsets.symmetric(horizontal: rSP(15)),
-                        splashColor: Colors.black26,
-                        child: Text(
-                          PickCart.carManager ? '完成' : '管理',
-                          style: TextStyle(
-                            color: Color(0xFF666666),
-                            fontSize: rSP(14),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: rSP(15)),
+                          child: Text(
+                            PickCart.carManager ? '完成' : '管理',
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontSize: rSP(14),
+                            ),
                           ),
                         ),
+                        style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black26,)),
                       ),
                       // FlatButton(
                       //   splashColor: Colors.black26,

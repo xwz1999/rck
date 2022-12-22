@@ -47,7 +47,6 @@ class _NetworkFileVideoState extends State<NetworkFileVideo> {
     if (widget.pageController?.page?.round() == widget.page) {
       _chewieController.play();
     }
-    ;
   }
 
   @override
@@ -58,9 +57,11 @@ class _NetworkFileVideoState extends State<NetworkFileVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return _chewieController == null
-        ? Center(child: CircularProgressIndicator())
-        : Chewie(
+    return
+      // _chewieController == null
+      //   ? Center(child: CircularProgressIndicator())
+      //   :
+    Chewie(
       controller: _chewieController,
     );
   }

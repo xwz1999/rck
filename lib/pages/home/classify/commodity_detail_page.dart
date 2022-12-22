@@ -19,6 +19,7 @@ import 'package:recook/pages/home/classify/material_page.dart' as MP;
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
@@ -129,7 +130,8 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
         //       model: model,
         //     ));
         if (UserManager.instance!.user.info!.id == 0) {
-          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Get.offAll(() => LoginPage());
+          Get.offAll(() => LoginPage());
           Toast.showError('请先登录...');
           return;
         }
@@ -309,7 +311,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
         if (favorite) {
           if (UserManager.instance!.user.info!.id == 0) {
             UserManager.instance!.goodsId = _goodsDetail!.data!.id!;
-            AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+            Get.offAll(() => LoginPage());
             Toast.showError('请先登录...');
             return;
           }

@@ -13,7 +13,7 @@ class CommonLocalizationsDelegate
   @override
   SynchronousFuture<_DefaultCupertinoLocalizations> load(Locale locale) {
     return SynchronousFuture<_DefaultCupertinoLocalizations>(
-        _DefaultCupertinoLocalizations(locale.languageCode));
+        _DefaultCupertinoLocalizations());
   }
 
   @override
@@ -21,8 +21,7 @@ class CommonLocalizationsDelegate
 }
 
 class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
-  _DefaultCupertinoLocalizations(this._languageCode);
-  final String _languageCode;
+  _DefaultCupertinoLocalizations();
 
   static const List<String> _shortWeekdays = <String>[
     '周一',

@@ -25,13 +25,13 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
   List<GoodsList> _goodsModels = [];
   bool _searching = false;
   FocusNode _focusNode = FocusNode();
-  List<GoodsList> _hotList = [];
+  // List<GoodsList> _hotList = [];
   @override
   void initState() {
     super.initState();
     getGoodsWindowModels().then((models) {
       setState(() {
-        _hotList = models;
+        //_hotList = models;
       });
     });
   }

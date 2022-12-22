@@ -1,13 +1,17 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
+import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
@@ -33,7 +37,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   // FocusNode _inviteCodeFocusNode;
   TextEditingController? _phoneController;
   TextEditingController? _smsCodeController;
-  TextEditingController? _inviteCodeController;
+  // TextEditingController? _inviteCodeController;
 
   bool _loginEnable = false;
   bool _cantSelected = false;
@@ -42,7 +46,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   String _countDownStr = "获取验证码";
   int _countDownNum = 59;
 
-  String _errorMsg = "";
+  // String _errorMsg = "";
 
   @override
   void initState() {
@@ -144,7 +148,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
                           _getCodeEnable = true;
                           _loginEnable = _verifyLoginEnable();
                         } else {
-                          _errorMsg = "";
+                          //_errorMsg = "";
                           _getCodeEnable = false;
                           _loginEnable = false;
                         }
@@ -182,7 +186,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   _verifyLoginEnable() {
     if (!TextUtils.verifyPhone(_phoneController!.text)) {
       setState(() {
-        _errorMsg = "手机号格式不正确,请检查";
+        //_errorMsg = "手机号格式不正确,请检查";
       });
       return false;
     }
@@ -242,7 +246,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
                     Future.delayed(Duration(seconds: 2), () {
                       _cantSelected = false;
                     });
-                    GSDialog.of(context).showLoadingDialog(context, "正在发送..");
+                    ReToast.loading(text: '正在发送..');
                     _getSmsCode();
                   },
                 ),
@@ -260,12 +264,12 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
    */
   _getSmsCode() {
     UserDao.sendSmsCode(_phoneController!.text, success: (data, code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       Toast.showSuccess("验证码发送成功，请注意查收");
       _beginCountDown();
       FocusScope.of(context).requestFocus(_smsCodeFocusNode);
     }, failure: (code, error) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       Toast.showError(error);
     });
   }
@@ -355,7 +359,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
         radius: BorderRadius.all(Radius.circular(3)),
         backgroundColor: Theme.of(context).primaryColor,
         onTap: () {
-          GSDialog.of(context).showLoadingDialog(context, "正在登录...");
+          ReToast.loading(text: '正在登录...');
           _weChatRegister(context);
         },
       ),
@@ -381,7 +385,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   }
 
   _weChatRegister(BuildContext context) {
-    String? bindData = getStore().state.openinstall!.code;
+    //String? bindData = getStore().state.openinstall!.code;
     // if (bindData.length <= 0) {
     //   bindData = _inviteCodeController.text.toUpperCase();
     // }
@@ -389,33 +393,35 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
         widget.argument[WeChatBindPage.KEY_wxUnionId],
         _phoneController!.text,
         _smsCodeController!.text, success: (data, code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       if (data!.status == 0) {
         _weChatRegisterWithInviteCode(context);
         // AppRouter.push(context,
         //   RouteName.WECHAT_INPUT_INVITATION,
         //   arguments: WeChatInputInviteCodePage.setArgument(widget.argument[WeChatBindPage.KEY_wxUnionId]));
       } else {
-        AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
+
+        Get.offAll(() => TabBarWidget());
         UserManager.updateUser(data, getStore());
       }
     }, failure: (code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       Toast.showError(msg);
     });
   }
 
   _weChatRegisterWithInviteCode(BuildContext context) {
-    GSDialog.of(context).showLoadingDialog(context, "正在登录...");
-    String? bindData = getStore().state.openinstall!.code;
+    ReToast.loading(text: '正在登录...');
+
+    //String? bindData = getStore().state.openinstall!.code;
     UserDao.weChatInvitation(
         widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], '',
         success: (data, code, msg) {
-      GSDialog.of(context).dismiss(context);
-      AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
+      BotToast.closeAllLoading();
+      Get.offAll(() => TabBarWidget());
       UserManager.updateUser(data!, getStore());
     }, failure: (code, msg) {
-      GSDialog.of(context).dismiss(context);
+      BotToast.closeAllLoading();
       Toast.showError(msg);
     });
   }

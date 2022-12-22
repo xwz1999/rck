@@ -17,7 +17,7 @@ enum AppTheme{
 }
 
 
-final ThemeDataReducer = combineReducers<ThemeData?>(
+final themeDataReducer = combineReducers<ThemeData?>(
     [TypedReducer<ThemeData?, UpdateThemeDataAction>(_reducer)]);
 
 

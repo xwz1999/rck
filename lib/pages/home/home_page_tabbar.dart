@@ -32,7 +32,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
   int hour = 0;
   //活动时间定时器
   Timer? _promotionTimer;
-  int _timeNumber = 0;
+  //int _timeNumber = 0;
 
   late GifController _gifController;
 
@@ -89,22 +89,23 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
     PromotionStatus processStatus =
         PromotionTimeTool.getPromotionStatusWithTabbar(
             item.startTime, item.getTrueEndTime());
-    String statusString = "";
+    //String statusString = "";
     switch (processStatus) {
       case PromotionStatus.end:
-        statusString = "正在热卖";
+        //statusString = "正在热卖";
         break;
       case PromotionStatus.ready:
-        statusString = "预热中";
+        //statusString = "预热中";
         break;
       case PromotionStatus.start:
-        statusString = "正在抢购";
+       // statusString = "正在抢购";
         break;
       case PromotionStatus.tomorrow:
-        statusString = "明日预告";
+       // statusString = "明日预告";
         break;
       default:
     }
+    // print(statusString);
     bool isSelect = index == widget.tabController!.index;
 
     Color textColor = isSelect
@@ -112,9 +113,9 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
         : processStatus == PromotionStatus.ready
             ? Colors.black
             : Colors.black.withOpacity(0.5);
-    Color subTextColor = processStatus == PromotionStatus.ready
-        ? Colors.black
-        : Colors.black.withOpacity(0.5);
+    // Color subTextColor = processStatus == PromotionStatus.ready
+    //     ? Colors.black
+    //     : Colors.black.withOpacity(0.5);
     Container textContainer = Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -166,63 +167,63 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
     );
   }
 
-  _isProcessingWidget(isSelect, Promotion item) {
-    double progressWidth = 68;
-    double startTime =
-        DateTime.parse(item.startTime!).millisecondsSinceEpoch / 1000;
-    double endTime =
-        DateTime.parse(item.getTrueEndTime()!).millisecondsSinceEpoch / 1000;
-    double nowTime = DateTime.now().millisecondsSinceEpoch / 1000;
-    double proportion = (nowTime - startTime) / (endTime - startTime);
-    double width =
-        proportion * progressWidth < 14 && proportion * progressWidth > 0
-            ? 14
-            : proportion * progressWidth;
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(7)),
-          // color: AppColor.pinkColor,
-          color: Color(0xffb5b5b6)),
-      alignment: Alignment.center,
-      width: progressWidth,
-      height: 14,
-      margin: EdgeInsets.only(
-        top: 2,
-      ),
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: width,
-            child: Container(
-              width: width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(7)),
-                color: AppColor.themeColor,
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                item.showName!,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 9 * 2.sp,
-                  color: Colors.white,
-                ),
-              ),
-              // Spacer(),
-              // Text('${(proportion*100).toInt().toString()}% ', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 11*2.sp, color: proportion > 0.66 ? Colors.white : AppColor.themeColor,),),
-            ],
-          )
-        ],
-      ),
-    );
-  }
+  // _isProcessingWidget(isSelect, Promotion item) {
+  //   double progressWidth = 68;
+  //   double startTime =
+  //       DateTime.parse(item.startTime!).millisecondsSinceEpoch / 1000;
+  //   double endTime =
+  //       DateTime.parse(item.getTrueEndTime()!).millisecondsSinceEpoch / 1000;
+  //   double nowTime = DateTime.now().millisecondsSinceEpoch / 1000;
+  //   double proportion = (nowTime - startTime) / (endTime - startTime);
+  //   double width =
+  //       proportion * progressWidth < 14 && proportion * progressWidth > 0
+  //           ? 14
+  //           : proportion * progressWidth;
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.all(Radius.circular(7)),
+  //         // color: AppColor.pinkColor,
+  //         color: Color(0xffb5b5b6)),
+  //     alignment: Alignment.center,
+  //     width: progressWidth,
+  //     height: 14,
+  //     margin: EdgeInsets.only(
+  //       top: 2,
+  //     ),
+  //     child: Stack(
+  //       children: <Widget>[
+  //         Positioned(
+  //           left: 0,
+  //           top: 0,
+  //           bottom: 0,
+  //           width: width,
+  //           child: Container(
+  //             width: width,
+  //             decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.all(Radius.circular(7)),
+  //               color: AppColor.themeColor,
+  //             ),
+  //           ),
+  //         ),
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: <Widget>[
+  //             Text(
+  //               item.showName!,
+  //               style: TextStyle(
+  //                 fontWeight: FontWeight.w400,
+  //                 fontSize: 9 * 2.sp,
+  //                 color: Colors.white,
+  //               ),
+  //             ),
+  //             // Spacer(),
+  //             // Text('${(proportion*100).toInt().toString()}% ', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 11*2.sp, color: proportion > 0.66 ? Colors.white : AppColor.themeColor,),),
+  //           ],
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _isProcessingGifWidget(isSelect, Promotion item) {
     double progressWidth = 68;

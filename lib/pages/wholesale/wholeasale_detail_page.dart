@@ -9,14 +9,12 @@ import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/pages/wholesale/wholesale_car_page.dart';
 import 'package:recook/pages/wholesale/wholesale_goods_page.dart';
-import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_floating_action_button_location.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -183,7 +181,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
         //       model: model,
         //     ));
         if (UserManager.instance!.user.info!.id == 0) {
-          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Get.offAll(() => LoginPage());
           Toast.showError('请先登录...');
           return;
         }
@@ -288,29 +286,29 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
   //   Get.back();
   // }
 
-  _showShare(BuildContext context) {
-    // if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
-    //     UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None) {
-    //   //跳到分享邀请
-    //   // _showInviteShare(context);
-    //   ShareTool().inviteShare(context);
-    //   return;
-    // }
-    String goodsTitle =
-        "${_goodsDetail!.getPriceString()} | ${_goodsDetail!.goodsName} | ${_goodsDetail!.description}";
-    ShareTool().goodsShare(context,
-        goodsPrice: _goodsDetail!.getPriceString(),
-        miniTitle: goodsTitle,
-        goodsName: _goodsDetail!.goodsName,
-        goodsDescription: _goodsDetail!.description,
-        miniPicurl: _goodsDetail!.mainPhotos!.length > 0
-            ? _goodsDetail!.mainPhotos![0].url
-            : "",
-        goodsId: _goodsDetail!.id.toString(),
-        amount: _goodsDetail!.price!.min!.commission! > 0
-            ? _goodsDetail!.price!.min!.commission.toString()
-            : "");
-  }
+  // _showShare(BuildContext context) {
+  //   // if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+  //   //     UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None) {
+  //   //   //跳到分享邀请
+  //   //   // _showInviteShare(context);
+  //   //   ShareTool().inviteShare(context);
+  //   //   return;
+  //   // }
+  //   String goodsTitle =
+  //       "${_goodsDetail!.getPriceString()} | ${_goodsDetail!.goodsName} | ${_goodsDetail!.description}";
+  //   ShareTool().goodsShare(context,
+  //       goodsPrice: _goodsDetail!.getPriceString(),
+  //       miniTitle: goodsTitle,
+  //       goodsName: _goodsDetail!.goodsName,
+  //       goodsDescription: _goodsDetail!.description,
+  //       miniPicurl: _goodsDetail!.mainPhotos!.length > 0
+  //           ? _goodsDetail!.mainPhotos![0].url
+  //           : "",
+  //       goodsId: _goodsDetail!.id.toString(),
+  //       amount: _goodsDetail!.price!.min!.commission! > 0
+  //           ? _goodsDetail!.price!.min!.commission.toString()
+  //           : "");
+  // }
 
   _getDetail() async {
     _goodsDetail = await WholesaleFunc.getDetailInfo(
@@ -322,25 +320,25 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     }
   }
 
-  _addFavorite() async {
-    HttpResultModel<BaseModel?> resultModel =
-        await GoodsDetailModelImpl.favoriteAdd(
-            UserManager.instance!.user.info!.id, _goodsDetail!.id as int?);
-    if (!resultModel.result) {
-      Toast.showInfo(resultModel.msg);
-      return;
-    }
-    _bottomBarController!.setFavorite(true);
-  }
+  // _addFavorite() async {
+  //   HttpResultModel<BaseModel?> resultModel =
+  //       await GoodsDetailModelImpl.favoriteAdd(
+  //           UserManager.instance!.user.info!.id, _goodsDetail!.id as int?);
+  //   if (!resultModel.result) {
+  //     Toast.showInfo(resultModel.msg);
+  //     return;
+  //   }
+  //   _bottomBarController!.setFavorite(true);
+  // }
 
-  _cancelFavorite() async {
-    HttpResultModel<BaseModel?> resultModel =
-        await GoodsDetailModelImpl.favoriteCancel(
-            UserManager.instance!.user.info!.id, _goodsDetail!.id as int?);
-    if (!resultModel.result) {
-      Toast.showInfo(resultModel.msg);
-      return;
-    }
-    _bottomBarController!.setFavorite(false);
-  }
+  // _cancelFavorite() async {
+  //   HttpResultModel<BaseModel?> resultModel =
+  //       await GoodsDetailModelImpl.favoriteCancel(
+  //           UserManager.instance!.user.info!.id, _goodsDetail!.id as int?);
+  //   if (!resultModel.result) {
+  //     Toast.showInfo(resultModel.msg);
+  //     return;
+  //   }
+  //   _bottomBarController!.setFavorite(false);
+  // }
 }

@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
 
-class Openinstall {
+class OpenInstall {
   String? channelCode;
   String? bindData;
   String? code;
@@ -8,9 +8,9 @@ class Openinstall {
   String? date;
   String? type;
   String? itemId;
-  Openinstall(this.channelCode, this.bindData);
+  OpenInstall(this.channelCode, this.bindData);
 
-  Openinstall.empty() {
+  OpenInstall.empty() {
     this.channelCode = "";
     this.bindData = "";
     this.code = "";
@@ -18,15 +18,15 @@ class Openinstall {
   }
 }
 
-final OpeninstallReducer = combineReducers<Openinstall?>(
-    [TypedReducer<Openinstall?, UpdateOpeninstallAction>(UpdateOpeninstall)]);
+final openInstallReducer = combineReducers<OpenInstall?>(
+    [TypedReducer<OpenInstall?, UpdateOpenInstallAction>(updateOpenInstall)]);
 
-Openinstall? UpdateOpeninstall(Openinstall? openinstall, action) {
-  openinstall = action.openinstall;
-  return openinstall;
+OpenInstall? updateOpenInstall(OpenInstall? openInstall, action) {
+  openInstall = action.openinstall;
+  return openInstall;
 }
 
-class UpdateOpeninstallAction {
-  final Openinstall openinstall;
-  UpdateOpeninstallAction(this.openinstall);
+class UpdateOpenInstallAction {
+  final OpenInstall openInstall;
+  UpdateOpenInstallAction(this.openInstall);
 }

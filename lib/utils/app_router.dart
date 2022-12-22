@@ -19,7 +19,6 @@ import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/login/phone_login_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
 import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
-import 'package:recook/pages/shop/member_benefits_page.dart';
 import 'package:recook/pages/shop/order/shop_order_center_page.dart';
 import 'package:recook/pages/shop/order/shop_order_detail_page.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
@@ -378,8 +377,8 @@ final Map<String, RouteBuilder> _routes = {
       ),
 
   // 会员权益
-  RouteName.Member_BENEFITS_PAGE: (context, {arguments}) =>
-      MemberBenefitsPage(),
+  // RouteName.Member_BENEFITS_PAGE: (context, {arguments}) =>
+  //     MemberBenefitsPage(),
 
 
   // 我的店铺
@@ -567,12 +566,12 @@ class AppRouter {
     return Navigator.canPop(context);
   }
 
-  static Future popAndPushNamed(BuildContext context, String routeName,
-      {arguments}) {
-    return NavigatorUtils.popAndPushNamed(context, routeName,
-        arguments:
-            RouteArguments(type: AnimationType.push, arguments: arguments));
-  }
+  // static Future popAndPushNamed(BuildContext context, String routeName,
+  //     {arguments}) {
+  //   return NavigatorUtils.popAndPushNamed(context, routeName,
+  //       arguments:
+  //           RouteArguments(type: AnimationType.push, arguments: arguments));
+  // }
 
   ///
   /// [Future] 用于接收pop时返回数据
@@ -615,19 +614,19 @@ class AppRouter {
   }
 
   // 平台自带跳转动画
-  static Future pushAndRemoveUntil(BuildContext context, String routeName,
-      {arguments}) {
-    return NavigatorUtils.pushNamedAndRemoveUntil(context, routeName,
-        arguments:
-            RouteArguments(type: AnimationType.push, arguments: arguments));
-  }
+  // static Future pushAndRemoveUntil(BuildContext context, String routeName,
+  //     {arguments}) {
+  //   return NavigatorUtils.pushNamedAndRemoveUntil(context, routeName,
+  //       arguments:
+  //           RouteArguments(type: AnimationType.push, arguments: arguments));
+  // }
 
-  static Future fadeAndRemoveUntil(BuildContext context, String routeName,
-      {arguments}) {
-    return NavigatorUtils.pushNamedAndRemoveUntil(context, routeName,
-        arguments:
-            RouteArguments(type: AnimationType.fade, arguments: arguments));
-  }
+  // static Future fadeAndRemoveUntil(BuildContext context, String routeName,
+  //     {arguments}) {
+  //   return NavigatorUtils.pushNamedAndRemoveUntil(context, routeName,
+  //       arguments:
+  //           RouteArguments(type: AnimationType.fade, arguments: arguments));
+  // }
 
   ///
   /// [Future] 用于接收pop时返回数据
@@ -648,12 +647,12 @@ class AppRouter {
   }
 
   // 模态跳转并移除之前的路由
-  static Future modelAndRemoveUntil(BuildContext context, String routeName,
-      {arguments}) {
-    return NavigatorUtils.pushNamedAndRemoveUntil(context, routeName,
-        arguments:
-            RouteArguments(type: AnimationType.model, arguments: arguments));
-  }
+  // static Future modelAndRemoveUntil(BuildContext context, String routeName,
+  //     {arguments}) {
+  //   return NavigatorUtils.pushNamedAndRemoveUntil(context, routeName,
+  //       arguments:
+  //           RouteArguments(type: AnimationType.model, arguments: arguments));
+  // }
 }
 
 /// 处理跳转时的参数传递

@@ -211,11 +211,11 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
     //   dateTime = DateTime.parse(goods.promotion.startTime);
     // }
 
-    bool isSeckill = false;
+    //bool isSeckill = false;
 
     if(goods.secKill!=null){
       if(goods.secKill!.secKill==1){
-        isSeckill = true;
+        //isSeckill = true;
         goods.price = goods.secKill!.secKillMinPrice;
         goods.commission = goods.secKill!.secKillCommission;
         //秒杀中 通过seckill中的库存和销量来判断是否是否售完

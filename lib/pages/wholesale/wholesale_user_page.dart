@@ -8,6 +8,7 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/vip_shop_push_page.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/other_item_view_v.dart';
 import 'package:recook/pages/user/pifa_benefit_page.dart';
@@ -616,7 +617,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                   fontSize: 16 * 2.sp,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   onPressed: () {
-                    AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                    Get.offAll(() => LoginPage());
                   },
                 ),
               ),

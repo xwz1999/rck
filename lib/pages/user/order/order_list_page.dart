@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -26,6 +27,7 @@ import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 enum OrderPositionType {
   onlineOrder, // 线上订单
@@ -175,7 +177,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
           listener: (int index) {
             Alert.dismiss(globalContext!);
             if (index == 0) return;
-            GSDialog.of(context).showLoadingDialog(globalContext!, "");
+            ReToast.loading(text: '');
             _presenter!.deleteOrder(UserManager.instance!.user.info!.id, order.id);
           },
         ));
@@ -190,7 +192,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
           listener: (int index) {
             Alert.dismiss(globalContext!);
             if (index == 0) return;
-            GSDialog.of(context).showLoadingDialog(globalContext!, "");
+            ReToast.loading(text: '');
             _presenter!.cancelOrder(UserManager.instance!.user.info!.id, order.id,
                 order: order);
           },
@@ -230,7 +232,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
               Alert.dismiss(context);
             } else {
               Alert.dismiss(context);
-              GSDialog.of(globalContext).showLoadingDialog(context, "");
+              ReToast.loading(text: '');
               _presenter!.confirmReceipt(
                   UserManager.instance!.user.info!.id, orderModel.id);
 
@@ -241,20 +243,20 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 
   @override
   getOrderDetailSuccess(OrderDetailModel detailModel) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
 //    AppRouter.push(globalContext, RouteName.ORDER_DETAIL,arguments: OrderDetailPage.setArguments(detailModel.data));
   }
 
   @override
   cancelOrderSuccess(OrderModel? order) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     order!.status = 2;
     _cancelCallback!();
   }
 
   @override
   deleteOrderSuccess(int? orderId) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
     OrderModel? deleteOrderModel;
     for (OrderModel model in _controller!.getData()) {
       if (model.id == orderId && model.id != null) {
@@ -271,7 +273,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 
   @override
   failure(String? msg) {
-    GSDialog.of(context).showError(globalContext!, msg);
+    ReToast.err(text: msg);
   }
 
   @override
@@ -285,10 +287,8 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 
   @override
   confirmReceiptSuccess(UserRoleUpgradeModel model) {
-    GSDialog.of(context).dismiss(globalContext!);
-    GSDialog.of(globalContext).showSuccess(globalContext!, "确认成功").then((value) {
-      // UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
-    });
+    BotToast.closeAllLoading();
+    ReToast.success(text:'添加地址成功' );
     _presenter!.getOrderList(
         UserManager.instance!.user.info!.id, 0, widget.type, widget.positionType);
   }

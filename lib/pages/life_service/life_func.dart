@@ -78,7 +78,7 @@ class LifeFunc {
   static Future<List<NewsModel>?> getNewsList(int page) async {
     Response? res = await getJuHe(
         APIV2.juHeAPI.xwtt,
-        '&type=top&page=${page}&page_size=10&is_filter=1',
+        '&type=top&page=$page&page_size=10&is_filter=1',
         APIV2.juHeAPI.xwttKey,
         isList: true);
 

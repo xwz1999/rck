@@ -266,7 +266,7 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
   SCGridView buildGridView(
       double appbarHeight, double statusBarHeight, int index) {
     List<Country>? secondCategories = countryListModelList![index].children;
-    String? firstTitle = countryListModelList![index].name;
+    //String? firstTitle = countryListModelList![index].name;
     return SCGridView(
         viewportHeight:
             DeviceInfo.screenHeight! - appbarHeight - statusBarHeight + 5,

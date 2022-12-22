@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -22,6 +23,7 @@ import 'package:recook/pages/user/order/order_list_page.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 enum ShopOrderListType { all, undelivered, delivered, receipt , afterSale ,}
 
@@ -103,7 +105,7 @@ class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
 
   @override
   getOrderDetailSuccess(OrderDetailModel detailModel) {
-    GSDialog.of(context).dismiss(globalContext!);
+    BotToast.closeAllLoading();
   }
 
   @override
@@ -111,7 +113,7 @@ class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
 
   @override
   failure(String? msg) {
-    GSDialog.of(context).showError(globalContext!, msg);
+    ReToast.err(text: msg);
   }
 
   @override

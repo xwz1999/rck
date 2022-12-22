@@ -9,6 +9,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/recharge_record_mdel.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -240,7 +241,7 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                         //       model: model,
                         //     ));
                         if (UserManager.instance!.user.info!.id == 0) {
-                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Get.offAll(() => LoginPage());
                           Toast.showError('请先登录...');
                           return;
                         }
@@ -424,36 +425,36 @@ class _RechargeResultPageState extends State<RechargeResultPage>
     );
   }
 
-  _textItem1(
-    String title,
-    String content,
-  ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 60.rw,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14.rsp,
-            ),
-          ),
-        ),
-        16.wb,
-        Expanded(
-          child: Text(
-            content,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14.rsp,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // _textItem1(
+  //   String title,
+  //   String content,
+  // ) {
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       SizedBox(
+  //         width: 60.rw,
+  //         child: Text(
+  //           title,
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 14.rsp,
+  //           ),
+  //         ),
+  //       ),
+  //       16.wb,
+  //       Expanded(
+  //         child: Text(
+  //           content,
+  //           maxLines: 3,
+  //           overflow: TextOverflow.ellipsis,
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 14.rsp,
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

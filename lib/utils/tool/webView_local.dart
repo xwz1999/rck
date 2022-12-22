@@ -6,13 +6,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewLocalPage extends StatefulWidget {
 
-  String? url;
+  final String? url;
   final String? title;
   final bool isLocalUrl;
 
-  late WebViewController _webViewController;
+  late final WebViewController webViewController;
 
-  WebViewLocalPage({this.url, this.isLocalUrl = false, this.title});
+  WebViewLocalPage({this.url, this.isLocalUrl = false, this.title, required this.webViewController});
 
   @override
   _WebViewLocalPage createState() => _WebViewLocalPage();
@@ -66,7 +66,7 @@ class _WebViewLocalPage extends State<WebViewLocalPage> {
               jsBridge(context)
             ].toSet(),
             onWebViewCreated: (WebViewController controller){
-              widget._webViewController = controller;
+              widget.webViewController = controller;
               if(widget.isLocalUrl){
                   _loadHtmlAssets(controller);
               }else{
@@ -77,7 +77,7 @@ class _WebViewLocalPage extends State<WebViewLocalPage> {
               controller.currentUrl().then((value) => debugPrint(value));
             },
             onPageFinished: (String value){
-              widget._webViewController.evaluateJavascript('document.title')
+              widget.webViewController.runJavascriptReturningResult('document.title')
                   .then((title) => debugPrint(title));
             },
           ),

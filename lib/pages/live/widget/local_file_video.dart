@@ -46,9 +46,11 @@ class _LocalFileVideoState extends State<LocalFileVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return _chewieController == null
-        ? Center(child: CircularProgressIndicator())
-        : Chewie(
+    return
+      // _chewieController == null
+      //   ? Center(child: CircularProgressIndicator())
+      //   :
+    Chewie(
       controller: _chewieController,
     );
   }

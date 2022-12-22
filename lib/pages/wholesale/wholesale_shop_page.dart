@@ -35,7 +35,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
   String phoneText = '';
   bool isYun = false;
   bool isEntity = false;
-  StateSetter? _bannerState;
+  //StateSetter? _bannerState;
   double bannerHeight = 160.rw;
   List<WholesaleBannerModel> _bannerList = [];
   List<WholesaleActivityModel> _activityList = [];
@@ -172,7 +172,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
     double screenWidth = MediaQuery.of(context).size.width;
     Widget banner =
         StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-      _bannerState = setState;
+      //_bannerState = setState;
       if (_bannerList.isEmpty) {
         return Container(
           height: 160.rw,
@@ -343,7 +343,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
       for(int i=0;i<_activityList.length;i++){
         List<WholesaleGood> list = [];
         list = await WholesaleFunc.getGoodsList(
-          _page, SortType.comprehensive,activity_id: _activityList[i].id, );
+          _page, SortType.comprehensive,activityId: _activityList[i].id, );
         _goodList.insert(i, list);
         //_goodList.add(list);
         if (_goodList.length == _activityList.length) {

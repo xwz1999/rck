@@ -1,11 +1,11 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/live_data_list_model.dart';
 import 'package:recook/pages/live/sub_page/data_manager/single_data_manager_live_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
@@ -112,11 +112,15 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
           elevation: 0,
           color: Colors.white,
           onPressed: () {
-            CRoute.push(
-                context,
-                SingleDataManagerPage(
-                  id: models[index].id,
-                ));
+            // CRoute.push(
+            //     context,
+            //     SingleDataManagerPage(
+            //       id: models[index].id,
+            //     ));
+
+            Get.to(()=> SingleDataManagerPage(
+              id: models[index].id,
+            ));
           },
           padding: EdgeInsets.all(rSize(10)),
           shape: RoundedRectangleBorder(

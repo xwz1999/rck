@@ -109,7 +109,7 @@ class OrderPresenterImpl extends OrderPresenterI {
     return HttpResultModel(aliPayModel.code, aliPayModel, aliPayModel.msg, true);
   }
 
-    @override
+   // @override
   Future<HttpResultModel<AlipayOrderModel?>> createAliPayOrderLifang(int? userId, int? orderId) async {
     ResultData resultData = await getModel()!.createAliPayOrderLifang(userId, orderId);
     if (!resultData.result) {
@@ -136,7 +136,7 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
 
-    @override
+    //@override
   Future<HttpResultModel<PayInfoModel?>> createWeChatOrderLifang(int? userId, int? orderId) async {
     ResultData resultData = await getModel()!.createWeChatOrderLifang(userId, orderId);
     if (!resultData.result) {
@@ -175,7 +175,7 @@ class OrderPresenterImpl extends OrderPresenterI {
     return HttpResultModel(resultModel.code, resultModel.data, resultModel.msg, true);
   }
 
-    @override
+    //@override
   Future<HttpResultModel<PayResult?>> verifyOrderPayStatusLifang(int orderId) async {
     ResultData resultData = await getModel()!.verifyOrderPayStatusLifang(orderId);
     if (!resultData.result) {
@@ -214,7 +214,7 @@ class OrderPresenterImpl extends OrderPresenterI {
     return HttpResultModel(resultModel.code, resultModel, resultModel.msg, true);
   }
 
-  @override
+  //@override
   Future<HttpResultModel<BaseModel?>> createRecookPayOrderDeposit(int? userId, int? orderId, String password) async {
     ResultData resultData = await getModel()!.createRecookPayOrderDeposit(userId, orderId, password);
     if (!resultData.result) {

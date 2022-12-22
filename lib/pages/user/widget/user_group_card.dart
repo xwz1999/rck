@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
@@ -11,6 +12,7 @@ import 'package:recook/pages/user/widget/user_group_card_detail_page.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserGroupCard extends StatefulWidget {
@@ -141,15 +143,13 @@ class _UserGroupCardState extends State<UserGroupCard> {
                                           Navigator.pop(context, false);
                                           break;
                                         case 1:
-                                          GSDialog.of(context)
-                                              .showLoadingDialog(
-                                                  context, '推荐中');
+                                          ReToast.loading(text: '推荐中');
                                           ResultData result =
                                               await HttpManager.post(
                                             APIV2.userAPI.recommendDiamond,
                                             {'userId': widget.id},
                                           );
-                                          GSDialog.of(context).dismiss(context);
+                                          BotToast.closeAllLoading();
                                           if (result.data['code'] == 'FAIL') {
                                             Navigator.pop(context, false);
                                             showToast('${result.data['msg']}');

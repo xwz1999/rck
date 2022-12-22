@@ -156,7 +156,8 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
                         //CRoute.push(context, PrivacyPageV2());
                       }),
                       SCTile.normalTile("联系我们", value: '400-861-0321', needDivide: true, listener: () {
-                        launch("tel:400-861-0321");
+                        launchUrl(Uri(path: "tel:400-861-0321"));
+                        //launch("tel:400-861-0321");
                       }),
 
 
@@ -224,7 +225,7 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
   Widget getEmptyBox({double height = 16}) {
     return SizedBox(
       width: double.infinity,
-      height: ScreenAdapterUtils.setWidth(height),
+      height: height,
     );
   }
 }

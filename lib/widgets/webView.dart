@@ -25,17 +25,22 @@ class WebViewPage extends StatefulWidget {
     AppBarTheme appBarTheme = const AppBarTheme(
         iconTheme: IconThemeData(color: Colors.white),
         color: AppColor.themeColor,
-        textTheme: TextTheme(
-          bodyText1: TextStyle(
-            color: Colors.white,
-            fontSize: 17,
-            fontWeight: FontWeight.w500)
+        titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontWeight: FontWeight.w500)
+
+        // textTheme: TextTheme(
+        //   bodyText1: TextStyle(
+        //     color: Colors.white,
+        //     fontSize: 17,
+        //     fontWeight: FontWeight.w500)
 
             // title: TextStyle(
             //     color: Colors.white,
             //     fontSize: 17,
             //     fontWeight: FontWeight.w500)
-        )),
+        ),
   }) {
     return {
       "url": url,
@@ -258,11 +263,11 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
   Future<void> _launchInBrowser(String url) async {
     ///打开webView中的url链接
     /// 先判断是否可以launch url
-    if (await canLaunch(url)) {
+    if (await canLaunchUrl(Uri(path: url))) {
       /// 如果可以则启动
-      await launch(url);
+      await launchUrl(Uri(path: url));
     } else {
-      print('${url}无法打开');
+      print('$url无法打开');
     }
   }
 }

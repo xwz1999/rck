@@ -105,7 +105,7 @@ class _LiveReportViewState extends State<LiveReportView> {
                   CustomImageButton(
                     onPressed: () {
                       final picker =  ImagePicker();
-                      picker.getImage(source: ImageSource.gallery)
+                      picker.pickImage(source: ImageSource.gallery)
                           .then((value) {
                         if (value != null) {
                           setState(() {

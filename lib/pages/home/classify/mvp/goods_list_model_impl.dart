@@ -29,7 +29,7 @@ class GoodsListModelImpl extends GoodListModelI {
   @override
   Future<ResultData> fetchList(
       int? categoryID, int page, SortType type, int? countryId,
-      {String? keyword,int? JDType}) async {
+      {String? keyword,int? jDType}) async {
             print(countryId.toString()+'|423546756678678');
     late String url;
     switch (type) {
@@ -74,8 +74,8 @@ class GoodsListModelImpl extends GoodListModelI {
     } else if (type == SortType.priceDesc || type == SortType.salesDesc) {
       params.putIfAbsent("order", () => "desc");
     }
-            if (JDType != null) {
-              params.putIfAbsent("kind", () => JDType);
+            if (jDType != null) {
+              params.putIfAbsent("kind", () => jDType);
 
             }else{
               params.putIfAbsent("kind", () => 0);

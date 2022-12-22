@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -38,7 +39,8 @@ class _RecookScaffoldState extends State<RecookScaffold> {
         bottom: widget.appBarBottom,
         elevation: 0,
         themeData: AppBarTheme(
-          brightness: widget.red ? Brightness.dark : Brightness.light,
+          //brightness: widget.red ? Brightness.dark : Brightness.light,
+            systemOverlayStyle:widget.red ?SystemUiOverlayStyle.dark:SystemUiOverlayStyle.light
         ),
         title: widget.title is String
             ? Text(

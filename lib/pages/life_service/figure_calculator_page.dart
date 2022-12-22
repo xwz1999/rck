@@ -1,19 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/life_service/figure_model.dart';
-import 'package:recook/models/life_service/hw_calculator_model.dart';
-import 'package:recook/models/life_service/loan_model.dart';
-import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/list_pick_body.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-
 import 'life_func.dart';
-import 'loan_result_page.dart';
+
 
 class FigureCalculatorPage extends StatefulWidget {
   FigureCalculatorPage({

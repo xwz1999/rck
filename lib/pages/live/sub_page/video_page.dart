@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
@@ -7,7 +8,6 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/activity/video_fall_through_page.dart';
 import 'package:recook/pages/live/models/video_list_model.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -79,10 +79,12 @@ class _VideoPageState extends State<VideoPage>
   _buildVideoCard(VideoListModel model, int index) {
     return GestureDetector(
       onTap: () {
-        CRoute.push(
-          context,
-          VideoFallThroughPage(models: _videoListModels, index: index),
-        );
+        // CRoute.push(
+        //   context,
+        //   VideoFallThroughPage(models: _videoListModels, index: index),
+        // );
+
+        Get.to(()=>VideoFallThroughPage(models: _videoListModels, index: index));
 
         // CRoute.push(context, VideoPreviewPage.network(path: model.))
       },

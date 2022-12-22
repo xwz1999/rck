@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -9,7 +10,6 @@ import 'package:recook/pages/live/models/follow_list_model.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/user/user_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class UserAttentionView extends StatefulWidget {
@@ -107,13 +107,10 @@ class _UserAttentionViewState extends State<UserAttentionView>
       subTitleSuffix: '粉丝 ${model.fans}',
       initAttention: model.isFollow == 1,
       onTap: () {
-        CRoute.push(
-          context,
-          UserHomePage(
-            userId: model.userId,
-            initAttention: model.isFollow == 1,
-          ),
-        );
+        Get.to(()=>    UserHomePage(
+          userId: model.userId,
+          initAttention: model.isFollow == 1,
+        ),);
       },
       onAttention: (bool oldState) {
         if (UserManager.instance!.haveLogin)
@@ -123,7 +120,7 @@ class _UserAttentionViewState extends State<UserAttentionView>
           );
         else {
           showToast('未登陆，请先登陆');
-          CRoute.push(context, UserPage());
+          Get.to(()=> UserPage(),);
         }
       },
     );

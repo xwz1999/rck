@@ -14,6 +14,7 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/media_model.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
 import 'package:recook/pages/user/recharge/recharge_page_third.dart';
 import 'package:recook/utils/amount_format.dart';
@@ -252,7 +253,7 @@ class _RechargePageSecondState extends State<RechargePageSecond>
                         //   model: model,
                         // ));
                         if (UserManager.instance!.user.info!.id == 0) {
-                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Get.offAll(() => LoginPage());
                           Toast.showError('请先登录...');
                           return;
                         }
@@ -496,9 +497,9 @@ class _RechargePageSecondState extends State<RechargePageSecond>
             List<AssetEntity?> entitys = [];
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
-            if (entitys == null) {
-              return;
-            }
+            // if (entitys == null) {
+            //   return;
+            // }
             for (var element in entitys) {
               File? file = await element!.file;
               Uint8List? thumbData = await element.thumbnailData;

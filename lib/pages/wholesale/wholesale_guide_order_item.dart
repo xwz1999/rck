@@ -405,19 +405,19 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
     );
   }
 
-  _refundStatus(OrderGoodsModel goods) {
-    if (goods.assType == 0) return "";
-    if (goods.refundStatus != 0) {
-      return goods.refundStatus == 1 ? "退款中" : "退款成功";
-    }
-
-    if (goods.returnStatus == 1) {
-      return "等待商家确认退货";
-    } else if (goods.returnStatus == 2) {
-      return "退货被拒绝";
-    } else if (goods.returnStatus == 3) {
-      return "退货成功";
-    }
-    return "";
-  }
+  // _refundStatus(OrderGoodsModel goods) {
+  //   if (goods.assType == 0) return "";
+  //   if (goods.refundStatus != 0) {
+  //     return goods.refundStatus == 1 ? "退款中" : "退款成功";
+  //   }
+  //
+  //   if (goods.returnStatus == 1) {
+  //     return "等待商家确认退货";
+  //   } else if (goods.returnStatus == 2) {
+  //     return "退货被拒绝";
+  //   } else if (goods.returnStatus == 3) {
+  //     return "退货成功";
+  //   }
+  //   return "";
+  // }
 }

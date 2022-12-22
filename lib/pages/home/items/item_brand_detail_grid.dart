@@ -12,6 +12,7 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/items/item_tag_widget.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
@@ -281,7 +282,7 @@ class BrandDetailGridItem extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       if (UserManager.instance!.user.info!.id == 0) {
-                        AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                        Get.offAll(() => LoginPage());
                         Toast.showError('请先登录...');
                         return;
                       }
@@ -342,13 +343,13 @@ class BrandDetailGridItem extends StatelessWidget {
                         fontSize: 13 * 2.sp,
                       ),
                       padding: EdgeInsets.symmetric(
-                          horizontal: ScreenAdapterUtils.setWidth(
+                          horizontal:
                               UserLevelTool.currentRoleLevelEnum() ==
                                           UserRoleLevel.Vip &&
                                       this.goods!.getPromotionStatus() ==
                                           PromotionStatus.start
-                                  ? 16
-                                  : 8),
+                                  ? 32.w
+                                  : 16.w,
                           vertical: rSize(0)),
                       borderRadius: BorderRadius.circular(40),
                       // borderRadius: BorderRadius.only(
@@ -383,18 +384,18 @@ class BrandDetailGridItem extends StatelessWidget {
   }
 
   _saleNumberWidget(GoodsSimple? goods) {
-    bool sellout = false;
+    //bool sellout = false;
     bool isSeckill = false;
 
     if(this.goods!.inventory!>0){
-      sellout = false;
+      //sellout = false;
     }else{
-      sellout = true;
+      //sellout = true;
     }
     if(this.goods!.secKill!=null){
       if(this.goods!.secKill!.secKill==1){
         isSeckill = true;
-        sellout = true;
+       // sellout = true;
         //秒杀中 通过seckill中的库存和销量来判断是否是否售完
       }
     }

@@ -81,20 +81,16 @@ class _UserSetPasswordState extends BaseStoreState<UserSetPassword> {
             child: Container(
               margin: EdgeInsets.only(left: 15, right: 15, top: 30),
               height: 47,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: pwdData.length == 6
                     ? () {
-                        AppRouter.push(
-                            context, RouteName.USER_SET_PASSWORD_AGAIN,
-                            arguments:
-                                UserSetPasswordAgain.setArguments(pwdData));
-                      }
+                  AppRouter.push(
+                      context, RouteName.USER_SET_PASSWORD_AGAIN,
+                      arguments:
+                      UserSetPasswordAgain.setArguments(pwdData));
+                }
                     : null,
-                textColor: Colors.white,
-                disabledTextColor: Colors.white,
-                color: AppColor.themeColor,
-                disabledColor: Color(0xffd7d7d7),
-                child: Container(
+                child:  Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width - 30,
                   child: Text(
@@ -102,11 +98,11 @@ class _UserSetPasswordState extends BaseStoreState<UserSetPassword> {
                     style: TextStyle(fontSize: 17 * 2.sp, color: Colors.white),
                   ),
                 ),
+                style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),
+                    backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(rSize(4)),
+                    )) ),
               ),
-              // child: Container(
-              //   alignment: Alignment.center,
-              //   child: Text('下一步', style: TextStyle(fontSize: 17*2.sp,color: Colors.white ),),
-              // ),
             ),
             onTap: () {},
           )

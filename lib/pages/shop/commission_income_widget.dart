@@ -6,7 +6,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/commission_income_model.dart';
 import 'package:recook/widgets/no_data_view.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class CommissionIncomeWidget extends StatefulWidget {
@@ -18,7 +18,7 @@ class CommissionIncomeWidget extends StatefulWidget {
 
 class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
   int _page = 0;
-  CommissionIncomeModel? _model;
+  // CommissionIncomeModel? _model;
   List<IncomeList>? _listData = [];
   GSRefreshController? _gsRefreshController;
   List<String> _dateList = [];
@@ -148,24 +148,30 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
       "page": _page,
       "date": _selectValue,
     });
-    _gsRefreshController!.isRefresh()
-        ? _gsRefreshController!.refreshCompleted()
-        : null;
-    _gsRefreshController!.isLoading()
-        ? _gsRefreshController!.loadComplete()
-        : null;
+    if( _gsRefreshController!.isRefresh()){
+      _gsRefreshController!.refreshCompleted();
+    }
+    if(_gsRefreshController!.isLoading()){
+      _gsRefreshController!.loadComplete();
+    }
+    // _gsRefreshController!.isRefresh()
+    //     ? _gsRefreshController!.refreshCompleted()
+    //     : null;
+    // _gsRefreshController!.isLoading()
+    //     ? _gsRefreshController!.loadComplete()
+    //     : null;
 
     if (!resultData.result) {
-      GSDialog.of(context).showError(context, resultData.msg);
+      ReToast.err(text: resultData.msg);
       return;
     }
     CommissionIncomeModel model =
         CommissionIncomeModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      GSDialog.of(context).showError(context, model.msg);
+      ReToast.err(text: model.msg);
       return;
     }
-    _model = model;
+    //_model = model;
     if (_page == 0) {
       _listData = model.data!.list;
     } else {

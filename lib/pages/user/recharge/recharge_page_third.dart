@@ -7,6 +7,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -231,7 +232,7 @@ class _RechargePageThirdState extends State<RechargePageThird>
                         //   model: model,
                         // ));
                         if (UserManager.instance!.user.info!.id == 0) {
-                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Get.offAll(() => LoginPage());
                           Toast.showError('请先登录...');
                           return;
                         }

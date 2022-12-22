@@ -63,7 +63,7 @@ class SelectedListItem extends StatefulWidget {
 }
 
 class _SelectedListItemState extends State<SelectedListItem> {
-  bool _isFirstLoad = true;
+  // bool _isFirstLoad = true;
   num? goodsNum = 0;
 
   @override

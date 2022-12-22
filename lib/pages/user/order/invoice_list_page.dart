@@ -15,6 +15,7 @@ import 'package:recook/models/order_detail_model.dart';
 import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class InvoiceListPage extends StatefulWidget {
@@ -125,7 +126,7 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
         await _presenter.getInvoiceList(UserManager.instance!.user.info!.id);
     _refreshController!.refreshCompleted();
     if (!model.result) {
-      GSDialog.of(globalContext).showError(globalContext!, model.msg);
+      ReToast.err(text: model.msg);
       return;
     }
     setState(() {

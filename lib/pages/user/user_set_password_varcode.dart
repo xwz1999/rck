@@ -10,9 +10,6 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/keyboard/keyboard_widget.dart';
-import 'package:recook/widgets/keyboard/pay_password.dart';
-import 'package:recook/widgets/toast.dart';
 
 class UserSetPasswordVarCode extends StatefulWidget {
   @override
@@ -27,7 +24,7 @@ class _UserSetPasswordVarCodeState
   String _countDownStr = "点击发送验证码";
   bool _getCodeEnable = false;
   int _countDownNum = 60;
-  bool _verifySms = false;
+  //bool _verifySms = false;
   bool _cantSelected = false;
   @override
   void dispose() {
@@ -43,12 +40,12 @@ class _UserSetPasswordVarCodeState
   String pwdData = '';
   TextEditingController _textEditingController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  VoidCallback? _showBottomSheetCallback;
+  //VoidCallback? _showBottomSheetCallback;
   @override
   void initState() {
     super.initState();
     _getCodeEnable = true;
-    _showBottomSheetCallback = _showBottomSheet;
+    //_showBottomSheetCallback = _showBottomSheet;
   }
 
   @override
@@ -73,10 +70,10 @@ class _UserSetPasswordVarCodeState
   }
 
   _varCodeWidget() {
-    TextStyle redStyle =
-        TextStyle(color: AppColor.themeColor, fontSize: 15 * 2.sp);
-    TextStyle greyStyle =
-        TextStyle(color: Color(0xff777777), fontSize: 15 * 2.sp);
+    // TextStyle redStyle =
+    //     TextStyle(color: AppColor.themeColor, fontSize: 15 * 2.sp);
+    // TextStyle greyStyle =
+    //     TextStyle(color: Color(0xff777777), fontSize: 15 * 2.sp);
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -146,24 +143,53 @@ class _UserSetPasswordVarCodeState
           ),
           Container(
               margin: EdgeInsets.only(top: 15),
-              child: FlatButton(
-                textColor: AppColor.themeColor,
-                disabledTextColor: Color(0xff777777),
-                child: Text(
+              child:
+              TextButton(
+                  onPressed: _getCodeEnable
+                      ? () {
+                          if (_cantSelected) return;
+                          _cantSelected = true;
+                          Future.delayed(Duration(seconds: 2), () {
+                            _cantSelected = false;
+                          });
+                          _getVarCode();
+                        }
+                      : null,
+                child:Text(
                   _countDownStr,
-                  style: TextStyle(fontSize: 15 * 2.sp),
+                  style: TextStyle(
+                    fontSize: 15 * 2.sp,
+                    color: Colors.white,
+                  ),
                 ),
-                onPressed: _getCodeEnable
-                    ? () {
-                        if (_cantSelected) return;
-                        _cantSelected = true;
-                        Future.delayed(Duration(seconds: 2), () {
-                          _cantSelected = false;
-                        });
-                        _getVarCode();
-                      }
-                    : null,
-              )),
+                style: ButtonStyle(overlayColor:MaterialStateProperty.all(Color(0xff777777),),
+                    backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(rSize(4)),
+                    )) ),
+              ),
+              // FlatButton(
+              //   textColor: AppColor.themeColor,
+              //   disabledTextColor: Color(0xff777777),
+              //   child: Text(
+              //     _countDownStr,
+              //     style: TextStyle(fontSize: 15 * 2.sp),
+              //   ),
+              //   onPressed: _getCodeEnable
+              //       ? () {
+              //           if (_cantSelected) return;
+              //           _cantSelected = true;
+              //           Future.delayed(Duration(seconds: 2), () {
+              //             _cantSelected = false;
+              //           });
+              //           _getVarCode();
+              //         }
+              //       : null,
+              // )
+
+
+
+
+          ),
           GestureDetector(
             child: Container(
               margin: EdgeInsets.only(left: 15, right: 15, top: 30),
@@ -194,73 +220,73 @@ class _UserSetPasswordVarCodeState
   }
 
   /// 底部弹出 自定义键盘  下滑消失
-  void _showBottomSheet() {
-    setState(() {
-      // disable the button
-      _showBottomSheetCallback = null;
-    });
-    _scaffoldKey.currentState!
-        .showBottomSheet<void>((BuildContext context) {
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: GestureDetector(
-                    child: Container(
-                      color: Colors.white.withAlpha(0),
-                    ),
-                    onTap: () {
-                      Navigator.pop(_scaffoldKey.currentContext!);
-                    },
-                  ),
-                ),
-                MyKeyboard(
-                  _onKeyDown,
-                  isShowTips: true,
-                  needCommit: true,
-                ),
-              ],
-            ),
-          );
-          // return new MyKeyboard(_onKeyDown, isShowTips: true, needCommit: true,);
-        })
-        .closed
-        .whenComplete(() {
-          if (mounted) {
-            setState(() {
-              if (_verifySms) {
-                _verifySmsCode();
-              }
-              _verifySms = false;
-              // re-enable the button
-              _showBottomSheetCallback = _showBottomSheet;
-            });
-          }
-        });
-  }
+  // void _showBottomSheet() {
+  //   setState(() {
+  //     // disable the button
+  //     //_showBottomSheetCallback = null;
+  //   });
+  //   _scaffoldKey.currentState!
+  //       .showBottomSheet<void>((BuildContext context) {
+  //         return Container(
+  //           height: MediaQuery.of(context).size.height,
+  //           child: Column(
+  //             children: <Widget>[
+  //               Expanded(
+  //                 child: GestureDetector(
+  //                   child: Container(
+  //                     color: Colors.white.withAlpha(0),
+  //                   ),
+  //                   onTap: () {
+  //                     Navigator.pop(_scaffoldKey.currentContext!);
+  //                   },
+  //                 ),
+  //               ),
+  //               MyKeyboard(
+  //                 _onKeyDown,
+  //                 isShowTips: true,
+  //                 needCommit: true,
+  //               ),
+  //             ],
+  //           ),
+  //         );
+  //         // return new MyKeyboard(_onKeyDown, isShowTips: true, needCommit: true,);
+  //       })
+  //       .closed
+  //       .whenComplete(() {
+  //         if (mounted) {
+  //           setState(() {
+  //             if (_verifySms) {
+  //               _verifySmsCode();
+  //             }
+  //             _verifySms = false;
+  //             // re-enable the button
+  //             //_showBottomSheetCallback = _showBottomSheet;
+  //           });
+  //         }
+  //       });
+  // }
 
-  void _onKeyDown(KeyEventR data) {
-    if (data.isDelete()) {
-      if (pwdData.length > 0) {
-        pwdData = pwdData.substring(0, pwdData.length - 1);
-        setState(() {});
-      }
-    } else if (data.isCommit()) {
-      if (pwdData.length < 4) {
-        //  Fluttertoast.showToast(msg: "密码不足6位，请重试", gravity: ToastGravity.CENTER);
-        Toast.showError("验证码不足4位,请重试");
-        return;
-      }
-      _verifySms = true;
-      Navigator.pop(_scaffoldKey.currentContext!);
-    } else {
-      if (pwdData.length < 4) {
-        pwdData += data.key;
-      }
-      setState(() {});
-    }
-  }
+  // void _onKeyDown(KeyEventR data) {
+  //   if (data.isDelete()) {
+  //     if (pwdData.length > 0) {
+  //       pwdData = pwdData.substring(0, pwdData.length - 1);
+  //       setState(() {});
+  //     }
+  //   } else if (data.isCommit()) {
+  //     if (pwdData.length < 4) {
+  //       //  Fluttertoast.showToast(msg: "密码不足6位，请重试", gravity: ToastGravity.CENTER);
+  //       Toast.showError("验证码不足4位,请重试");
+  //       return;
+  //     }
+  //     _verifySms = true;
+  //     Navigator.pop(_scaffoldKey.currentContext!);
+  //   } else {
+  //     if (pwdData.length < 4) {
+  //       pwdData += data.key;
+  //     }
+  //     setState(() {});
+  //   }
+  // }
 
   _getVarCode() async {
     ResultData resultData = await HttpManager.post(

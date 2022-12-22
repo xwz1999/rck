@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/business/focus/child_focus_page.dart';
 
@@ -29,7 +30,7 @@ class _DiscoveryPageState extends State<DiscoveryPage>
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: AppBar(
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: Colors.white,
         // leading: SizedBox(
         //   width: rSize(50),

@@ -35,7 +35,7 @@ class _CouponItemState extends State<CouponItem> {
   @override
   Widget build(BuildContext context) {
     bool discount = widget.coupon!.type == 1;
-    bool common = widget.coupon!.scope == 0;
+   // bool common = widget.coupon!.scope == 0;
 //    String discountString = widget.coupon.discount % 1 != 0
 //        ? widget.coupon.discount.toString()
 //        : widget.coupon.discount.round().toString();

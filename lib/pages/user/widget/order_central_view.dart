@@ -16,7 +16,7 @@ class OrderCentralView extends StatefulWidget {
 
 class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
   // final double _iconSize = rSize(25);
-  final double _iconSize = rSize(30);
+  // final double _iconSize = rSize(30);
   final double _fontSize = 12 * 2.sp;
 
   @override

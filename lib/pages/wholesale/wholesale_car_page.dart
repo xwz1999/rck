@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
 import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:recook/pages/wholesale/wholesale_car_item.dart';
@@ -12,13 +11,10 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:waterfall_flow/waterfall_flow.dart';
-
 import 'models/goods_dto.dart';
 import 'models/wholesale_car_model.dart';
-import 'models/wholesale_good_model.dart';
 import 'models/wholesale_order_preview_model.dart';
-import 'more_goods/whoesale_goods_grid.dart';
+
 
 class WholesaleCarPage extends StatefulWidget {
   final bool? canBack;
@@ -36,10 +32,10 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
   bool _editting = false;
   GSRefreshController? _refreshController;
   List<WholesaleCarModel> _selectedGoods = [];
-  List<WholesaleGood> _likeGoodsList = [];
+  //List<WholesaleGood> _likeGoodsList = [];
 
   List<WholesaleCarModel> _carList = [];
-  StateSetter? _bottomStateSetter;
+  //StateSetter? _bottomStateSetter;
   int _totalNum = 0;
   bool? _canback = false;
   bool _onLoad = true;
@@ -69,7 +65,8 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: _canback!? RecookBackButton():null,
-        brightness: Brightness.light,
+        //brightness: Brightness.light,
+        systemOverlayStyle:SystemUiOverlayStyle.light,
         backgroundColor: Colors.white,
         titleSpacing: 0,
         automaticallyImplyLeading: false,
@@ -153,7 +150,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       controller: _refreshController,
       onRefresh: () async {
          _carList =  await WholesaleFunc.getCarList();
-         _likeGoodsList = await WholesaleFunc.getLikeGoodsList(UserManager.instance!.user.info!.id,isSale: true);
+         //_likeGoodsList = await WholesaleFunc.getLikeGoodsList(UserManager.instance!.user.info!.id,isSale: true);
          _checkAll = false;
          _selectedGoods.clear();
          _totalNum = 0;
@@ -232,7 +229,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                         List<GoodsDTO> list = [];
                         list.add(GoodsDTO(skuId:goods.skuId,quantity:num));
                         goods.quantity = num;
-                        WholesaleFunc.UpdateShopCar(list);
+                        WholesaleFunc.updateShopCar(list);
                         setState(() {
 
                         });
@@ -298,7 +295,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                       List<GoodsDTO> list = [];
                       list.add(GoodsDTO(skuId:goods.skuId,quantity:num));
                       goods.quantity = num;
-                      WholesaleFunc.UpdateShopCar(list);
+                      WholesaleFunc.updateShopCar(list);
                       setState(() {
 
                       });
@@ -361,7 +358,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                   List<GoodsDTO> list = [];
                   list.add(GoodsDTO(skuId:goods.skuId,quantity:num));
                   goods.quantity = num;
-                  WholesaleFunc.UpdateShopCar(list);
+                  WholesaleFunc.updateShopCar(list);
                   setState(() {
 
                   });
@@ -409,91 +406,91 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
     );
   }
 
-  _buildLikeTitle() {
-    return Container(
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 22.rw,
-            height: 2.rw,
-            decoration: BoxDecoration(color: Color(0xFFC92219)),
-          ),
-          Container(
-            width: 6.rw,
-            height: 6.rw,
-            decoration: BoxDecoration(
-                color: Color(0xFFC92219),
-                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
-          ),
-          20.wb,
-          Text(
-            '您可能还喜欢',
-            style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rsp),
-          ),
-          20.wb,
-          Container(
-            width: 6.rw,
-            height: 6.rw,
-            decoration: BoxDecoration(
-                color: Color(0xFFC92219),
-                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
-          ),
-          Container(
-            width: 22.rw,
-            height: 2.rw,
-            decoration: BoxDecoration(color: Color(0xFFC92219)),
-          ),
-        ],
-      ),
-    );
-  }
+  // _buildLikeTitle() {
+  //   return Container(
+  //     width: double.infinity,
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Container(
+  //           width: 22.rw,
+  //           height: 2.rw,
+  //           decoration: BoxDecoration(color: Color(0xFFC92219)),
+  //         ),
+  //         Container(
+  //           width: 6.rw,
+  //           height: 6.rw,
+  //           decoration: BoxDecoration(
+  //               color: Color(0xFFC92219),
+  //               borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+  //         ),
+  //         20.wb,
+  //         Text(
+  //           '您可能还喜欢',
+  //           style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rsp),
+  //         ),
+  //         20.wb,
+  //         Container(
+  //           width: 6.rw,
+  //           height: 6.rw,
+  //           decoration: BoxDecoration(
+  //               color: Color(0xFFC92219),
+  //               borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+  //         ),
+  //         Container(
+  //           width: 22.rw,
+  //           height: 2.rw,
+  //           decoration: BoxDecoration(color: Color(0xFFC92219)),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _buildLikeWidget() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.rw),
-      //height: _likeGoodsList?.length * 381.rw / 2,
-      width: double.infinity,
-      child: Column(
-        children: [
-          35.hb,
-          _buildLikeTitle(),
-          50.hb,
-          WaterfallFlow.builder(
-              primary: false,
-              shrinkWrap: true,
-              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: _likeGoodsList.length,
-              gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              itemBuilder: (context, index) {
-                WholesaleGood goods = _likeGoodsList[index];
-
-                return MaterialButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      Get.to(()=>WholesaleDetailPage(goodsId: goods.id as int?,));
-
-                    },
-                    child: WholesaleGoodsGrid(goods: goods,));
-              }),
-          40.hb,
-          // Container(
-          //   alignment: Alignment.center,
-          //   child: Text(
-          //     '已经到底啦~',
-          //     style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
-          //   ),
-          // ),
-        ],
-      ),
-    );
-  }
+  // _buildLikeWidget() {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 10.rw),
+  //     //height: _likeGoodsList?.length * 381.rw / 2,
+  //     width: double.infinity,
+  //     child: Column(
+  //       children: [
+  //         35.hb,
+  //         _buildLikeTitle(),
+  //         50.hb,
+  //         WaterfallFlow.builder(
+  //             primary: false,
+  //             shrinkWrap: true,
+  //             padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
+  //             physics: NeverScrollableScrollPhysics(),
+  //             itemCount: _likeGoodsList.length,
+  //             gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+  //               crossAxisCount: 2,
+  //               crossAxisSpacing: 10,
+  //               mainAxisSpacing: 10,
+  //             ),
+  //             itemBuilder: (context, index) {
+  //               WholesaleGood goods = _likeGoodsList[index];
+  //
+  //               return MaterialButton(
+  //                   padding: EdgeInsets.zero,
+  //                   onPressed: () {
+  //                     Get.to(()=>WholesaleDetailPage(goodsId: goods.id as int?,));
+  //
+  //                   },
+  //                   child: WholesaleGoodsGrid(goods: goods,));
+  //             }),
+  //         40.hb,
+  //         // Container(
+  //         //   alignment: Alignment.center,
+  //         //   child: Text(
+  //         //     '已经到底啦~',
+  //         //     style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
+  //         //   ),
+  //         // ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _bottomTool() {
     return StatefulBuilder(
@@ -503,7 +500,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
         _selectedGoods.forEach((goods) {
           totalPrice += goods.salePrice! * goods.quantity!;
         });
-        _bottomStateSetter = bottomSetState;
+        //_bottomStateSetter = bottomSetState;
         return Container(
           padding: EdgeInsets.symmetric(horizontal: rSize(8)),
           color: Colors.white,

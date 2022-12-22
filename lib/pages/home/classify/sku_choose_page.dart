@@ -5,7 +5,6 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pic_swiper.dart';
@@ -38,13 +37,12 @@ class SkuChoosePage extends StatefulWidget {
 
 class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
   Sku? _sku;
-  String? _commission, _price;
+  String? _price;
   late List<String?> _skuDes;
   late StringBuffer _stringBuffer;
   int? _num;
   List _photoList = [];
   List<PicSwiperItem> picSwiperItem = [];
-  StateSetter? _refreshState;
 
   /// 存放 sku id 列表
   List selectedIds = [];
@@ -94,10 +92,10 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
     }
 
     if (maxCommission == minCommission) {
-      _commission = maxCommission!.toStringAsFixed(2);
+     // _commission = maxCommission!.toStringAsFixed(2);
     } else {
-      _commission =
-          "${minCommission!.toStringAsFixed(2)}-${maxCommission!.toStringAsFixed(2)}";
+      // _commission =
+      //     "${minCommission!.toStringAsFixed(2)}-${maxCommission!.toStringAsFixed(2)}";
     }
   }
 
@@ -232,8 +230,6 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                 children: <Widget>[
                   Builder(
                     builder: (context) {
-                      final skuNotNull =
-                          _sku != null && _sku!.commission != null;
                       return RichText(
                         text: TextSpan(children: [
                           TextSpan(
@@ -396,7 +392,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
 
                 if (_sku!.inventory! <= 0) {
                   Toast.showInfo('该物品为空');
-                  CRoute.popBottom(context);
+                  popBottom(context);
                   return;
                 }
 
@@ -410,6 +406,15 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
         ],
       ),
     );
+  }
+
+  static popBottom(BuildContext context) {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+      popBottom(context);
+    } else {
+      return;
+    }
   }
 
   void _skuClicked() {
@@ -506,13 +511,6 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
       selectedIds.clear();
     }
     setState(() {});
-    // if (_headerImageState != null) {
-    //   _headerImageState(() {});
-    // }
-    //
-    // if (_refreshState != null) {
-    //   _refreshState(() {});
-    // }
   }
 }
 

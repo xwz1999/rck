@@ -66,19 +66,25 @@ class _InvoiceUsuallyUsedPageState extends State<InvoiceUsuallyUsedPage> {
           child: SafeArea(
             bottom: true,
             top: false,
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(rSize(4)),
-              ),
-              padding: EdgeInsets.symmetric(vertical: rSize(13)),
+            child:
+            TextButton(
               onPressed: () {
                 AppRouter.push(context, RouteName.USER_INVOICE_ADD_TITLE)
                     .then((value) {
                   _controller.requestRefresh();
                 });
               },
-              child: Text('添加发票抬头'),
-              color: AppColor.redColor,
+              child:Text(
+                '添加发票抬头',
+                style: TextStyle(
+                  fontSize: 16 * 2.sp,
+                  color: Colors.white,
+                ),
+              ),
+              style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black12,),
+                  backgroundColor: MaterialStateProperty.all(AppColor.themeColor,),shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(rSize(4)),
+                  )) ),
             ),
           ),
         ),

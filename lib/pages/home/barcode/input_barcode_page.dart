@@ -197,12 +197,12 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
     //   return;
     // }
     // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE, arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
-    ScanResultModel scanResultModel =
+    ScanResultModel? scanResultModel =
         ScanResultModel.fromMap(resultData.data['data']);
-    if (scanResultModel == null) {
-      showError(model.msg??'');
-      return;
-    }
+    // if (scanResultModel == null) {
+    //   showError(model.msg??'');
+    //   return;
+    // }
     Get.off(
       () => QRScarerResultPage(
         model: scanResultModel,

@@ -15,6 +15,7 @@ import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 enum OrderAfterSaleType { userPage, shopPage }
 
@@ -177,7 +178,7 @@ class _OrderAfterSalePageState extends BaseStoreState<OrderAfterSalePage>
 
   @override
   failure(String? msg) {
-    GSDialog.of(context).showError(globalContext!, msg);
+    ReToast.err(text: msg);
   }
 
   @override

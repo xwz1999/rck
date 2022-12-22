@@ -19,17 +19,17 @@ class RecookState {
   User? user;
   ThemeData? themeData;
   UserBrief? userBrief;
-  Openinstall? openinstall;
+  OpenInstall? openinstall;
   int? goodsId;
   RecookState({this.user, this.themeData, this.userBrief, this.openinstall, this.goodsId});
 }
 
 RecookState appReducer(RecookState state, action){
   return RecookState(
-      user : UserReducer(state.user, action),
-      themeData: ThemeDataReducer(state.themeData, action),
-      userBrief: UserBriefReducer(state.userBrief, action),
-      openinstall: OpeninstallReducer(state.openinstall, action),
+      user : userReducer(state.user, action),
+      themeData: themeDataReducer(state.themeData, action),
+      userBrief: userBriefReducer(state.userBrief, action),
+      openinstall: openInstallReducer(state.openinstall, action),
       goodsId: 0,
   );
 }

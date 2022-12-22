@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/pifa_benefit_model.dart';
-import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/pifa_benefit_detail_page.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -68,10 +66,10 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
 
   ///累计收益
   ///
-  UserAccumulateModel _model = UserAccumulateModel.zero();
-  DateTime _date = DateTime.now();
+  // UserAccumulateModel _model = UserAccumulateModel.zero();
+  //DateTime _date = DateTime.now();
   String formatType = 'yyyy-MM'; //时间选择器按钮样式
-  String TableformatType = 'M月d日'; //时间样式
+  String tableFormatType = 'M月d日'; //时间样式
 
   PifaBenefitModel? _models; //自购导购未到已到收益
   PifaBenefit? _type;
@@ -114,7 +112,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                   ? submit
                   : (time, type) {
                       Navigator.maybePop(context);
-                      _date = time;
+                      //_date = time;
                       setState(() {});
                     },
             ));
@@ -153,7 +151,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
   }
 
   Widget _buildCard() {
-    String CumulativeText = '累计$_title';
+    String cumulativeText = '累计$_title';
 
     return Container(
       margin:
@@ -183,7 +181,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CumulativeText.text.color(Color(0xFF3A3943)).make(),
+                      cumulativeText.text.color(Color(0xFF3A3943)).make(),
                       8.hb,
                       (_all).text.color(Color(0xFFD5101A)).size(28.rsp).make(),
                     ],

@@ -131,7 +131,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
             Container(
               height: 34,
               alignment: Alignment.center,
-              color: AppThemes.themeDataGrey.appBarTheme.color,
+              color: AppThemes.themeDataGrey.appBarTheme.backgroundColor,
               width: MediaQuery.of(context).size.width,
               child: TabBar(
                   onTap: (index) {
@@ -205,7 +205,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
                 onSubmitted: (_submitted) {
                   //_contentFocusNode.unfocus();
 
-                  _presenter!.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
+                  _presenter!.fetchList(_category.id, 0, _sortType, null, jDType: _jDType,keyword: _searchText);
 
                   setState(() {});
                 },
@@ -244,7 +244,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       child: Container(
         alignment: Alignment.center,
         // color: Colors.white,
-        color: AppThemes.themeDataGrey.appBarTheme.color,
+        color: AppThemes.themeDataGrey.appBarTheme.backgroundColor,
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -464,7 +464,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       type: ListViewType.grid,
       refreshCallback: () {
         // _presenter.fetchList(widget.category.id, 0, _sortType);
-        _presenter!.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
+        _presenter!.fetchList(_category.id, 0, _sortType, null, jDType: _jDType,keyword: _searchText);
         setState(() {
 
         });
@@ -472,7 +472,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       loadMoreCallback: (int page) {
         // _presenter.fetchList(widget.category.id, page, _sortType);
         _presenter!.fetchList(_category.id, page, _sortType, null,
-            JDType: _jDType,keyword: _searchText);
+            jDType: _jDType,keyword: _searchText);
         setState(() {
 
         });

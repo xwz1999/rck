@@ -231,7 +231,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
             deleteListener: () async{
 
               Alert.dismiss(context);
-              bool isOpened = await openAppSettings();
+              await openAppSettings();
             },
             type: NormalTextDialogType.delete,
           ),

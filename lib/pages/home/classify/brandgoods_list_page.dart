@@ -250,14 +250,14 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
     return _brandPresenter;
   }
 
-  @override
-  void onAttach() {}
-
-  @override
-  void onDetach() {}
-
-  @override
-  failure(String msg) {
-    return null;
-  }
+  // @override
+  // void onAttach() {}
+  //
+  // @override
+  // void onDetach() {}
+  //
+  // @override
+  // failure(String msg) {
+  //   return null;
+  // }
 }

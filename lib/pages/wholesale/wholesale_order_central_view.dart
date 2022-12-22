@@ -17,7 +17,7 @@ class WholesaleOrderCentralView extends StatefulWidget {
 
 class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentralView> {
   // final double _iconSize = rSize(25);
-  final double _iconSize = rSize(30);
+ // final double _iconSize = rSize(30);
   final double _fontSize = 12 * 2.sp;
 
   @override

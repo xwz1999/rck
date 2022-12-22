@@ -35,7 +35,7 @@ class SCTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.itemBuilder,
   })  :assert(indicator != null ||
             (indicatorWeight > 0.0)),
-        assert(indicator != null || (indicatorPadding != null)),
+        assert(indicator != null),
         super(key: key);
 
   // 是否需要每次切换时刷新item

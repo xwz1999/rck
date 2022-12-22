@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 import 'material_progress_bar.dart';
 
 class ShortVideoController extends StatefulWidget {
-  VideoPlayerController controller;
+  final VideoPlayerController controller;
   @override
   State<StatefulWidget> createState() {
     return _MaterialControlsState(controller);
@@ -18,7 +18,7 @@ class ShortVideoController extends StatefulWidget {
 
 class _MaterialControlsState extends State<ShortVideoController> {
   late VideoPlayerValue _latestValue;
-  late double _latestVolume;
+  //late double _latestVolume;
   late bool _hideStuff = true;
   late Timer _hideTimer;
   late Timer _initTimer;
@@ -164,68 +164,64 @@ class _MaterialControlsState extends State<ShortVideoController> {
     );
   }
 
-  GestureDetector _buildMuteButton(
-      VideoPlayerController controller,
-      ) {
-    return GestureDetector(
-      onTap: () {
-        _cancelAndRestartTimer();
+  // GestureDetector _buildMuteButton(
+  //     VideoPlayerController controller,
+  //     ) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       _cancelAndRestartTimer();
+  //
+  //       if (_latestValue.volume == 0) {
+  //         controller.setVolume(_latestVolume);
+  //       } else {
+  //         _latestVolume = controller.value.volume;
+  //         controller.setVolume(0.0);
+  //       }
+  //     },
+  //     child: AnimatedOpacity(
+  //       opacity: _hideStuff ? 0.0 : 1.0,
+  //       duration: Duration(milliseconds: 300),
+  //       child: ClipRect(
+  //         child: Container(
+  //           child: Container(
+  //             height: barHeight,
+  //             padding: EdgeInsets.only(
+  //               left: 8.0,
+  //               right: 8.0,
+  //             ),
+  //             child: Icon(
+  //               (_latestValue != null && _latestValue.volume > 0)
+  //                   ? Icons.volume_up
+  //                   : Icons.volume_off,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-        if (_latestValue.volume == 0) {
-          controller.setVolume(_latestVolume);
-        } else {
-          _latestVolume = controller.value.volume;
-          controller.setVolume(0.0);
-        }
-      },
-      child: AnimatedOpacity(
-        opacity: _hideStuff ? 0.0 : 1.0,
-        duration: Duration(milliseconds: 300),
-        child: ClipRect(
-          child: Container(
-            child: Container(
-              height: barHeight,
-              padding: EdgeInsets.only(
-                left: 8.0,
-                right: 8.0,
-              ),
-              child: Icon(
-                (_latestValue != null && _latestValue.volume > 0)
-                    ? Icons.volume_up
-                    : Icons.volume_off,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  GestureDetector _buildPlayPause(VideoPlayerController controller) {
-    return GestureDetector(
-      onTap: _playPause,
-      child: Container(
-        height: barHeight,
-        color: Colors.transparent,
-        margin: EdgeInsets.only(left: 8.0, right: 4.0),
-        padding: EdgeInsets.only(
-          left: 12.0,
-          right: 12.0,
-        ),
-        child: Icon(
-          controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
-    );
-  }
+  // GestureDetector _buildPlayPause(VideoPlayerController controller) {
+  //   return GestureDetector(
+  //     onTap: _playPause,
+  //     child: Container(
+  //       height: barHeight,
+  //       color: Colors.transparent,
+  //       margin: EdgeInsets.only(left: 8.0, right: 4.0),
+  //       padding: EdgeInsets.only(
+  //         left: 12.0,
+  //         right: 12.0,
+  //       ),
+  //       child: Icon(
+  //         controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildPosition(Color iconColor) {
-    final position = _latestValue != null && _latestValue.position != null
-        ? _latestValue.position
-        : Duration.zero;
-    final duration = _latestValue != null && _latestValue.duration != null
-        ? _latestValue.duration
-        : Duration.zero;
+    final position =  _latestValue.position;
+    final duration =  _latestValue.duration;
 
     return Padding(
       padding: EdgeInsets.only(right: 24.0),
@@ -265,11 +261,12 @@ class _MaterialControlsState extends State<ShortVideoController> {
 
   void _playPause() {
     bool isFinished;
-    if (_latestValue.duration != null) {
-      isFinished = _latestValue.position >= _latestValue.duration;
-    } else {
-      isFinished = false;
-    }
+    // if (_latestValue.duration != null) {
+    //   isFinished = _latestValue.position >= _latestValue.duration;
+    // } else {
+    //   isFinished = false;
+    // }
+    isFinished = _latestValue.position >= _latestValue.duration;
 
     setState(() {
       if (controller.value.isPlaying) {

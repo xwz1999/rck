@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -60,7 +61,7 @@ class _TopicPageState extends State<TopicPage> {
               return [
                 SliverAppBar(
                   leading: RecookBackButton(white: true),
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle.light,
                   stretch: true,
                   floating: true,
                   expandedHeight:

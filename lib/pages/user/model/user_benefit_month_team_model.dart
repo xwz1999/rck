@@ -5,7 +5,7 @@ class UserBenefitMonthTeamModel {
   int? ratio;
   int? count;
   int? isSettlement;
-  int? order_count;
+  int? orderCount;
 
   UserBenefitMonthTeamModel(
       {this.userIncome,
@@ -14,7 +14,7 @@ class UserBenefitMonthTeamModel {
       this.ratio,
       this.count,
       this.isSettlement,
-      this.order_count});
+      this.orderCount});
 
   UserBenefitMonthTeamModel.fromJson(Map<String, dynamic> json) {
     if (json['userIncome'] != null) {
@@ -28,7 +28,7 @@ class UserBenefitMonthTeamModel {
     ratio = json['ratio'];
     count = json['count'];
     isSettlement = json['IsSettlement'];
-    order_count = json['order_count'];
+    orderCount = json['order_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -41,7 +41,7 @@ class UserBenefitMonthTeamModel {
     data['ratio'] = this.ratio;
     data['count'] = this.count;
     data['IsSettlement'] = this.isSettlement;
-    data['order_count'] = this.order_count;
+    data['order_count'] = this.orderCount;
     return data;
   }
 }
@@ -56,7 +56,7 @@ class UserIncomeMonth {
   int? count;
   num? amount;
   int? roleLevel;
-  int? order_count;
+  int? orderCount;
 
   UserIncomeMonth(
       {this.userId,
@@ -68,7 +68,7 @@ class UserIncomeMonth {
       this.count,
       this.amount,
       this.roleLevel,
-      this.order_count});
+      this.orderCount});
 
   UserIncomeMonth.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -80,7 +80,7 @@ class UserIncomeMonth {
     count = json['count'];
     amount = json['amount'];
     roleLevel = json['roleLevel'];
-    order_count = json['order_count'];
+    orderCount = json['order_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -94,7 +94,7 @@ class UserIncomeMonth {
     data['count'] = this.count;
     data['amount'] = this.amount;
     data['roleLevel'] = this.roleLevel;
-    data['order_count'] = this.order_count;
+    data['order_count'] = this.orderCount;
     return data;
   }
 }

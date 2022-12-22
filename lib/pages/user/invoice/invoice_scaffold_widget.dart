@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -38,7 +39,8 @@ class _InvoiceScaffoldWidgetState extends State<InvoiceScaffoldWidget> {
         leading: _backButton(context),
         appBackground: Colors.white,
         themeData: AppBarTheme(
-          brightness: Brightness.light,
+          // brightness: Brightness.light,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
         title: Text(
           widget.title ?? '开具发票',

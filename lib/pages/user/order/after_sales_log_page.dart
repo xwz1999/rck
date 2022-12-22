@@ -179,89 +179,89 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
     });
   }
 
-  _getSubInfoChildren(String text) {
-    if (text.contains('|')) {
-      return text.split('|').map((e) => Text(e)).toList();
-    } else {
-      return Text(text);
-    }
-  }
+  // _getSubInfoChildren(String text) {
+  //   if (text.contains('|')) {
+  //     return text.split('|').map((e) => Text(e)).toList();
+  //   } else {
+  //     return Text(text);
+  //   }
+  // }
+  //
+  // _getRichTextWidget(String text) {
+  //   // text = "退款金额 <black>¥169</black> 将原路退回至您的<black>付款账户</black>，请及时关注到账情况。<gray>若3天内未收到退款/瑞币，请联系客服咨询。</gray> <gray>gray</gray>  <address>寄回地址：浙江省宁波市海曙区翠柏路宁波工程学院翠柏校区 瑞库客 13888888888</address>";
+  //   // text = text.replaceAll("|", "\n");
+  //   List<AfterSalesRichTextModel> richTextList = [];
+  //
+  //   // RegExp reg = RegExp("<[^>]+>(.*?)<[^>]+>");
+  //   // RegExp reg = RegExp("(?<=<black>)(.*?)(?=</black>)");
+  //   // RegExp reg = RegExp("(<black>)(.*?)(</black>)");
+  //   // black
+  //   richTextList.addAll(_regTextList("(<black>)(.*?)(</black>)", text,
+  //       type: AfterSalesRichTextType.black));
+  //   richTextList.addAll(_regTextList("(<gray>)(.*?)(</gray>)", text,
+  //       type: AfterSalesRichTextType.gray));
+  //   richTextList.addAll(_regTextList("(<address>)(.*?)(</address>)", text,
+  //       type: AfterSalesRichTextType.address));
+  //   List normalTextList = text.split(RegExp("<[^>]+>(.*?)<[^>]+>"));
+  //   for (String normalText in normalTextList as Iterable<String>) {
+  //     int index = text.indexOf(normalText);
+  //     richTextList.add(AfterSalesRichTextModel(
+  //       type: AfterSalesRichTextType.none,
+  //       richText: normalText,
+  //       start: index,
+  //       end: index + normalText.length - 1,
+  //     ));
+  //   }
+  //   richTextList.sort((left, right) => left.start!.compareTo(right.start!));
+  //   // richtext list
+  //   List<InlineSpan> textSpanList = [];
+  //   TextStyle normalStyle =
+  //       TextStyle(color: Color(0xff333333), fontSize: 14 * 2.sp);
+  //   TextStyle blackStyle = TextStyle(color: Colors.black, fontSize: 14 * 2.sp);
+  //   TextStyle grayStyle =
+  //       TextStyle(color: Color(0xff999999), fontSize: 14 * 2.sp);
+  //   TextStyle addressStyle =
+  //       TextStyle(color: Color(0xff666666), fontSize: 14 * 2.sp);
+  //   for (AfterSalesRichTextModel textModel in richTextList) {
+  //     print("--- " + textModel.getNormalText());
+  //     if (textModel.type == AfterSalesRichTextType.none) {
+  //       textSpanList
+  //           .add(TextSpan(text: textModel.getNormalText(), style: normalStyle));
+  //     }
+  //     if (textModel.type == AfterSalesRichTextType.black) {
+  //       textSpanList
+  //           .add(TextSpan(text: textModel.getNormalText(), style: blackStyle));
+  //     }
+  //     if (textModel.type == AfterSalesRichTextType.address) {
+  //       textSpanList.add(
+  //           TextSpan(text: textModel.getNormalText(), style: addressStyle));
+  //     }
+  //     if (textModel.type == AfterSalesRichTextType.gray) {
+  //       textSpanList.add(WidgetSpan(
+  //           child: Container(
+  //         decoration: BoxDecoration(
+  //             color: Color(0xfff8f8f8), borderRadius: BorderRadius.circular(4)),
+  //         child: Text(textModel.getNormalText(), style: grayStyle),
+  //         padding:
+  //             EdgeInsets.symmetric(horizontal: rSize(8), vertical: 8 * 2.h),
+  //       )));
+  //     }
+  //   }
+  //   return textSpanList;
+  // }
 
-  _getRichTextWidget(String text) {
-    // text = "退款金额 <black>¥169</black> 将原路退回至您的<black>付款账户</black>，请及时关注到账情况。<gray>若3天内未收到退款/瑞币，请联系客服咨询。</gray> <gray>gray</gray>  <address>寄回地址：浙江省宁波市海曙区翠柏路宁波工程学院翠柏校区 瑞库客 13888888888</address>";
-    // text = text.replaceAll("|", "\n");
-    List<AfterSalesRichTextModel> richTextList = [];
-
-    // RegExp reg = RegExp("<[^>]+>(.*?)<[^>]+>");
-    // RegExp reg = RegExp("(?<=<black>)(.*?)(?=</black>)");
-    // RegExp reg = RegExp("(<black>)(.*?)(</black>)");
-    // black
-    richTextList.addAll(_regTextList("(<black>)(.*?)(</black>)", text,
-        type: AfterSalesRichTextType.black));
-    richTextList.addAll(_regTextList("(<gray>)(.*?)(</gray>)", text,
-        type: AfterSalesRichTextType.gray));
-    richTextList.addAll(_regTextList("(<address>)(.*?)(</address>)", text,
-        type: AfterSalesRichTextType.address));
-    List normalTextList = text.split(RegExp("<[^>]+>(.*?)<[^>]+>"));
-    for (String normalText in normalTextList as Iterable<String>) {
-      int index = text.indexOf(normalText);
-      richTextList.add(AfterSalesRichTextModel(
-        type: AfterSalesRichTextType.none,
-        richText: normalText,
-        start: index,
-        end: index + normalText.length - 1,
-      ));
-    }
-    richTextList.sort((left, right) => left.start!.compareTo(right.start!));
-    // richtext list
-    List<InlineSpan> textSpanList = [];
-    TextStyle normalStyle =
-        TextStyle(color: Color(0xff333333), fontSize: 14 * 2.sp);
-    TextStyle blackStyle = TextStyle(color: Colors.black, fontSize: 14 * 2.sp);
-    TextStyle grayStyle =
-        TextStyle(color: Color(0xff999999), fontSize: 14 * 2.sp);
-    TextStyle addressStyle =
-        TextStyle(color: Color(0xff666666), fontSize: 14 * 2.sp);
-    for (AfterSalesRichTextModel textModel in richTextList) {
-      print("--- " + textModel.getNormalText());
-      if (textModel.type == AfterSalesRichTextType.none) {
-        textSpanList
-            .add(TextSpan(text: textModel.getNormalText(), style: normalStyle));
-      }
-      if (textModel.type == AfterSalesRichTextType.black) {
-        textSpanList
-            .add(TextSpan(text: textModel.getNormalText(), style: blackStyle));
-      }
-      if (textModel.type == AfterSalesRichTextType.address) {
-        textSpanList.add(
-            TextSpan(text: textModel.getNormalText(), style: addressStyle));
-      }
-      if (textModel.type == AfterSalesRichTextType.gray) {
-        textSpanList.add(WidgetSpan(
-            child: Container(
-          decoration: BoxDecoration(
-              color: Color(0xfff8f8f8), borderRadius: BorderRadius.circular(4)),
-          child: Text(textModel.getNormalText(), style: grayStyle),
-          padding:
-              EdgeInsets.symmetric(horizontal: rSize(8), vertical: 8 * 2.h),
-        )));
-      }
-    }
-    return textSpanList;
-  }
-
-  _regTextList(String regExp, String text,
-      {AfterSalesRichTextType type = AfterSalesRichTextType.none}) {
-    if (TextUtils.isEmpty(regExp)) return [];
-    List<AfterSalesRichTextModel> richTextList = [];
-    RegExp reg = RegExp(regExp);
-    for (RegExpMatch item in reg.allMatches(text)) {
-      richTextList.add(AfterSalesRichTextModel(
-          richText: text.substring(item.start, item.end),
-          type: type,
-          start: item.start,
-          end: item.end));
-    }
-    return richTextList;
-  }
+  // _regTextList(String regExp, String text,
+  //     {AfterSalesRichTextType type = AfterSalesRichTextType.none}) {
+  //   if (TextUtils.isEmpty(regExp)) return [];
+  //   List<AfterSalesRichTextModel> richTextList = [];
+  //   RegExp reg = RegExp(regExp);
+  //   for (RegExpMatch item in reg.allMatches(text)) {
+  //     richTextList.add(AfterSalesRichTextModel(
+  //         richText: text.substring(item.start, item.end),
+  //         type: type,
+  //         start: item.start,
+  //         end: item.end));
+  //   }
+  //   return richTextList;
+  // }
 }

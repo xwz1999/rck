@@ -459,7 +459,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              (model.coupon != null && model.coupon != "0")
+              (model.coupon != null && model.coupon != 0)
                   ? Container(
                       margin: EdgeInsets.only(right: 5),
                       child: SmallCouponWidget(

@@ -297,13 +297,13 @@ class BrandLikeGridItem extends StatelessWidget {
                         fontSize: 13 * 2.sp,
                       ),
                       padding: EdgeInsets.symmetric(
-                          horizontal: ScreenAdapterUtils.setWidth(
+                          horizontal:
                               UserLevelTool.currentRoleLevelEnum() ==
                                           UserRoleLevel.Vip &&
                                       this.goods!.getPromotionStatus() ==
                                           PromotionStatus.start
-                                  ? 16
-                                  : 8),
+                                  ? 32.w
+                                  : 16.w,
                           vertical: rSize(0)),
                       borderRadius: BorderRadius.circular(40),
                       // borderRadius: BorderRadius.only(
@@ -338,18 +338,18 @@ class BrandLikeGridItem extends StatelessWidget {
   }
 
   _saleNumberWidget(GoodsSimple? goods) {
-    bool sellout = false;
+   // bool sellout = false;
     bool isSeckill = false;
 
     if(this.goods!.inventory!>0){
-      sellout = false;
+      //sellout = false;
     }else{
-      sellout = true;
+      //sellout = true;
     }
     if(this.goods!.secKill!=null){
       if(this.goods!.secKill!.secKill==1){
         isSeckill = true;
-        sellout = true;
+        //sellout = true;
         //秒杀中 通过seckill中的库存和销量来判断是否是否售完
       }
     }

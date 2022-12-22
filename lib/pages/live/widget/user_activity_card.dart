@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -12,7 +13,6 @@ import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
 import 'package:recook/pages/live/widget/user_base_card.dart';
 import 'package:recook/pages/user/user_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -135,13 +135,17 @@ class _UserActivityCardState extends State<UserActivityCard> {
         SizedBox(height: rSize(35)),
         GestureDetector(
           onTap: () {
-            CRoute.push(
-              context,
-              ActivityPreviewPage(
-                model: widget.model,
-                userModel: widget.userModel,
-              ),
-            );
+            // CRoute.push(
+            //   context,
+            //   ActivityPreviewPage(
+            //     model: widget.model,
+            //     userModel: widget.userModel,
+            //   ),
+            // );
+            Get.to(()=>  ActivityPreviewPage(
+              model: widget.model,
+              userModel: widget.userModel,
+            ));
           },
           child: Builder(builder: (context) {
             if (widget.model.trendType == 1)
@@ -333,7 +337,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
                     );
                   else {
                     showToast('未登陆，请先登陆');
-                    CRoute.push(context, UserPage());
+                    Get.to(()=> UserPage());
                   }
                 },
               ),
@@ -366,7 +370,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
       );
     else {
       showToast('未登陆，请先登陆');
-      CRoute.push(context, UserPage());
+      Get.to(()=> UserPage());
     }
   }
 }

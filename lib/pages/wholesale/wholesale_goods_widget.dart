@@ -151,8 +151,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
                       fontSize: 13 * 2.sp,
                     ),
                     padding: EdgeInsets.symmetric(
-                        horizontal: ScreenAdapterUtils.setWidth(
-                           8),
+                        horizontal: 16.w,
                         vertical: rSize(0)),
                     borderRadius: BorderRadius.circular(40),
                     // borderRadius: BorderRadius.only(
@@ -182,14 +181,14 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
     );
   }
 
-  _buyEvent(BuildContext context) {
-    if (widget.buyClick != null) {
-      widget.buyClick!();
-    } else {
-      // AppRouter.push(context, RouteName.COMMODITY_PAGE,
-      //     arguments: CommodityDetailPage.setArguments(this.goods.id));
-    }
-  }
+  // _buyEvent(BuildContext context) {
+  //   if (widget.buyClick != null) {
+  //     widget.buyClick!();
+  //   } else {
+  //     // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+  //     //     arguments: CommodityDetailPage.setArguments(this.goods.id));
+  //   }
+  // }
 
 
   //

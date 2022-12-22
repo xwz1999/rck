@@ -1,14 +1,11 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/wholesale/models/wholesale_good_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-
-import '../wholeasale_detail_page.dart';
 
 class WholesaleGoodsGrid extends StatelessWidget {
 
@@ -175,8 +172,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
                       fontSize: 13 * 2.sp,
                     ),
                     padding: EdgeInsets.symmetric(
-                        horizontal: ScreenAdapterUtils.setWidth(
-                             8),
+                        horizontal:16.w,
                         vertical: rSize(0)),
                     borderRadius: BorderRadius.circular(40),
                     // borderRadius: BorderRadius.only(
@@ -207,12 +203,12 @@ class WholesaleGoodsGrid extends StatelessWidget {
     );
   }
 
-  _buyEvent(BuildContext context) {
-    Get.to(()=>WholesaleDetailPage(goodsId: this.goods!.id as int?,));
-      //
-      // AppRouter.push(context, RouteName.COMMODITY_PAGE,
-      //     arguments: CommodityDetailPage.setArguments(this.goods.id));
-
-  }
+  // _buyEvent(BuildContext context) {
+  //   Get.to(()=>WholesaleDetailPage(goodsId: this.goods!.id as int?,));
+  //     //
+  //     // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+  //     //     arguments: CommodityDetailPage.setArguments(this.goods.id));
+  //
+  // }
 
 }

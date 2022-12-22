@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -39,7 +41,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
       backgroundColor: AppColor.frenchColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         elevation: 0,
         leading: RecookBackButton(),
         centerTitle: true,
@@ -163,9 +165,9 @@ class _AddReviewPageState extends State<AddReviewPage> {
                                   var values = await CameraPicker.pickFromCamera(context);
                                   entitys.add(values);
 
-                                  if (entitys == null) {
-                                    return;
-                                  }
+                                  // if (entitys == null) {
+                                  //   return;
+                                  // }
 
                                   for (var element in entitys) {
                                     File? file = await element!.file;
@@ -287,10 +289,10 @@ class _AddReviewPageState extends State<AddReviewPage> {
 
   uploadFiles() {
     if (_mediaModels.isNotEmpty) {
-      GSDialog.of(context).showLoadingDialog(context, '上传图片');
+      ReToast.loading(text: '上传图片');
       HttpManager.uploadFiles(medias: _mediaModels).then((_) {
-        GSDialog.of(context).dismiss(context);
-        GSDialog.of(context).showLoadingDialog(context, '评价中');
+        BotToast.closeAllLoading();
+        ReToast.loading(text: '评价中');
         addComment(_controller.text,
                 images: _mediaModels
                     .map((e) => {
@@ -300,15 +302,15 @@ class _AddReviewPageState extends State<AddReviewPage> {
                         })
                     .toList())
             .then((value) {
-          GSDialog.of(context).dismiss(context);
+          BotToast.closeAllLoading();
           ReToast.success(text: "产品评论成功，待平台审核");
           Navigator.pop(context);
         });
       });
     } else {
-      GSDialog.of(context).showLoadingDialog(context, '评价中');
+      ReToast.loading(text: '评价中');
       addComment(_controller.text).then((value) {
-        GSDialog.of(context).dismiss(context);
+        BotToast.closeAllLoading();
         Navigator.pop(context);
       });
     }

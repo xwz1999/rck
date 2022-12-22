@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
@@ -13,6 +14,7 @@ import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/animated_rotate.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/custom_painters/round_background_painter.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -177,10 +179,8 @@ class _BenefitViewGenState extends State<BenefitViewGen>
 
   Future loadData() async {
     DateTime _now = DateTime.now();
-    GSDialog.of(context).showLoadingDialog(
-      context,
-      '加载中',
-    );
+
+    ReToast.loading(text: '加载中');
     if (widget.type == UserBenefitPageType.GUIDE ||
         widget.type == UserBenefitPageType.SELF) {
       _todayModel = await UserBenefitFunc.getBenefitDayExpect(DateTime.now());
@@ -214,7 +214,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     _cardItems[2] = _getCard(_thisMonthModel);
     _cardItems[3] = _getCard(_lastMonthModel);
 
-    GSDialog.of(context).dismiss(context);
+    BotToast.closeAllLoading();
     setState(() {});
   }
 

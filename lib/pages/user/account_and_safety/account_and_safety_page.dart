@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -30,8 +32,8 @@ class AccountAndSafetyPage extends StatefulWidget {
 class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
   bool secureValue = false;
   bool _weChatLoginLoading = false;
-  String? _backgroundUrl;
-  int _goodsId = 0;
+  // String? _backgroundUrl;
+  // int _goodsId = 0;
   @override
   void initState() {
     super.initState();
@@ -65,7 +67,7 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
             color: AppColor.blackColor,
           ),
         ),
-        themeData: AppBarTheme(brightness: Brightness.light),
+        themeData: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light,),
         leading: _backButton(context),
       ),
       body: ListView(
@@ -135,13 +137,13 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
       showError("没有检测到微信！请先安装！");
       return;
     }
-    GSDialog.of(context).showLoadingDialog(context, "正在请求数据...");
+    ReToast.loading(text: '正在请求数据...');
     WeChatUtils.wxLogin((WXLoginResult result) {
       if (result.errCode == -2) {
         Toast.showInfo('用户取消登录');
-        GSDialog.of(context).dismiss(context);
+        BotToast.closeAllLoading();
       } else if (result.errCode != 0) {
-        GSDialog.of(context).dismiss(context);
+        BotToast.closeAllLoading();
         Toast.showInfo(result.errStr);
       } else {
         if (!_weChatLoginLoading) {
@@ -151,7 +153,7 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
         }
       }
     });
-    GSDialog.of(context).dismiss(context);
+    BotToast.closeAllLoading();
   }
 
   _wechatUnboundhandle() async {
@@ -191,10 +193,10 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
   }
 
   _weChatLogin(String? code) async {
-    GSDialog.of(context).showLoadingDialog(context, "登录中...");
+    ReToast.loading(text: '登录中...');
     ResultData resultData = await HttpManager.post(UserApi.wx_binding,
         {'userId': UserManager.instance!.user.info!.id, 'code': code});
-    GSDialog.of(context).dismiss(context);
+    BotToast.closeAllLoading();
 
     _weChatLoginLoading = false;
     if (!resultData.result) {

@@ -104,13 +104,14 @@ class _GoodsWindowViewState extends State<GoodsWindowView> {
                         ),
                       ),
                       Spacer(),
-                      FlatButton(
+
+                      TextButton(
                         onPressed: () {
                           setState(() {
                             if (PickCart.goodsManager) {
                               PickCart.goodsPicked.removeWhere((goodsPicked) {
                                 return _goodsModels.indexWhere((element) =>
-                                        element.id == goodsPicked.id) !=
+                                element.id == goodsPicked.id) !=
                                     -1;
                               });
                             } else {
@@ -120,20 +121,21 @@ class _GoodsWindowViewState extends State<GoodsWindowView> {
                                     -1;
                               });
                             }
-
                             PickCart.goodsManager = !PickCart.goodsManager;
                             widget.onPick!();
                           });
                         },
-                        padding: EdgeInsets.symmetric(horizontal: rSP(15)),
-                        splashColor: Colors.black26,
-                        child: Text(
-                          PickCart.goodsManager ? '完成' : '管理',
-                          style: TextStyle(
-                            color: Color(0xFF666666),
-                            fontSize: rSP(14),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: rSP(15)),
+                          child: Text(
+                            PickCart.goodsManager ? '完成' : '管理',
+                            style: TextStyle(
+                              color: Color(0xFF666666),
+                              fontSize: rSP(14),
+                            ),
                           ),
                         ),
+                        style: ButtonStyle(overlayColor:MaterialStateProperty.all(Colors.black26,)),
                       ),
                     ],
                   ),
