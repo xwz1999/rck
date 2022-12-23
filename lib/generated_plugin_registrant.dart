@@ -10,7 +10,6 @@ import 'package:bytedesk_kefu/bytedesk_kefu_web.dart';
 import 'package:camera_web/camera_web.dart';
 import 'package:device_info_plus_web/device_info_plus_web.dart';
 import 'package:devicelocale/devicelocale_web.dart';
-import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:fluttertoast/fluttertoast_web.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:just_audio_web/just_audio_web.dart';
@@ -30,7 +29,6 @@ void registerPlugins(Registrar registrar) {
   CameraPlugin.registerWith(registrar);
   DeviceInfoPlusPlugin.registerWith(registrar);
   DevicelocaleWeb.registerWith(registrar);
-  FilePickerWeb.registerWith(registrar);
   FluttertoastWebPlugin.registerWith(registrar);
   ImagePickerPlugin.registerWith(registrar);
   JustAudioPlugin.registerWith(registrar);

@@ -17,6 +17,7 @@ class _DiscoveryPageState extends State<DiscoveryPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 1, vsync: this);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   }
 
   @override

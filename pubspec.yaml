@@ -237,7 +237,7 @@ dependencies:
       path:
         bytedesk_kefu
       ref:
-        9b8f21e
+        7c6af45
 
 
 #  device_info_plus: ^2.0.1

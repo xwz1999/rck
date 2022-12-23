@@ -56,6 +56,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     _manageStatus = false;
     _editting = false;
     _presenter = ShoppingCartPresenterImpl();
