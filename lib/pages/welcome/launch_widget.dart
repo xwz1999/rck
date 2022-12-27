@@ -61,21 +61,21 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   }
 
   initDate()async{
-
       UserManager.instance!.kingCoinListModelList =
       await UserFunc.getKingCoinList();
-      PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
       Get.offAll(WelcomeWidget());
+
   }
 
   initAgreeDate(){
+
     AMapFlutterLocation.setApiKey(
         AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
     AMapFlutterLocation.updatePrivacyShow(true, true);
     AMapFlutterLocation.updatePrivacyAgree(true);
     //初始化日志工具
     initPlatformState();
-
+    PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
     BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
   }
 

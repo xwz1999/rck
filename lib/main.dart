@@ -14,7 +14,7 @@ import 'package:recook/redux/openinstall_state.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/utils/CommonLocalizationsDelegate.dart';
 import 'package:recook/utils/storage/hive_store.dart';
-import 'package:recook/utils/test.dart';
+// import 'package:recook/utils/test.dart';
 import 'package:redux/redux.dart';
 
 import 'constants/header.dart';
@@ -27,10 +27,10 @@ void main() async {
     // 网络请求加密功能
     // useEncrypt: true
   );
-  bool inTest = Test.test();
-  if (inTest) {
-    return;
-  }
+  // bool inTest = Test.test();
+  // if (inTest) {
+  //   return;
+  // }
 
   //持久化存储
   await Hive.initFlutter();
@@ -68,12 +68,12 @@ void main() async {
 
   if (!isDebug) {
     AppConfig.setDebug(isDebug);
-    DPrint.printf("当前为release 模式");
+    //DPrint.printf("当前为release 模式");
     //return FlutterBugly.postCatchedException(() {
     runApp(MyApp(store));
     //});
   } else {
-    DPrint.printf("当前为 debug 模式");
+   // DPrint.printf("当前为 debug 模式");
     runApp(MyApp(store));
   }
   //return FlutterBugly.postCatchedException(() {

@@ -85,6 +85,7 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
                         //CRoute.push(context, PrivacyPageV2());
                       },
                       child: Text.rich(TextSpan(
+
                         style: TextStyle(
                           color: Color(0xFF333333),
                           fontSize: rSP(10),

@@ -25,7 +25,7 @@ import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:uni_links/uni_links.dart';
 
-class WelcomeWidget extends StatefulWidget {
+class  WelcomeWidget extends StatefulWidget {
   @override
   _WelcomeWidgetState createState() => _WelcomeWidgetState();
 }

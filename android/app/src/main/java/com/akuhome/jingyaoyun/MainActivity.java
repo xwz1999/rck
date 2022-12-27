@@ -18,6 +18,7 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 
+
 public class MainActivity extends FlutterActivity {
 //  @Override
 //  protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class MainActivity extends FlutterActivity {
     @Override
     public void configureFlutterEngine(FlutterEngine flutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
+        //HookFlutterClipBordUtil.hookClipBoard(flutterEngine);
     }
 
 
