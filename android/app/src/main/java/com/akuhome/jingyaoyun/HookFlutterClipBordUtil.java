@@ -61,6 +61,7 @@ public class HookFlutterClipBordUtil {
 
         public IClipboardInvocationHandler(Object real) {
             this.real = real;
+
         }
 
         @Override

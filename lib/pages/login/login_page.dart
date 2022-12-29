@@ -295,7 +295,6 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
   _recognizer(context, int type) {
     final TapGestureRecognizer recognizer = new TapGestureRecognizer();
     recognizer.onTap = () {
-      print("点击协议了");
       AppRouter.push(
         context,
         RouteName.WEB_VIEW_PAGE,

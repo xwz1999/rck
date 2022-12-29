@@ -64,7 +64,6 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
     //进入应用时候不会触发该状态 应用程序处于可见状态，并且可以响应用户的输入事件。它相当于 Android 中Activity的onResume
       case AppLifecycleState.resumed:
 
-
           JPush().isNotificationEnabled().then((bool value) {
             if (value)
               perText = '已开启';
@@ -75,8 +74,6 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
           }).catchError((onError) {
             print(onError);
           });
-
-
 
         print("应用进入前台======");
         break;

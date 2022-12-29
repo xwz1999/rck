@@ -84,8 +84,7 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
                         );
                         //CRoute.push(context, PrivacyPageV2());
                       },
-                      child: Text.rich(TextSpan(
-
+                      child:RichText(text:TextSpan(
                         style: TextStyle(
                           color: Color(0xFF333333),
                           fontSize: rSP(10),
@@ -165,7 +164,6 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
 _recognizer(context, int type) {
   final TapGestureRecognizer recognizer = new TapGestureRecognizer();
   recognizer.onTap = () {
-    print("点击协议了");
     AppRouter.push(
       context,
       RouteName.WEB_VIEW_PAGE,
@@ -222,7 +220,7 @@ class _PrivacySecondDialog extends StatelessWidget {
                     );
                     //CRoute.push(context, PrivacyPageV2());
                   },
-                  child: Text.rich(TextSpan(
+                  child: RichText(text:TextSpan(
                     children: [
                       TextSpan(text: '您可再次查看'),
                       new TextSpan(

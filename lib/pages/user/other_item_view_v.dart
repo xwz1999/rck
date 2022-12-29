@@ -118,18 +118,6 @@ class _OtherItemViewVState extends State<OtherItemViewV> {
                       Toast.showError('请先登录...');
                       return;
                     }
-
-                    // var custom = json.encode({
-                    //   "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
-                    //   "title": "", // 可自定义, 类型为字符串
-                    //   "content": "", // 可自定义, 类型为字符串
-                    //   "price": "", // 可自定义, 类型为字符串
-                    //   "imageUrl": "", //必须为图片网址, 类型为字符串
-                    //   "id": "", // 可自定义
-                    //   "categoryCode": "", // 可自定义, 类型为字符串
-                    //   "client": "flutter" // 可自定义, 类型为字符串
-                    // });
-
                     BytedeskKefu.startWorkGroupChatOrderCallback(
                         context, AppConfig.WORK_GROUP_WID, "客服", (value) {},
                         () {
@@ -194,7 +182,6 @@ class _OtherItemViewVState extends State<OtherItemViewV> {
                     });
                   } else {
                     Get.offAll(() => LoginPage());
-                    // showError("请先登录!");
                     Toast.showError("请先登录");
                   }
                 },

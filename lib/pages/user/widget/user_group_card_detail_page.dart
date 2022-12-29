@@ -34,7 +34,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
       color: Colors.white,
       child: Row(
         children: [
-          64.hb,
+          //64.hb,
           15.wb,
           title.text.size(14.rsp).color(Color(0xFF333333)).make(),
           Spacer(),
