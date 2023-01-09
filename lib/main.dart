@@ -13,6 +13,7 @@ import 'package:recook/pages/welcome/launch_widget.dart';
 import 'package:recook/redux/openinstall_state.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/utils/CommonLocalizationsDelegate.dart';
+import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 // import 'package:recook/utils/test.dart';
 import 'package:redux/redux.dart';

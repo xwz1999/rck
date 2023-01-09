@@ -12,6 +12,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/message/message_ceter_page.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/welcome/welcome_widget.dart';
+import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
@@ -64,11 +65,11 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
       UserManager.instance!.kingCoinListModelList =
       await UserFunc.getKingCoinList();
       Get.offAll(WelcomeWidget());
-
+      PowerLogger.start(context, debug:true);//AppConfig.debug!  在正式服数据下进行调试\
   }
 
   initAgreeDate(){
-
+    AndroidBackTop.agreeEvent();
     AMapFlutterLocation.setApiKey(
         AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
     AMapFlutterLocation.updatePrivacyShow(true, true);
@@ -77,6 +78,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     initPlatformState();
     PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
     BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
+
   }
 
   Future<void> initPlatformState() async {
