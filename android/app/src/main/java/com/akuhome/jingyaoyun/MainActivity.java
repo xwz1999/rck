@@ -16,15 +16,11 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
-
+import android.app.Activity;
+import android.content.SharedPreferences;
 
 
 public class MainActivity extends FlutterActivity {
-//  @Override
-//  protected void onCreate(Bundle savedInstanceState) {
-//    super.onCreate(savedInstanceState);
-//    GeneratedPluginRegistrant.registerWith(this);
-//  }
 
   //通讯名称,回到手机桌面
   private  final String CHANNEL = "android/back/desktop";
@@ -46,8 +42,17 @@ public class MainActivity extends FlutterActivity {
 //  }
     @Override
     public void configureFlutterEngine(FlutterEngine flutterEngine) {
+        super.configureFlutterEngine(flutterEngine);
         GeneratedPluginRegistrant.registerWith(flutterEngine);
-        //HookFlutterClipBordUtil.hookClipBoard(flutterEngine);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("flutter",
+                Activity.MODE_PRIVATE);
+        String name =sharedPreferences.getString("copy", "");
+        HookFlutterClipBordUtil.isAgree = name;
+
+        HookFlutterClipBordUtil.hookClipBoard(flutterEngine);
+
+
     }
 
 
@@ -59,7 +64,20 @@ public class MainActivity extends FlutterActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(0);
         }
+
     }
+
+    private void init(){
+        SharedPreferences mySharedPreferences= getSharedPreferences("flutter",
+                Activity.MODE_PRIVATE);
+//实例化SharedPreferences.Editor对象（第二步）
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+//用putString的方法保存数据
+        editor.putString("copy", "agree");
+//提交当前数据
+        editor.commit();
+    }
+
 
     //注册返回到手机桌面事件
     private void initBackToDesktop() {
@@ -71,6 +89,15 @@ public class MainActivity extends FlutterActivity {
                             moveTaskToBack(false);
                             result.success(true);
                         }
+                        else if(methodCall.method.equals("agree")){
+                            System.out.println("agree");
+                            init();
+                        }
+//                        else if(methodCall.method.equals("stopCopy")){
+//
+//                            System.out.println("stopCopy");
+//                            HookFlutterClipBordUtil.hookClipBoard(getFlutterEngine());
+//                        }
                     }
                 }
         );

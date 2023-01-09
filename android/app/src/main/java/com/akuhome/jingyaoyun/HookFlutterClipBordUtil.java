@@ -17,12 +17,13 @@ import io.flutter.embedding.engine.systemchannels.PlatformChannel;
  */
 public class HookFlutterClipBordUtil {
 
+
+    public static String isAgree = "";
     /**
      * 代理剪切板功能
      * @param flutterEngine
      */
     public static void hookClipBoard(FlutterEngine flutterEngine) {
-
         Class IPlatformMessageHandler;
         Field platformMessageHandlerField;
         try {
@@ -31,17 +32,21 @@ public class HookFlutterClipBordUtil {
             if (platformMessageHandlerField == null) {
                 return;
             }
-            platformMessageHandlerField.setAccessible(true);
 
-            // 拿到真实正常的实例，给不需要被hook的方法使用
-            PlatformChannel channel = flutterEngine.getPlatformChannel();
-            Object real = platformMessageHandlerField.get(channel);
             // 代理PlatformMessageHandler的方法
-            platformMessageHandlerField.set(channel, Proxy.newProxyInstance(
-                    IPlatformMessageHandler.getClassLoader(), new Class[]{
-                            IPlatformMessageHandler
-                    }, new IClipboardInvocationHandler(real))
-            );
+
+                platformMessageHandlerField.setAccessible(true);
+
+                // 拿到真实正常的实例，给不需要被hook的方法使用
+                PlatformChannel channel = flutterEngine.getPlatformChannel();
+                Object real = platformMessageHandlerField.get(channel);
+                platformMessageHandlerField.set(channel, Proxy.newProxyInstance(
+                        IPlatformMessageHandler.getClassLoader(), new Class[]{
+                                IPlatformMessageHandler
+                        }, new IClipboardInvocationHandler(real))
+                );
+
+
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -66,11 +71,19 @@ public class HookFlutterClipBordUtil {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             // flutter输入框会调用获取剪切板 合规问题屏蔽掉
-            if ("getClipboardData".equals(method.getName())) {
-                return "";
+
+            if(!isAgree.equals("agree")){
+                if ("getClipboardData".equals(method.getName())) {
+                    System.out.println("禁用状态");
+                        return "";
+                }
+            }else{
+                System.out.println("正常状态");
             }
             return method.invoke(real, args);
         }
     }
+
+
 
 }

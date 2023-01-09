@@ -5,13 +5,14 @@ import 'package:package_info/package_info.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
+// import 'package:android_intent_plus/android_intent.dart';
 import 'package:recook/pages/user/user_info_page.dart';
+import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';
 import 'package:recook/widgets/webView.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'account_and_safety/account_and_safety_page.dart';
 
 class SettingPage extends StatelessWidget {
@@ -110,15 +111,13 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
                     physics: AlwaysScrollableScrollPhysics(),
                     children: <Widget>[
                       getEmptyBox(),
-                      SCTile.normalTile("个人资料", needDivide: true, listener: () {
+                      SCTile.normalTile("个人资料", needDivide: true, listener: () async {
                         Get.to(UserInfoPage());
-                        //push(RouteName.USER_INFO_PAGE);
                       }),
                       SCTile.normalTile('账户与安全', needDivide: true,
                           listener: () {
                         Get.to(AccountAndSafetyPage());
 
-                        //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
 
                       SCTile.normalTile('接收推送通知',
