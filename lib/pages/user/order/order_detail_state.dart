@@ -1177,23 +1177,23 @@ abstract class OrderDetailState<T extends StatefulWidget>
                           SizedBox(
                             width: rSize(5),
                           ),
-                          canRefund
-                              ? CustomImageButton(
-                                  title: "申请退款",
-                                  color: Colors.grey[600],
-                                  fontSize: 12 * 2.sp,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: rSize(1), horizontal: rSize(4)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40)),
-                                  border: Border.all(
-                                      color: Colors.grey[600]!,
-                                      width: 0.8 * 2.w),
-                                  onPressed: () {
-                                    refundClick(goods);
-                                  },
-                                )
-                              : Container(),
+                          // canRefund
+                          //     ? CustomImageButton(
+                          //         title: "申请退款",
+                          //         color: Colors.grey[600],
+                          //         fontSize: 12 * 2.sp,
+                          //         padding: EdgeInsets.symmetric(
+                          //             vertical: rSize(1), horizontal: rSize(4)),
+                          //         borderRadius:
+                          //             BorderRadius.all(Radius.circular(40)),
+                          //         border: Border.all(
+                          //             color: Colors.grey[600]!,
+                          //             width: 0.8 * 2.w),
+                          //         onPressed: () {
+                          //           refundClick(goods);
+                          //         },
+                          //       )
+                          //     : Container(),
                           SizedBox(
                             width: rSize(5),
                           ),

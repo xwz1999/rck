@@ -13,6 +13,7 @@ import 'package:recook/pages/home/classify/order_prepay_page.dart';
 import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/mvp/order_list_contact.dart';
 import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
+import 'package:recook/pages/user/order/after_sales/cancel_goods_page.dart';
 import 'package:recook/pages/user/order/order_detail_state.dart';
 import 'package:recook/pages/user/order/order_logistics_list_page.dart';
 import 'package:recook/widgets/alert.dart';
@@ -286,19 +287,21 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         borderRadius: BorderRadius.all(Radius.circular(40)),
         border: Border.all(color: Colors.grey, width: 0.8 * 2.w),
         onPressed: () {
-          Alert.show(
-              context,
-              NormalTextDialog(
-                content: "确定取消订单吗？取消后将不能撤销",
-                items: ["我再想想", "确认"],
-                listener: (int index) {
-                  Alert.dismiss(globalContext!);
-                  if (index == 0) return;
-                  ReToast.loading(text: '');
-                  _presenter.cancelOrder(
-                      UserManager.instance!.user.info!.id, orderDetail!.id);
-                },
-              ));
+          Get.to(()=>CancelGoodsPage(orderId: 1,));
+
+          // Alert.show(
+          //     context,
+          //     NormalTextDialog(
+          //       content: "确定取消订单吗？取消后将不能撤销",
+          //       items: ["我再想想", "确认"],
+          //       listener: (int index) {
+          //         Alert.dismiss(globalContext!);
+          //         if (index == 0) return;
+          //         ReToast.loading(text: '');
+          //         _presenter.cancelOrder(
+          //             UserManager.instance!.user.info!.id, orderDetail!.id);
+          //       },
+          //     ));
         },
       ))
       ..add(Container(

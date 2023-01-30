@@ -14,6 +14,8 @@ import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/my_favorites_page.dart';
+import 'package:recook/pages/user/order/after_sales/apply_after_sale_page.dart';
+import 'package:recook/pages/user/order/after_sales/cancel_goods_page.dart';
 import 'package:recook/pages/user/setting_page.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -212,7 +214,8 @@ class _OtherItemViewVState extends State<OtherItemViewV> {
                   ),
                   '我的设置',
                   () => Get.to(() =>
-                      SettingPage()) // AppRouter.push(context, RouteName.SETTING_PAGE),
+                      SettingPage()
+    )
                   ),
             ],
           ).pSymmetric(v: 18.w),

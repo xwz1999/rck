@@ -1,11 +1,4 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019-08-15  14:52 
- * remark    : 
- * ====================================================
- */
+
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';

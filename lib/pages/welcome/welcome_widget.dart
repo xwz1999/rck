@@ -19,7 +19,6 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/user_model.dart';
 import 'package:recook/pages/tabBar/TabbarWidget.dart';
-import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/share_preference.dart';
 import 'package:recook/utils/storage/hive_store.dart';

@@ -9,6 +9,7 @@
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -20,6 +21,7 @@ import 'package:recook/pages/home/classify/order_prepay_page.dart';
 import 'package:recook/pages/user/items/item_order_list.dart';
 import 'package:recook/pages/user/mvp/order_list_contact.dart';
 import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
+import 'package:recook/pages/user/order/after_sales/cancel_goods_page.dart';
 import 'package:recook/pages/user/order/order_detail_page.dart';
 import 'package:recook/pages/user/order/order_list_controller.dart';
 import 'package:recook/pages/user/order/publish_evaluation_page.dart';
@@ -120,8 +122,10 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
           },
           orderModel: _controller!.getData()[index],
           cancelOrder: (OrderModel order, {callback}) {
-            _cancelCallback = callback;
-            _cancelOrder(order);
+            Get.to(()=>CancelGoodsPage(orderId: 1,));  
+            
+            // _cancelCallback = callback;
+            // _cancelOrder(order);
           },
           goToPay: (OrderModel order, {callback}) {
             _goToPay(order);

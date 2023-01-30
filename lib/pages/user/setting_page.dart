@@ -7,7 +7,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 // import 'package:android_intent_plus/android_intent.dart';
 import 'package:recook/pages/user/user_info_page.dart';
-import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';

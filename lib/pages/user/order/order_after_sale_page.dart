@@ -156,7 +156,7 @@ class _OrderAfterSalePageState extends BaseStoreState<OrderAfterSalePage>
                   labelColor: AppColor.blackColor,
                   unselectedLabelColor: AppColor.greyColor,
                   controller: _tabController,
-                  tabs: <Widget>[Tab(text: "售后中"), Tab(text: "已完成")],
+                  tabs: <Widget>[Tab(text: "售后中"), Tab(text: "售后完结"), Tab(text: "取消记录")],
                 ),
               ),
               Expanded(

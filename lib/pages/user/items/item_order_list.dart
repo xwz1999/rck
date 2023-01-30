@@ -285,6 +285,27 @@ class _OrderListItemState extends State<OrderListItem> {
           ));
         break;
       case 1:
+        children
+          ..add(Spacer())
+          ..add(
+              CustomImageButton(
+                padding:
+                EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
+                title: "取消订单",
+                borderRadius: BorderRadius.all(Radius.circular(40)),
+                color: Colors.grey[700],
+                fontSize: 14 * 2.sp,
+                border: Border.all(color: Colors.grey[700]!, width: 0.3),
+                onPressed: () {
+                  //if (widget.cancelOrder == null) return;
+                  widget.cancelOrder(widget.orderModel, callback: () {
+                    setState(() {});
+                  });
+                },
+              ))
+          ..add(Container(
+            width: rSize(8),
+          ));
         break;
       case 2:
         {
